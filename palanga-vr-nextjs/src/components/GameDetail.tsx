@@ -127,14 +127,34 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
         </div>
       </div>
 
-      {/* Video placeholder */}
+      {/* Video */}
       <div style={{ padding: '32px 32px 0' }}>
         <div style={{ maxWidth: 1320, margin: '0 auto' }}>
           <div style={{ background: '#000', borderRadius: 'var(--radius-card-lg)', aspectRatio: '16/9', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(${game.poster}) center/cover`, opacity: 0.7 }} />
-            <button style={{ position: 'relative', zIndex: 1, width: 96, height: 96, borderRadius: '50%', background: 'rgba(255,255,255,0.95)', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 12px 32px rgba(0,0,0,0.4)' }}>
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="var(--navy-900)" style={{ marginLeft: 4 }}><polygon points="6 4 20 12 6 20 6 4" /></svg>
-            </button>
+            {game.youtubeId ? (
+              <a
+                href={`https://www.youtube.com/watch?v=${game.youtubeId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ position: 'absolute', inset: 0, display: 'block', textDecoration: 'none', cursor: 'pointer' }}
+              >
+                <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${game.poster})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.42)' }} />
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
+                  <div style={{ width: 80, height: 80, borderRadius: '50%', background: '#FF0000', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="white" style={{ marginLeft: 4 }}><polygon points="6 4 20 12 6 20 6 4" /></svg>
+                  </div>
+                  <span style={{ font: '700 14px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.08em', textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>Žiūrėti video</span>
+                </div>
+              </a>
+            ) : (
+              <>
+                <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(${game.poster}) center/cover`, opacity: 0.7 }} />
+                <div style={{ position: 'relative', zIndex: 1, width: 96, height: 96, borderRadius: '50%', background: 'rgba(255,255,255,0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 12px 32px rgba(0,0,0,0.4)' }}>
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="var(--navy-900)" style={{ marginLeft: 4 }}><polygon points="6 4 20 12 6 20 6 4" /></svg>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

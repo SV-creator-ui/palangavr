@@ -1,5 +1,6 @@
 ﻿export interface Game {
   slug: string;
+  youtubeId?: string;
   title: string;
   year: number;
   difficulty: number;
@@ -28,6 +29,7 @@ export interface FaqItem {
 export const GAMES: Game[] = [
   {
     slug: 'alien-infection',
+    youtubeId: 'ZyLLaPA9yQI',
     title: 'Alien Infection',
     year: 2024,
     difficulty: 4,
@@ -46,6 +48,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: 'ninja-trials',
+    youtubeId: 'ScEbCy35OVo',
     title: 'Ninja Trials',
     year: 2023,
     difficulty: 3,
@@ -64,6 +67,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: 'cyberscape',
+    youtubeId: '9kSQ-MLwWJY',
     title: 'Cyberscape',
     year: 2025,
     difficulty: 3,
@@ -83,6 +87,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: 'dragon-tower',
+    youtubeId: 'q5j8YFyfsHo',
     title: 'Dragon Tower',
     year: 2018,
     difficulty: 3,
@@ -101,6 +106,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: 'manor-of-escape',
+    youtubeId: 'Sx3uzbmaG7I',
     title: 'Manor of Escape',
     year: 2021,
     difficulty: 3,
@@ -119,6 +125,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: 'pirates-plague',
+    youtubeId: 'eGLdaquEQx8',
     title: 'Pirates Plague',
     year: 2021,
     difficulty: 3,
@@ -137,6 +144,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: 'runaway-train',
+    youtubeId: '8iGISrU-Da0',
     title: 'Runaway Train',
     year: 2022,
     difficulty: 5,
@@ -155,6 +163,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: 'depths-of-osiris',
+    youtubeId: 'Kt1WQiFVwso',
     title: 'Depths of Osiris',
     year: 2020,
     difficulty: 5,
@@ -173,6 +182,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: 'space-station-tiberia',
+    youtubeId: 'DBWe9lacAps',
     title: 'Space Station Tiberia',
     year: 2017,
     difficulty: 4,
