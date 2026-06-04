@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Button from './ui/Button';
+import { useLang } from '@/context/LangContext';
 
 const HERO_BG_IMAGES = [
   '/assets/game-banner-alien-infection.jpg',
@@ -50,30 +51,20 @@ function HeroBgCarousel() {
   );
 }
 
-function HeroStatsRow({ centered }: { centered?: boolean }) {
-  const stats = [
-    ['9', 'pabėgimo kambariai'],
-    ['2 – 6', 'žaidėjai komandoje'],
-    ['~45 min', 'tikro adrenalino'],
-    ['nuo 20 €', 'vienam žmogui'],
-  ];
-  return (
-    <div style={{ marginTop: 56, display: 'flex', gap: 40, justifyContent: centered ? 'center' : 'flex-start', flexWrap: 'wrap' }}>
-      {stats.map(([n, l]) => (
-        <div key={l} style={{ display: 'flex', flexDirection: 'column', gap: 4, alignItems: centered ? 'center' : 'flex-start' }}>
-          <span style={{ font: '800 32px var(--font-display)', color: '#fff', lineHeight: 1 }}>{n}</span>
-          <span style={{ font: '500 12px var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'rgba(255,255,255,0.7)' }}>{l}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 interface Props {
   onBook: () => void;
 }
 
 export default function Hero({ onBook }: Props) {
+  const { t } = useLang();
+  const h = t.hero;
+  const stats: [string, string][] = [
+    ['9', h.stat1],
+    ['2 – 6', h.stat2],
+    ['~45 min', h.stat3],
+    ['nuo 20 €', h.stat4],
+  ];
+
   return (
     <section style={{
       position: 'relative',
@@ -98,21 +89,29 @@ export default function Hero({ onBook }: Props) {
         }}>
           <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--heat-pink)', boxShadow: '0 0 0 4px rgba(242,70,110,0.25)' }} />
           <span style={{ font: '700 11px var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#fff' }}>
-            PALANGA · DAUKANTO G. 35
+            {h.badge}
           </span>
         </div>
         <h1 className="t-hero" style={{ maxWidth: 1400, marginBottom: 28, color: '#fff' }}>
-          VR nuotykiai<br />Palangoje
+          {h.title.split('\n').map((line, i) => (
+            <span key={i}>{line}{i === 0 && <br />}</span>
+          ))}
         </h1>
         <p style={{ font: '500 22px/1.4 var(--font-body)', color: 'rgba(255,255,255,0.9)', margin: '0 0 40px', maxWidth: 720 }}>
-          Devyni komandiniai VR pabėgimo kambariai 2–6 žaidėjams.<br />
-          45 minutės, kurių neužmiršite.
+          {h.sub}
         </p>
         <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
-          <Button variant="primary" onClick={onBook} style={{ padding: '18px 32px', fontSize: 16 }}>Rezervuoti laiką</Button>
-          <Button variant="ghost" href="/#games" style={{ padding: '18px 32px', fontSize: 16 }}>Visi kambariai</Button>
+          <Button variant="primary" onClick={onBook} style={{ padding: '18px 32px', fontSize: 16 }}>{h.cta}</Button>
+          <Button variant="ghost" href="/#games" style={{ padding: '18px 32px', fontSize: 16 }}>{h.cta2}</Button>
         </div>
-        <HeroStatsRow centered />
+        <div style={{ marginTop: 56, display: 'flex', gap: 40, justifyContent: 'center', flexWrap: 'wrap' }}>
+          {stats.map(([n, l]) => (
+            <div key={l} style={{ display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'center' }}>
+              <span style={{ font: '800 32px var(--font-display)', color: '#fff', lineHeight: 1 }}>{n}</span>
+              <span style={{ font: '500 12px var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'rgba(255,255,255,0.7)' }}>{l}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

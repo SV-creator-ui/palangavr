@@ -1,4 +1,4 @@
-export interface Game {
+﻿export interface Game {
   slug: string;
   title: string;
   year: number;
@@ -35,7 +35,7 @@ export const GAMES: Game[] = [
     players: '2 − 6',
     time: '~45 min',
     timeShort: '~45 min',
-    poster: '/assets/poster-alien-infection.png',
+    poster: '/assets/poster-alien-infection.webp',
     tagline: 'VR pabėgimo kambarys siaubingame garse ir vaizde.',
     description: [
       'Keisti įvykiai vyksta vietiniame miške. Jūsų ugniagesių komanda iškviesta surasti dingusį katiną.',
@@ -53,7 +53,7 @@ export const GAMES: Game[] = [
     players: '2 − 6',
     time: '~45 min',
     timeShort: '~45 min',
-    poster: '/assets/poster-ninja-trials.png',
+    poster: '/assets/poster-ninja-trials.webp',
     tagline: 'Šiąnakt jūs tampate tikrais nindzėmis.',
     description: [
       'Šiąnakt jūs tampate tikrais nindzėmis.',
@@ -71,7 +71,7 @@ export const GAMES: Game[] = [
     players: '2 − 6',
     time: '~45 min',
     timeShort: '~45 min',
-    poster: '/assets/poster-cyberscape.png',
+    poster: '/assets/poster-cyberscape.webp',
     tagline: 'Įžengėte į pagrindinį tinklą. Sunaikinkite virusą. Išgelbėkite darbus.',
     description: [
       'Retro stiliaus VR pabėgimo kambarys.',
@@ -90,7 +90,7 @@ export const GAMES: Game[] = [
     players: '2 − 6',
     time: '~45 min',
     timeShort: '~45 min',
-    poster: '/assets/poster-dragon-tower.png',
+    poster: '/assets/poster-dragon-tower.webp',
     tagline: 'Pabėk iš kalėjimo. Virk eliksyrus. Nugalėk drakoną.',
     description: [
       'Alchemikas įmetė jus į bokštą. Atskrenda drakonai.',
@@ -108,7 +108,7 @@ export const GAMES: Game[] = [
     players: '2 − 6',
     time: '~45 min',
     timeShort: '~45 min',
-    poster: '/assets/poster-manor-of-escape.png',
+    poster: '/assets/poster-manor-of-escape.webp',
     tagline: 'Durys užsirakino pačios. Namas jus stebi.',
     description: [
       'Miestelio dvare ilgą laiką girdisi šiurpūs riksmai, dingsta žmonės.',
@@ -126,7 +126,7 @@ export const GAMES: Game[] = [
     players: '2 − 6',
     time: '~45 min',
     timeShort: '~45 min',
-    poster: '/assets/poster-pirates-plague.png',
+    poster: '/assets/poster-pirates-plague.webp',
     tagline: 'Kapitonas serga. Įgula prakeikta. Jūra nori jus atgal.',
     description: [
       'Paskubėkite! Turite nedaug laiko, arba jūs ir jūsų komanda taps prakeikta amžiams!',
@@ -144,7 +144,7 @@ export const GAMES: Game[] = [
     players: '2 − 6',
     time: '~45 min',
     timeShort: '~45 min',
-    poster: '/assets/poster-runaway-train.png',
+    poster: '/assets/poster-runaway-train.webp',
     tagline: 'Tik jūs galite sustabdyti pasileidusį traukinį.',
     description: [
       'Stabdžių nebėra. Konduktoriaus nebėra. Vienintelis dalykas tarp traukinio ir bedugnės – jūsų komanda.',
@@ -162,7 +162,7 @@ export const GAMES: Game[] = [
     players: '2 − 6',
     time: '~50 min',
     timeShort: '~50 min',
-    poster: '/assets/poster-depths-of-osiris.png',
+    poster: '/assets/poster-depths-of-osiris.webp',
     tagline: 'Ten apačioje – kažkas su jumis.',
     description: [
       'Nuotykiai vandenyno dugne.',
@@ -180,7 +180,7 @@ export const GAMES: Game[] = [
     players: '2 − 6',
     time: '~50 min',
     timeShort: '~50 min',
-    poster: '/assets/poster-space-station-tiberia.png',
+    poster: '/assets/poster-space-station-tiberia.webp',
     tagline: 'Artėja meteoritas. Ar spėsite išgelbėti pasaulį?',
     description: [
       'Didžiulis meteoritas tuoj trenksis į žemę.',

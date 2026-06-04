@@ -53,7 +53,7 @@ const HowItWorks = () => {
           }}>
               <div style={{
               font: '800 96px/0.9 var(--font-display)',
-              color: i === 1 ? 'rgba(255,255,255,0.12)' : 'var(--gray-300)',
+              color: i === 1 ? 'rgba(255,255,255,0.28)' : 'var(--gray-300)',
               letterSpacing: '-0.04em'
             }}>{s.n}</div>
               <h3 style={{ font: '800 28px/1.05 var(--font-display)', color: 'inherit', textTransform: 'uppercase', margin: 0 }}>{s.title}</h3>

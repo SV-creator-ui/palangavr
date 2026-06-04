@@ -1,6 +1,7 @@
 'use client';
 
 import { PRICING } from '@/data/games';
+import { useLang } from '@/context/LangContext';
 
 function PlayerDots({ count, dark = true }: { count: number; dark?: boolean }) {
   return (
@@ -22,16 +23,18 @@ interface Props {
 }
 
 export default function Pricing({ onBook }: Props) {
+  const { t } = useLang();
+  const p2 = t.pricing;
   return (
     <section id="pricing" style={{ background: 'var(--bg-stage)', color: '#fff' }} className="section-pad">
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 64 }}>
-          <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-orange)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>Kainos</span>
+          <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-orange)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{p2.eyebrow}</span>
           <h2 style={{ font: '800 clamp(48px, 6.5vw, 88px)/0.95 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '12px 0 16px' }}>
-            Nuo <span style={{ background: 'var(--heat-gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>20 €</span> žmogui
+            {p2.title.split('20 €')[0]}<span style={{ background: 'var(--heat-gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>20 €</span>{p2.title.split('20 €')[1]}
           </h2>
           <p style={{ font: '500 18px/1.5 var(--font-body)', color: 'rgba(255,255,255,0.7)', margin: '0 auto', maxWidth: 600 }}>
-            Vienodos kainos visiems pabėgimo kambariams. Mokate už grupę – nesvarbu, kurį nuotykį pasirenkate.
+            {p2.sub}
           </p>
         </div>
 
@@ -45,20 +48,20 @@ export default function Pricing({ onBook }: Props) {
             }}>
               <div className="pr-count" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <span style={{ font: '800 48px/1 var(--font-display)', color: 'inherit' }}>{p.players}</span>
-                <span style={{ font: '500 13px/1.2 var(--font-body)', color: p.popular ? 'rgba(255,255,255,0.7)' : 'var(--fg-muted)' }}>žaidėjai</span>
+                <span style={{ font: '500 13px/1.2 var(--font-body)', color: p.popular ? 'rgba(255,255,255,0.7)' : 'var(--fg-muted)' }}>{p2.players}</span>
               </div>
               <div className="pr-dots" style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 <PlayerDots count={p.players} dark={!p.popular} />
                 {p.popular && (
                   <span style={{ font: '700 11px var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--heat-orange)', marginTop: 4 }}>
-                    ★ Populiariausias pasirinkimas
+                    {p2.popular}
                   </span>
                 )}
               </div>
               <div className="pr-price" style={{ textAlign: 'right' }}>
                 <div style={{ font: '800 36px/1 var(--font-display)', color: 'inherit' }}>{p.price} €</div>
                 <div style={{ font: '500 12px var(--font-body)', color: p.popular ? 'rgba(255,255,255,0.6)' : 'var(--fg-muted)', marginTop: 4 }}>
-                  {p.perPerson.toFixed(p.perPerson % 1 ? 2 : 0)} € / žmogui
+                  {p.perPerson.toFixed(p.perPerson % 1 ? 2 : 0)} {p2.perPerson}
                 </div>
               </div>
               <div className="pr-btn" style={{ textAlign: 'right' }}>
@@ -68,7 +71,7 @@ export default function Pricing({ onBook }: Props) {
                   color: '#fff', font: '700 14px var(--font-display)', cursor: 'pointer',
                   width: '100%',
                 }}>
-                  Rezervuoti {p.players}
+                  {p2.bookBtn} {p.players}
                 </button>
               </div>
             </div>
@@ -76,11 +79,7 @@ export default function Pricing({ onBook }: Props) {
         </div>
 
         <div style={{ marginTop: 56 }} className="grid-3col">
-          {[
-            ['Be paslėptų mokesčių', 'Kaina apima viską: įrangą, instruktažą, kambarį.'],
-            ['Apmokėjimas', 'Apmokėjimas grynais arba kortele.'],
-            ['Nuolaida', 'Du seansai iš eilės su 5 % nuolaida. Parašykite mums.'],
-          ].map(([h, b]) => (
+          {p2.info.map(([h, b]) => (
             <div key={h} style={{ border: '1px solid rgba(255,255,255,0.12)', borderRadius: 'var(--radius-card)', padding: '24px 28px', background: 'rgba(255,255,255,0.03)' }}>
               <h4 style={{ font: '700 16px var(--font-display)', color: '#fff', margin: '0 0 8px' }}>{h}</h4>
               <p style={{ font: '400 14px/1.55 var(--font-body)', color: 'rgba(255,255,255,0.7)', margin: 0 }}>{b}</p>

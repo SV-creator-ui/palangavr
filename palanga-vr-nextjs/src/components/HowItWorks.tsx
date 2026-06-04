@@ -1,38 +1,24 @@
-const steps = [
-  {
-    n: '01',
-    title: 'Pasirink nuotykį',
-    body: 'Devyni unikalūs pasauliai – nuo lengvų šeimai tinkančių iki ekspertų lygio galvosūkių. Surink komandą nuo 2 iki 6 žaidėjų.',
-    meta: '2 – 6 žaidėjų',
-  },
-  {
-    n: '02',
-    title: 'Rezervuok laiką',
-    body: 'Užsisakyk seansą internetu arba paskambink. Atvyk 10 min. anksčiau – pristatysime pabėgimo kambarį ir uždėsime VR įrangą.',
-    meta: '~10 min pasiruošimas',
-  },
-  {
-    n: '03',
-    title: 'Įženk į kambarį',
-    body: '45 minutės azartiškų nuotykių virtualioje realybėje. Įtraukiantys galvosūkiai, nepamirštami pasauliai ir adrenalinas.',
-    meta: '~45 min žaidimo',
-  },
-];
+'use client';
+
+import { useLang } from '@/context/LangContext';
 
 export default function HowItWorks() {
+  const { t } = useLang();
+  const steps = t.how.steps;
+
   return (
     <section id="how" style={{ background: '#fff' }} className="section-pad">
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24, marginBottom: 64 }}>
           <div>
-            <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-pink)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>Kaip vyksta</span>
+            <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-pink)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{t.how.eyebrow}</span>
             <h2 style={{ font: '800 clamp(40px, 5.5vw, 72px)/0.95 var(--font-display)', color: 'var(--fg)', textTransform: 'uppercase', margin: '12px 0 0', display: 'inline-flex', alignItems: 'center', gap: 24 }}>
-              Trys žingsniai
+              {t.how.title}
               <span style={{ display: 'inline-block', width: 120, height: 2, background: 'var(--gray-300)' }} />
             </h2>
           </div>
           <p style={{ font: '500 17px/1.5 var(--font-body)', color: 'var(--fg-muted)', margin: 0, maxWidth: 420 }}>
-            Nuo durų atidarymo iki pergalės – maždaug valanda jūsų laiko.
+            {t.how.sub}
           </p>
         </div>
         <div className="grid-3col">
@@ -46,7 +32,7 @@ export default function HowItWorks() {
               minHeight: 320,
               position: 'relative', overflow: 'hidden',
             }}>
-              <div style={{ font: '800 96px/0.9 var(--font-display)', color: i === 1 ? 'rgba(255,255,255,0.12)' : 'var(--gray-300)', letterSpacing: '-0.04em' }}>{s.n}</div>
+              <div style={{ font: '800 96px/0.9 var(--font-display)', color: i === 1 ? 'rgba(255,255,255,0.28)' : 'var(--gray-300)', letterSpacing: '-0.04em' }}>{s.n}</div>
               <h3 style={{ font: '800 28px/1.05 var(--font-display)', color: 'inherit', textTransform: 'uppercase', margin: 0 }}>{s.title}</h3>
               <p style={{ font: '400 15px/1.55 var(--font-body)', color: i === 1 ? 'rgba(255,255,255,0.8)' : 'var(--fg-muted)', margin: 0 }}>{s.body}</p>
               <div style={{ marginTop: 'auto', paddingTop: 16, borderTop: `1px solid ${i === 1 ? 'rgba(255,255,255,0.15)' : 'var(--gray-300)'}` }}>

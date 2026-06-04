@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="lt">
 <head>
   <meta charset="utf-8">
@@ -151,42 +151,368 @@
 
   <script type="text/babel" data-presets="env,react">
     /* ===================================================================
+       I18N — LANGUAGE CONTEXT & TRANSLATIONS
+       =================================================================== */
+    const LangContext = React.createContext('lt');
+    const useLang = () => React.useContext(LangContext);
+    const useT = () => {
+      const lang = useLang();
+      return (key) => {
+        const keys = key.split('.');
+        let v = TRANSLATIONS[lang];
+        for (const k of keys) v = v?.[k];
+        return v ?? TRANSLATIONS.lt[key.split('.').reduce((o,k)=>o?.[k],TRANSLATIONS.lt)] ?? key;
+      };
+    };
+
+    const TRANSLATIONS = {
+      lt: {
+        nav: { games:'Pabėgimo kambariai', how:'Kaip vyksta', pricing:'Kainos', faq:'D.U.K.', contact:'Kontaktai' },
+        book: 'Rezervacija',
+        hero: {
+          badge: 'PALANGA · S. DAUKANTO G. 24',
+          title: 'VR nuotykiai\nPalangoje',
+          sub: 'Devyni komandiniai VR pabėgimo kambariai 2–6 žaidėjams. ~45 minutės, kurių neužmiršite.',
+          cta: 'Rezervuoti laiką', cta2: 'Visi kambariai',
+          stat1: 'pabėgimo kambariai', stat2: 'žaidėjai komandoje', stat3: 'tikro adrenalino', stat4: 'vienam žmogui',
+        },
+        grid: {
+          eyebrow: '9 nuotykiai · 1 vieta', title: 'Pabėgimo kambariai',
+          sub: 'Kiekvienas pasaulis – azartiški nuotykiai, unikalios vietos, intriguojantys galvosūkiai.',
+          sortLabel: 'Rūšiuoti pagal',
+          sorts: ['Naujausi','Seniausi','Lengviausi','Sunkiausi'],
+          difficulty: 'Sudėtingumas', players: 'Žaidėjai', duration: 'Trukmė',
+        },
+        how: {
+          eyebrow: 'Kaip vyksta', title: 'Trys žingsniai',
+          sub: 'Nuo durų atidarymo iki pergalės – maždaug valanda jūsų laiko.',
+          steps: [
+            { n:'01', title:'Pasirink nuotykį', body:'Devyni unikalūs pasauliai – nuo lengvų šeimai tinkančių iki ekspertų lygio galvosūkių. Surink komandą nuo 2 iki 6 žaidėjų.', meta:'2 – 6 žaidėjų' },
+            { n:'02', title:'Rezervuok laiką', body:'Užsisakyk seansą internetu arba paskambink. Atvyk 10 min. anksčiau – pristatysime pabėgimo kambarį ir uždėsime VR įrangą.', meta:'~10 min pasiruošimas' },
+            { n:'03', title:'Įženk į kambarį', body:'45 minutės azartiškų nuotykių virtualioje realybėje. Įtraukiantys galvosūkiai, nepamirštami pasauliai ir adrenalinas.', meta:'~45 min žaidimo' },
+          ],
+        },
+        pricing: {
+          eyebrow: 'Kainos', title: 'Nuo {n} € žmogui',
+          sub: 'Vienodos kainos visiems pabėgimo kambariams. Mokate už grupę – nesvarbu, kurį nuotykį pasirenkate.',
+          players: 'žaidėjai', popular: '★ Populiariausias pasirinkimas',
+          perPerson: '€ / žmogui', bookBtn: 'Rezervuoti {n}',
+          info: [
+            ['Be paslėptų mokesčių','Kaina apima viską: įrangą, instruktažą, kambarį.'],
+            ['Apmokėjimas','Apmokėjimas grynais arba kortele.'],
+            ['Nuolaida','Du seansai iš eilės su 5 % nuolaida. Parašykite mums.'],
+          ],
+        },
+        faq: {
+          eyebrow: 'D.U.K.', title: 'Dažniausi klausimai',
+          notFound: 'Klausimo nėra sąraše? Paskambinkite mums:',
+          items: [
+            { q:'Nuo kokio amžiaus galima žaisti?', a:'Rekomenduojame nuo 9 metų. Vaikai iki 13 m. žaidžia tik kartu su suaugusiais.' },
+            { q:'Kiek žmonių telpa viename kambaryje?', a:'Vienoje komandoje žaidžia nuo 2 iki 6 žaidėjų. Visi pabėgimo kambariai – komandiniai, todėl smagiausia atvykti su draugais, šeima ar kolegomis.' },
+            { q:'Ar reikia patirties su VR?', a:'Visiškai ne. Prieš seansą operatorius supažindina su įranga ir valdymu. Pradedančiajam puikiai tinka Ninja Trials arba Dragon Tower.' },
+            { q:'Kiek trunka apsilankymas?', a:'Pats žaidimas apie 45 minutės. Su trumpu pristatymu, įrangos prisitaikymu ir nuotraukomis – maždaug valanda.' },
+            { q:'Ar galima atvykti su akiniais?', a:'Taip. VR įranga pritaikyta dėvėti akinius.' },
+            { q:'Ką daryti, jei reikia atšaukti?', a:'Prašome apie atšaukimą informuoti telefonu. Tel. nr.: +37068426686' },
+            { q:'Ar pykina su VR akiniais?', a:'Mūsų žaidimuose jūs judate po visą realią erdvę, todėl pykinimas nepasireiškia.' },
+          ],
+        },
+        contact: {
+          eyebrow:'Apsilankymas', title:'Palangos\ncentre',
+          addrLabel:'Adresas', phoneLabel:'Telefonas', emailLabel:'El. paštas', hoursLabel:'Darbo laikas',
+          addr1:'S. Daukanto g. 24, Palanga', addr2:'Viešbutis „Palangos Vėtra"',
+          hours:'Pir – Ket 14:00 – 22:00\nPen 12:00 – 22:00 · Šeš 10:00 – 22:00 · Sek 10:00 – 22:00',
+          bookBtn:'Rezervuoti laiką', callBtn:'Paskambinti',
+        },
+        footer: {
+          navTitle:'Naršyti', hoursTitle:'Darbo laikas', contactTitle:'Susisiekti',
+          desc:'Pabėgimo kambariai prie jūros. Komandiniai nuotykiai 2–6 žaidėjams Palangos centre.',
+          bookLink:'Rezervuoti laiką →',
+          days: { pirKet:'Pir – Ket', pen:'Pen', ses:'Šeš', sek:'Sek' },
+          copy:'Palanga, Lietuva',
+        },
+        detail: {
+          back:'Visi kambariai', about:'Apie', players:'Žaidėjai', duration:'Trukmė', difficulty:'Sudėtingumas',
+          watchVideo:'Žiūrėti video', moreGames:'Daugiau nuotykių',
+          ctaTitle:'PASIRUOŠĘ PRAMOGAUTI?',
+          ctaSub:'Surinkite komandą nuo 2 iki 6 žaidėjų ir užsisakykite seansą jums patogiu metu.',
+          ctaBack:'Visi kambariai', ctaBook:'Rezervuoti laiką',
+        },
+        booking: {
+          title:'Rezervacija · Žingsnis {n} / 3',
+          step1Title:'Pasirinkite kambarį ir komandą',
+          step2Title:'Pasirinkite datą ir laiką',
+          step3Title:'Jūsų kontaktai',
+          roomLabel:'Pabėgimo kambarys', playersLabel:'Žaidėjų skaičius',
+          dateLabel:'Data', timesLabel:'Laisvi laikai · {date}',
+          timesNote:'Perbraukti laikai jau užimti. Sesijos trukmė – 45 min, atvykti rekomenduojame 10 min anksčiau.',
+          nameLabel:'Vardas', namePlaceholder:'Jonas Jonaitis',
+          phoneLabel:'Telefonas', emailLabel:'El. paštas',
+          infoNote:'Mokėjimas atliekamas vietoje grynaisiais arba kortele. Rezervacija nepatvirtina mokėjimo – tik laiką. Prašome apie atšaukimą informuoti telefonu. Tel. nr.: +37068426686',
+          total:'Iš viso', perPersonPlayers:'{price} € / žmogui · {n} žaidėjai',
+          back:'Atgal', next:'Toliau', confirm:'Patvirtinti rezervaciją', close:'Uždaryti',
+          today:'Šiandien',
+          successTitle:'Rezervacija išsiųsta!',
+          successSub:'Per kelias minutes gausite patvirtinimo laišką el. paštu. Iki susitikimo Palangoje!',
+          summaryRoom:'Pabėgimo kambarys', summaryDate:'Data', summaryTime:'Laikas', summaryTeam:'Komanda',
+          teamVal:'{n} žaidėjai',
+        },
+        diff: { 'Vidutiniška':'Vidutiniška', 'Sudėtinga':'Sudėtinga', 'Ekspertams':'Ekspertams' },
+        months: ['saus.','vas.','kov.','bal.','geg.','birž.','liep.','rugp.','rugs.','spal.','lapkr.','gruod.'],
+        days: ['Sek','Pir','Ant','Tre','Ket','Pen','Šeš'],
+      },
+      en: {
+        nav: { games:'Escape Rooms', how:'How it works', pricing:'Prices', faq:'FAQ', contact:'Contact' },
+        book: 'Book now',
+        hero: {
+          badge: 'PALANGA · S. DAUKANTO ST. 24',
+          title: 'VR Adventures\nin Palanga',
+          sub: 'Nine team VR escape rooms for 2–6 players. ~45 minutes you won\'t forget.',
+          cta: 'Book now', cta2: 'All rooms',
+          stat1: 'escape rooms', stat2: 'players per team', stat3: 'pure adrenaline', stat4: 'per person',
+        },
+        grid: {
+          eyebrow: '9 adventures · 1 location', title: 'Escape Rooms',
+          sub: 'Every world is a thrilling adventure, unique setting and captivating puzzle.',
+          sortLabel: 'Sort by',
+          sorts: ['Newest','Oldest','Easiest','Hardest'],
+          difficulty: 'Difficulty', players: 'Players', duration: 'Duration',
+        },
+        how: {
+          eyebrow: 'How it works', title: 'Three steps',
+          sub: 'From opening the door to victory – about an hour of your time.',
+          steps: [
+            { n:'01', title:'Choose an adventure', body:'Nine unique worlds – from easy family-friendly to expert-level puzzles. Gather a team of 2 to 6 players.', meta:'2 – 6 players' },
+            { n:'02', title:'Book a time', body:'Book online or give us a call. Arrive 10 min. early – we\'ll brief you on the room and fit your VR gear.', meta:'~10 min setup' },
+            { n:'03', title:'Enter the room', body:'45 minutes of thrilling adventures in virtual reality. Engaging puzzles, unforgettable worlds and pure adrenaline.', meta:'~45 min of play' },
+          ],
+        },
+        pricing: {
+          eyebrow: 'Prices', title: 'From {n} € per person',
+          sub: 'Same price for all escape rooms. You pay per group – no matter which adventure you choose.',
+          players: 'players', popular: '★ Most popular choice',
+          perPerson: '€ / person', bookBtn: 'Book for {n}',
+          info: [
+            ['No hidden fees','Price includes everything: equipment, briefing, room.'],
+            ['Payment','Cash or card payment on site.'],
+            ['Discount','Two consecutive sessions with 5% discount. Contact us.'],
+          ],
+        },
+        faq: {
+          eyebrow: 'FAQ', title: 'Frequently asked questions',
+          notFound: 'Question not on the list? Call us:',
+          items: [
+            { q:'From what age can you play?', a:'We recommend from age 9. Children under 13 must play accompanied by adults.' },
+            { q:'How many people fit in one room?', a:'One team plays with 2 to 6 players. All escape rooms are team-based, so it\'s most fun with friends, family or colleagues.' },
+            { q:'Is VR experience required?', a:'Not at all. Before the session the operator introduces you to the equipment and controls. Ninja Trials or Dragon Tower are perfect for beginners.' },
+            { q:'How long does a visit take?', a:'The game itself is about 45 minutes. With a brief intro, equipment fitting and photos – about an hour.' },
+            { q:'Can I come wearing glasses?', a:'Yes. The VR equipment is adapted for use with glasses.' },
+            { q:'What if I need to cancel?', a:'Please notify us about cancellation by phone. Tel.: +37068426686' },
+            { q:'Does VR cause motion sickness?', a:'In our games you physically move through real space, so motion sickness does not occur.' },
+          ],
+        },
+        contact: {
+          eyebrow:'Visit us', title:'In the heart\nof Palanga',
+          addrLabel:'Address', phoneLabel:'Phone', emailLabel:'Email', hoursLabel:'Opening hours',
+          addr1:'S. Daukanto st. 24, Palanga', addr2:'Hotel "Palangos Vėtra"',
+          hours:'Mon – Thu 14:00 – 22:00\nFri 12:00 – 22:00 · Sat 10:00 – 22:00 · Sun 10:00 – 22:00',
+          bookBtn:'Book now', callBtn:'Call us',
+        },
+        footer: {
+          navTitle:'Navigate', hoursTitle:'Opening hours', contactTitle:'Contact',
+          desc:'Escape rooms by the sea. Team adventures for 2–6 players in the centre of Palanga.',
+          bookLink:'Book now →',
+          days: { pirKet:'Mon – Thu', pen:'Fri', ses:'Sat', sek:'Sun' },
+          copy:'Palanga, Lithuania',
+        },
+        detail: {
+          back:'All rooms', about:'About', players:'Players', duration:'Duration', difficulty:'Difficulty',
+          watchVideo:'Watch video', moreGames:'More adventures',
+          ctaTitle:'READY FOR FUN?',
+          ctaSub:'Gather a team of 2 to 6 players and book a session at a time that suits you.',
+          ctaBack:'All rooms', ctaBook:'Book now',
+        },
+        booking: {
+          title:'Booking · Step {n} / 3',
+          step1Title:'Choose room and team',
+          step2Title:'Choose date and time',
+          step3Title:'Your contact details',
+          roomLabel:'Escape room', playersLabel:'Number of players',
+          dateLabel:'Date', timesLabel:'Available times · {date}',
+          timesNote:'Crossed-out times are already taken. Session duration – 45 min, please arrive 10 min early.',
+          nameLabel:'Name', namePlaceholder:'John Smith',
+          phoneLabel:'Phone', emailLabel:'Email',
+          infoNote:'Payment is made on site by cash or card. Booking does not confirm payment – only the time slot. Please notify us about cancellation by phone. Tel.: +37068426686',
+          total:'Total', perPersonPlayers:'{price} € / person · {n} players',
+          back:'Back', next:'Next', confirm:'Confirm booking', close:'Close',
+          today:'Today',
+          successTitle:'Booking sent!',
+          successSub:'You will receive a confirmation email in a few minutes. See you in Palanga!',
+          summaryRoom:'Escape room', summaryDate:'Date', summaryTime:'Time', summaryTeam:'Team',
+          teamVal:'{n} players',
+        },
+        diff: { 'Vidutiniška':'Medium', 'Sudėtinga':'Hard', 'Ekspertams':'Expert' },
+        months: ['Jan.','Feb.','Mar.','Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.'],
+        days: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+      },
+      ru: {
+        nav: { games:'Комнаты побега', how:'Как это работает', pricing:'Цены', faq:'Вопросы', contact:'Контакты' },
+        book: 'Забронировать',
+        hero: {
+          badge: 'ПАЛАНГА · УЛ. С. ДАУКАНТАС 24',
+          title: 'VR приключения\nв Паланге',
+          sub: 'Девять командных VR квест-комнат для 2–6 игроков. ~45 минут, которые вы не забудете.',
+          cta: 'Забронировать', cta2: 'Все комнаты',
+          stat1: 'комнат побега', stat2: 'игроков в команде', stat3: 'чистого адреналина', stat4: 'с человека',
+        },
+        grid: {
+          eyebrow: '9 приключений · 1 место', title: 'Комнаты побега',
+          sub: 'Каждый мир — захватывающие приключения, уникальные локации, интригующие головоломки.',
+          sortLabel: 'Сортировать',
+          sorts: ['Новейшие','Старейшие','Лёгкие','Сложные'],
+          difficulty: 'Сложность', players: 'Игроки', duration: 'Длительность',
+        },
+        how: {
+          eyebrow: 'Как это работает', title: 'Три шага',
+          sub: 'От открытия двери до победы – около часа вашего времени.',
+          steps: [
+            { n:'01', title:'Выберите приключение', body:'Девять уникальных миров – от лёгких семейных до головоломок экспертного уровня. Соберите команду от 2 до 6 игроков.', meta:'2 – 6 игроков' },
+            { n:'02', title:'Забронируйте время', body:'Забронируйте сеанс онлайн или позвоните нам. Приходите на 10 мин. раньше – мы познакомим вас с комнатой и подготовим VR-снаряжение.', meta:'~10 мин подготовка' },
+            { n:'03', title:'Войдите в комнату', body:'45 минут захватывающих приключений в виртуальной реальности. Увлекательные головоломки, незабываемые миры и адреналин.', meta:'~45 мин игры' },
+          ],
+        },
+        pricing: {
+          eyebrow: 'Цены', title: 'От {n} € с человека',
+          sub: 'Одинаковые цены для всех комнат побега. Вы платите за группу – независимо от выбранного приключения.',
+          players: 'игроков', popular: '★ Самый популярный выбор',
+          perPerson: '€ / чел.', bookBtn: 'Забронировать на {n}',
+          info: [
+            ['Без скрытых платежей','Цена включает всё: оборудование, инструктаж, комнату.'],
+            ['Оплата','Оплата наличными или картой на месте.'],
+            ['Скидка','Два сеанса подряд со скидкой 5%. Напишите нам.'],
+          ],
+        },
+        faq: {
+          eyebrow: 'Вопросы', title: 'Часто задаваемые вопросы',
+          notFound: 'Не нашли ответ? Позвоните нам:',
+          items: [
+            { q:'С какого возраста можно играть?', a:'Рекомендуем с 9 лет. Дети до 13 лет играют только в сопровождении взрослых.' },
+            { q:'Сколько человек помещается в одну комнату?', a:'В одной команде играют от 2 до 6 игроков. Все комнаты побега командные, поэтому веселее всего приходить с друзьями, семьёй или коллегами.' },
+            { q:'Нужен ли опыт в VR?', a:'Совсем нет. Перед сеансом оператор знакомит с оборудованием и управлением. Ninja Trials или Dragon Tower отлично подходят для начинающих.' },
+            { q:'Сколько длится посещение?', a:'Сама игра около 45 минут. С коротким вступлением, подгонкой снаряжения и фотографиями – около часа.' },
+            { q:'Можно ли приходить в очках?', a:'Да. VR-оборудование приспособлено для ношения с очками.' },
+            { q:'Что делать, если нужно отменить бронирование?', a:'Пожалуйста, сообщите об отмене по телефону. Тел.: +37068426686' },
+            { q:'Укачивает ли в VR-очках?', a:'В наших играх вы физически перемещаетесь в реальном пространстве, поэтому укачивания не возникает.' },
+          ],
+        },
+        contact: {
+          eyebrow:'Посещение', title:'В центре\nПаланги',
+          addrLabel:'Адрес', phoneLabel:'Телефон', emailLabel:'Эл. почта', hoursLabel:'Часы работы',
+          addr1:'Ул. С. Даукантас 24, Паланга', addr2:'Отель „Palangos Vėtra"',
+          hours:'Пн – Чт 14:00 – 22:00\nПт 12:00 – 22:00 · Сб 10:00 – 22:00 · Вс 10:00 – 22:00',
+          bookBtn:'Забронировать', callBtn:'Позвонить',
+        },
+        footer: {
+          navTitle:'Навигация', hoursTitle:'Часы работы', contactTitle:'Контакты',
+          desc:'Комнаты побега у моря. Командные приключения для 2–6 игроков в центре Паланги.',
+          bookLink:'Забронировать →',
+          days: { pirKet:'Пн – Чт', pen:'Пт', ses:'Сб', sek:'Вс' },
+          copy:'Паланга, Литва',
+        },
+        detail: {
+          back:'Все комнаты', about:'О', players:'Игроки', duration:'Длительность', difficulty:'Сложность',
+          watchVideo:'Смотреть видео', moreGames:'Больше приключений',
+          ctaTitle:'ГОТОВЫ К ПРИКЛЮЧЕНИЮ?',
+          ctaSub:'Соберите команду от 2 до 6 игроков и забронируйте сеанс в удобное для вас время.',
+          ctaBack:'Все комнаты', ctaBook:'Забронировать',
+        },
+        booking: {
+          title:'Бронирование · Шаг {n} / 3',
+          step1Title:'Выберите комнату и команду',
+          step2Title:'Выберите дату и время',
+          step3Title:'Ваши контакты',
+          roomLabel:'Комната побега', playersLabel:'Количество игроков',
+          dateLabel:'Дата', timesLabel:'Свободное время · {date}',
+          timesNote:'Зачёркнутое время уже занято. Длительность сеанса – 45 мин, рекомендуем прийти на 10 мин раньше.',
+          nameLabel:'Имя', namePlaceholder:'Иван Иванов',
+          phoneLabel:'Телефон', emailLabel:'Эл. почта',
+          infoNote:'Оплата на месте наличными или картой. Бронирование не подтверждает оплату – только время. Об отмене просим сообщать по телефону. Тел.: +37068426686',
+          total:'Итого', perPersonPlayers:'{price} € / чел. · {n} игроков',
+          back:'Назад', next:'Далее', confirm:'Подтвердить бронирование', close:'Закрыть',
+          today:'Сегодня',
+          successTitle:'Бронирование отправлено!',
+          successSub:'Через несколько минут вы получите письмо с подтверждением. До встречи в Паланге!',
+          summaryRoom:'Комната побега', summaryDate:'Дата', summaryTime:'Время', summaryTeam:'Команда',
+          teamVal:'{n} игроков',
+        },
+        diff: { 'Vidutiniška':'Средняя', 'Sudėtinga':'Сложная', 'Ekspertams':'Для экспертов' },
+        months: ['янв.','фев.','мар.','апр.','май','июн.','июл.','авг.','сен.','окт.','ноя.','дек.'],
+        days: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
+      },
+    };
+
+    /* Game & FAQ translations (non-LT content) */
+    const GAME_TR = {
+      en: {
+        'alien-infection':    { tagline:'A VR escape room in terrifying sound and visuals.', description:['An alien virus threatens the space station.','Your team must locate the source of the infection and neutralise it before it spreads. Every second counts.','Alien Infection – a high-intensity sci-fi thriller for teams who can handle the pressure.'] },
+        'ninja-trials':       { tagline:'Tonight, you become real ninjas.', description:['The ancient dojo awaits.','Master the art of the ninja – solve ancient puzzles, dodge traps and prove your worth to the Grand Master.','Ninja Trials – a fast-paced action adventure perfect for first-timers and veterans alike.'] },
+        'cyberscape':         { tagline:'You\'ve entered the mainframe. Destroy the virus. Save the data.', description:['A rogue AI has been unleashed on the city\'s mainframe, and it\'s hungry for data.','Put on your VR headset and race through digital corridors deep inside the system itself. Find the virus, cut the source and escape before it tracks you down.','Cyberscape – a fast-paced neon thriller: easy to start, deep to dive into.'] },
+        'dragon-tower':       { tagline:'Escape the dungeon. Brew potions. Defeat the dragon.', description:['The dungeon doors have slammed shut.','Mix magical potions, solve ancient riddles and find a way to vanquish the fearsome dragon that guards the tower.','Dragon Tower – a classic fantasy adventure, great for beginners.'] },
+        'manor-of-escape':    { tagline:'The doors locked themselves. The manor is watching you.', description:['Something is wrong with this house.','Flickering lights, hidden passages and a dark secret waiting to be uncovered. Will your team solve the mystery before time runs out?','Manor of Escape – a suspenseful mystery for teams who love a good puzzle.'] },
+        'pirates-plague':     { tagline:'The captain is ill. The crew is cursed. The sea wants you back.', description:['Hurry! You have little time before you and your crew are cursed forever!','Fight off rival pirates, solve puzzles! Active and intense! Great for those who love action and excitement. Recommended for families.','Pirates Plague – a swashbuckling story with real puzzles for crews who aren\'t afraid to get their hands dirty.'] },
+        'runaway-train':      { tagline:'Only you can stop the runaway train.', description:['No brakes. No conductor. The only thing between the train and the cliff is your team.','Race through moving carriages, pull the right levers and pray you cut the right wire. There\'s no second chance.','A high-intensity Wild West thriller for teams who can keep a cool head.'] },
+        'depths-of-osiris':   { tagline:'Down there, something is with you.', description:['Adventures on the ocean floor.','You and your team descend to the ocean depths where you recently discovered the lost Temple of Osiris to recover a legendary artefact. Danger lurks everywhere.','Depths of Osiris – a tense underwater archaeology story for teams who embrace the dark.'] },
+        'space-station-tiberia':{ tagline:'A meteor is approaching. Can you save the world in time?', description:['A massive meteor is about to hit the Earth.','Time is running out. You must fly to the space station and repair it.','You and your team are the last hope to save the world.'] },
+      },
+      ru: {
+        'alien-infection':    { tagline:'VR комната побега в ужасающем звуке и визуале.', description:['Инопланетный вирус угрожает космической станции.','Ваша команда должна найти источник заражения и нейтрализовать его до распространения. Каждая секунда на счету.','Alien Infection – высокоинтенсивный научно-фантастический триллер для команд, умеющих держать давление.'] },
+        'ninja-trials':       { tagline:'Сегодня ночью вы становитесь настоящими ниндзя.', description:['Древнее додзё ждёт вас.','Освойте искусство ниндзя – решайте древние головоломки, уклоняйтесь от ловушек и докажите своё мастерство Великому Мастеру.','Ninja Trials – динамичное приключение, идеальное как для новичков, так и для опытных игроков.'] },
+        'cyberscape':         { tagline:'Вы вошли в главную сеть. Уничтожьте вирус. Спасите данные.', description:['Мошеннический ИИ выпущен в главную сеть города, и он жаждет данных.','Наденьте VR-шлем и мчитесь по цифровым коридорам внутри самой системы. Найдите вирус, отключите источник и сбегите, пока он вас не отследил.','Cyberscape – стремительный неоновый триллер: легко начать, глубоко погрузиться.'] },
+        'dragon-tower':       { tagline:'Сбегите из темницы. Варите зелья. Победите дракона.', description:['Двери темницы захлопнулись.','Смешивайте магические зелья, решайте древние загадки и найдите способ победить грозного дракона, охраняющего башню.','Dragon Tower – классическое фэнтезийное приключение, отлично подходит для новичков.'] },
+        'manor-of-escape':    { tagline:'Двери заперлись сами. Поместье наблюдает за вами.', description:['С этим домом что-то не так.','Мигающий свет, тайные проходы и тёмная тайна, ждущая своего раскрытия. Успеет ли ваша команда разгадать мистерию до конца времени?','Manor of Escape – напряжённая тайна для команд, любящих головоломки.'] },
+        'pirates-plague':     { tagline:'Капитан болен. Экипаж проклят. Море хочет вас назад.', description:['Торопитесь! У вас мало времени, иначе вы и ваша команда будете прокляты навечно!','Сражайтесь с пиратами, решайте головоломки! Активно и интенсивно! Подходит для любителей азарта и экшна. Рекомендуется семьям.','Pirates Plague – захватывающая история с настоящими головоломками для экипажей, не боящихся испачкать руки.'] },
+        'runaway-train':      { tagline:'Только вы можете остановить несущийся поезд.', description:['Тормоза отказали. Машиниста нет. Единственное, что стоит между поездом и пропастью, – ваша команда.','Пробегайте через движущиеся вагоны, тяните нужные рычаги и молитесь, что перерезали правый провод. Второго шанса не будет.','Высокоинтенсивный вестерн-триллер для команд, умеющих сохранять хладнокровие.'] },
+        'depths-of-osiris':   { tagline:'Там внизу — что-то рядом с вами.', description:['Приключения на дне океана.','Вы и ваша команда спускаетесь в глубины океана, где недавно обнаружили затерянный храм Осириса, чтобы добыть легендарный артефакт. Повсюду опасности.','Depths of Osiris – напряжённая история подводной археологии для команд, полюбивших темноту.'] },
+        'space-station-tiberia':{ tagline:'Приближается метеорит. Успеете ли вы спасти мир?', description:['Огромный метеорит вот-вот врежется в Землю.','Времени почти не осталось. Вам нужно добраться до космической станции и починить её.','Вы и ваша команда — последняя надежда на спасение мира.'] },
+      },
+    };
+
+    /* ===================================================================
        DATA
        =================================================================== */
     const GAMES = [
-      { slug:'alien-infection', title:'Alien Infection', year:2024, difficulty:4, difficultyName:'Sudėtinga', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-alien-infection.png',
+      { slug:'alien-infection', title:'Alien Infection', year:2024, difficulty:4, difficultyName:'Sudėtinga', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-alien-infection.webp',
         tagline:'VR pabėgimo kambarys siaubingame garse ir vaizde.',
         description:['Keisti įvykiai vyksta vietiniame miške. Jūsų ugniagesių komanda iškviesta surasti dingusį katiną.','Garsai ir šviesos danguje šiurpina žmones.','Drąsūs gelbėtojai leidžiasi į mišką ieškoti dingusio katino, nežinodami kokie priešai jų laukia. Ar spėsite pabėgti, išgelbėti kačiuką ir visą pasaulį nuo mirtinos infekcijos?'],
         tags:['Logika','Galvosūkis','Ateiviai','Pabėgimas','VR','Veiksmas','Šiurpuliukai','Komandinis'] },
-      { slug:'ninja-trials', youtubeId:'ScEbCy35OVo', title:'Ninja Trials', year:2023, difficulty:3, difficultyName:'Vidutiniška', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-ninja-trials.png',
+      { slug:'ninja-trials', youtubeId:'ScEbCy35OVo', title:'Ninja Trials', year:2023, difficulty:3, difficultyName:'Vidutiniška', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-ninja-trials.webp',
         tagline:'Šiąnakt jūs tampate tikrais nindzėmis.',
         description:['Šiąnakt jūs tampate tikrais nindzėmis.','Bet tai nebus lengva. Jūsų mokytojas paskyrė tris užduotis: Kovos, Slaptumo ir Dvasios išbandymus. Tik įvaldę reikalingus įgūdžius būsite pasiruošę jam pasipriešinti ir įrodyti savo vertę.','Ninja Trials – šeimai draugiškas pabėgimo kambarys, kupinas pramogų ir iššūkių visiems amžiams.'],
         tags:['Japonija','Kova','Kardai','Veiksmas','Magija','Boso kova','Pradedantiesiems'] },
-      { slug:'cyberscape', youtubeId:'9kSQ-MLwWJY', title:'Cyberscape', year:2025, difficulty:3, difficultyName:'Vidutiniška', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-cyberscape.png',
+      { slug:'cyberscape', youtubeId:'9kSQ-MLwWJY', title:'Cyberscape', year:2025, difficulty:3, difficultyName:'Vidutiniška', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-cyberscape.webp',
         tagline:'Įžengėte į pagrindinį tinklą. Sunaikinkite virusą. Išgelbėkite darbus.',
         description:['Retro stiliaus VR pabėgimo kambarys.','Sukčiavęs dirbtinis intelektas paleistas miesto pagrindiniame tinkle, ir jis išalkęs darbų.','Užsidėkite VR akinius ir leiskitės skaitmeniniais bėgiais pačios sistemos viduje. Suraskite virusą, nukirskite šaltinį ir sprukite, kol jis jūsų neatsekė.','Cyberscape – greito tempo neoninis trileris: lengvas pradėti, gilus pasinerti.'],
         tags:['Kibernetika','Hakeriai','Veiksmas','Komandinis','Galvosūkis'] },
-      { slug:'dragon-tower', youtubeId:'q5j8YFyfsHo', title:'Dragon Tower', year:2018, difficulty:3, difficultyName:'Vidutiniška', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-dragon-tower.png',
+      { slug:'dragon-tower', youtubeId:'q5j8YFyfsHo', title:'Dragon Tower', year:2018, difficulty:3, difficultyName:'Vidutiniška', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-dragon-tower.webp',
         tagline:'Pabėk iš kalėjimo. Virk eliksyrus. Nugalėk drakoną.',
         description:['Alchemikas įmetė jus į bokštą. Atskrenda drakonai.','Virkite eliksyrus ir raskite kelią iš bokšto arba tapkite drakono pietumis.','Dragon Tower – originalus, šeimai draugiškas, fantastinis nuotykis.'],
         tags:['Fantastika','Magija','Pabėgimas','Pradedantiesiems'] },
-      { slug:'manor-of-escape', youtubeId:'Sx3uzbmaG7I', title:'Manor of Escape', year:2021, difficulty:3, difficultyName:'Vidutiniška', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-manor-of-escape.png',
+      { slug:'manor-of-escape', youtubeId:'Sx3uzbmaG7I', title:'Manor of Escape', year:2021, difficulty:3, difficultyName:'Vidutiniška', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-manor-of-escape.webp',
         tagline:'Durys užsirakino pačios. Namas jus stebi.',
         description:['Miestelio dvare ilgą laiką girdisi šiurpūs riksmai, dingsta žmonės.','Meras nusamdė jus, kad sugautumėte išprotėjusį grafą Molumą, kuris alieka siaubingus eksperimentus.','Ar išdrįsite įžengti į dvarą, įvykdyti misiją ir išgelbėti miestelį?'],
         tags:['Baimė','Paslaptis','Pabėgimas','Galvosūkis'] },
-      { slug:'pirates-plague', youtubeId:'eGLdaquEQx8', title:'Pirates Plague', year:2021, difficulty:3, difficultyName:'Vidutiniška', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-pirates-plague.png',
+      { slug:'pirates-plague', youtubeId:'eGLdaquEQx8', title:'Pirates Plague', year:2021, difficulty:3, difficultyName:'Vidutiniška', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-pirates-plague.webp',
         tagline:'Kapitonas serga. Įgula prakeikta. Jūra nori jus atgal.',
         description:['Paskubėkite! Turite nedaug laiko, arba jūs ir jūsų komanda taps prakeikta amžiams!','Kovokite su kitais piratais, spręskite galvosūkius! Aktyvus ir intensyvus! Puikiai tinka norintiems azarto ir veiksmo. Rekomenduojama šeimoms.','Pirates Plague – šurmuliuojanti istorija su tikrais galvosūkiais įguloms, nebijančioms susitepti rankų.'],
         tags:['Piratai','Paslaptis','Galvosūkis','Nuotykis'] },
-      { slug:'runaway-train', youtubeId:'8iGISrU-Da0', title:'Runaway Train', year:2022, difficulty:5, difficultyName:'Ekspertams', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-runaway-train.png',
+      { slug:'runaway-train', youtubeId:'8iGISrU-Da0', title:'Runaway Train', year:2022, difficulty:5, difficultyName:'Ekspertams', players:'2 − 6', time:'~45 min', timeShort:'~45 min', poster:'assets/poster-runaway-train.webp',
         tagline:'Tik jūs galite sustabdyti pasileidusį traukinį.',
         description:['Stabdžių nebėra. Konduktoriaus nebėra. Vienintelis dalykas tarp traukinio ir bedugnės – jūsų komanda.','Eikite per judančius vagonus, traukite teisingas svirtis ir melskitės, kad nukirpote tinkamą laidą. Antros galimybės nebus.','Aukšto intensyvumo Laukinių Vakarų trileris įguloms, mokančioms išlaikyti šaltą galvą.'],
         tags:['Vakarai','Veiksmas','Komandinis','Ekspertams'] },
-      { slug:'depths-of-osiris', youtubeId:'Kt1WQiFVwso', title:'Depths of Osiris', year:2020, difficulty:5, difficultyName:'Ekspertams', players:'2 − 6', time:'~50 min', timeShort:'~50 min', poster:'assets/poster-depths-of-osiris.png',
+      { slug:'depths-of-osiris', youtubeId:'Kt1WQiFVwso', title:'Depths of Osiris', year:2020, difficulty:5, difficultyName:'Ekspertams', players:'2 − 6', time:'~50 min', timeShort:'~50 min', poster:'assets/poster-depths-of-osiris.webp',
         tagline:'Ten apačioje – kažkas su jumis.',
         description:['Nuotykiai vandenyno dugne.','Jūs ir komanda leisitės į vandenyno gelmes kur neseniai atradote prarastą Ozirio šventyklą ir atgauti legendinį artefaktą. Visur slypi pavojai.','Depths of Osiris – įtempta povandeninės archeologijos istorija įguloms, mėgstančioms tamsą.'],
         tags:['Po vandeniu','Paslaptis','Įtampa','Komandinis'] },
-      { slug:'space-station-tiberia', youtubeId:'DBWe9lacAps', title:'Space Station Tiberia', year:2017, difficulty:4, difficultyName:'Sudėtinga', players:'2 − 6', time:'~50 min', timeShort:'~50 min', poster:'assets/poster-space-station-tiberia.png',
+      { slug:'space-station-tiberia', youtubeId:'DBWe9lacAps', title:'Space Station Tiberia', year:2017, difficulty:4, difficultyName:'Sudėtinga', players:'2 − 6', time:'~50 min', timeShort:'~50 min', poster:'assets/poster-space-station-tiberia.webp',
         tagline:'Artėja meteoritas. Ar spėsite išgelbėti pasaulį?',
         description:['Didžiulis meteoritas tuoj trenksis į žemę.','Laiko liko visai negaug. Turite nuskristi į kosminę stotį ir ją suremontuoti.','Tu ir tavo komanda yra vienintelė viltis išgelbėti žemę.'],
         tags:['Mokslinė fantastika','Kosmosas','Galvosūkis','Paslaptis'] },
@@ -200,15 +526,7 @@
       { players:6, price:120, perPerson:20.0,  popular:false },
     ];
 
-    const FAQ_ITEMS = [
-      { q:'Nuo kokio amžiaus galima žaisti?', a:'Rekomenduojame nuo 9 metų. Vaikai iki 13 m. žaidžia tik kartu su suaugusiais.' },
-      { q:'Kiek žmonių telpa viename kambaryje?', a:'Vienoje komandoje žaidžia nuo 2 iki 6 žaidėjų. Visi pabėgimo kambariai – komandiniai, todėl smagiausia atvykti su draugais, šeima ar kolegomis.' },
-      { q:'Ar reikia patirties su VR?', a:'Visiškai ne. Prieš seansą operatorius supažindina su įranga ir valdymu. Pradedančiajam puikiai tinka Ninja Trials arba Dragon Tower.' },
-      { q:'Kiek trunka apsilankymas?', a:'Pats žaidimas apie 45 minutės. Su trumpu pristatymu, įrangos prisitaikymu ir nuotraukomis – maždaug valanda.' },
-      { q:'Ar galima atvykti su akiniais?', a:'Taip. VR įranga pritaikyta dėvėti akinius.' },
-      { q:'Ką daryti, jei reikia atšaukti?', a:'Prašome apie atšaukimą informuoti telefonu. Tel. nr.: +37068426686' },
-      { q:'Ar pykina su VR akiniais?', a:'Mūsų žaidimuose jūs judate po visą realią erdvę, todėl pykinimas nepasireiškia.' },
-    ];
+    /* FAQ_ITEMS now lives inside TRANSLATIONS[lang].faq.items — kept blank for compat */
 
     /* ===================================================================
        PRIMITIVES
@@ -240,15 +558,25 @@
     /* ===================================================================
        NAV & HEADER
        =================================================================== */
-    const NAV_LINKS = [
-      { id:'games',   label:'Pabėgimo kambariai' },
-      { id:'how',     label:'Kaip vyksta' },
-      { id:'pricing', label:'Kainos' },
-      { id:'faq',     label:'D.U.K.' },
-      { id:'contact', label:'Kontaktai' },
-    ];
+    const NAV_IDS = ['games','how','pricing','faq','contact'];
 
-    const Header = ({ onNav, onBook, onHome, current }) => (
+    const LanguageSwitcher = ({ lang, setLang }) => (
+      <div style={{ display:'flex', alignItems:'center', gap:2, padding:'4px', borderRadius:999, background:'var(--off-white)', border:'1px solid var(--gray-300)' }}>
+        {['lt','en','ru'].map(l => (
+          <button key={l} onClick={()=>setLang(l)} style={{
+            padding:'5px 10px', borderRadius:999, border:'none', cursor:'pointer',
+            background: lang===l ? 'var(--navy-900)' : 'transparent',
+            color: lang===l ? '#fff' : 'var(--fg-muted)',
+            font:'700 11px var(--font-display)', textTransform:'uppercase', letterSpacing:'0.05em',
+            transition:'all 150ms var(--ease-out)',
+          }}>{l}</button>
+        ))}
+      </div>
+    );
+
+    const Header = ({ onNav, onBook, onHome, current, lang, setLang }) => {
+      const t = useT();
+      return (
       <header style={{
         position:'sticky', top:0, zIndex:50, background:'#fff',
         padding:'14px 32px', display:'flex', alignItems:'center', justifyContent:'space-between',
@@ -256,17 +584,16 @@
         boxShadow:'0 6px 24px -16px rgba(11,11,58,0.25)'
       }}>
         <a href="#" onClick={e=>{e.preventDefault();onHome();}} style={{ display:'inline-flex' }}>
-          {/* Inline logo SVG (vrCAVE style) */}
           <img src="assets/logo-palanga-vr.png" alt="Palanga VR" style={{ height:48, width:'auto' }} />
         </a>
         <nav style={{ display:'flex', alignItems:'center', gap:18 }}>
-          {NAV_LINKS.map(l =>
-            <a key={l.id} href={`#${l.id}`} onClick={e=>{e.preventDefault();onNav(l.id);}} style={{
+          {NAV_IDS.map(id =>
+            <a key={id} href={`#${id}`} onClick={e=>{e.preventDefault();onNav(id);}} style={{
               font:'700 14px var(--font-display)', color:'var(--fg)', textDecoration:'none',
               textTransform:'uppercase', letterSpacing:'0.04em', padding:'6px 0',
-              borderBottom: current===l.id ? '2px solid var(--heat-pink)' : '2px solid transparent',
+              borderBottom: current===id ? '2px solid var(--heat-pink)' : '2px solid transparent',
               transition:'border-color 150ms var(--ease-out)', whiteSpace:'nowrap'
-            }}>{l.label}</a>
+            }}>{t(`nav.${id}`)}</a>
           )}
           <a href="tel:+37068426686" className="header-phone" style={{
             font:'700 14px var(--font-display)', color:'var(--fg)', textDecoration:'none',
@@ -278,10 +605,12 @@
             </svg>
             +370 684 26686
           </a>
-          <Button variant="primary" onClick={onBook} style={{ padding:'12px 22px', fontSize:14 }}>Rezervacija</Button>
+          <LanguageSwitcher lang={lang} setLang={setLang}/>
+          <Button variant="primary" onClick={onBook} style={{ padding:'12px 22px', fontSize:14 }}>{t('book')}</Button>
         </nav>
       </header>
-    );
+      );
+    };
 
     /* ===================================================================
        HERO
@@ -336,29 +665,28 @@
 
           {/* Content */}
           <div style={{ position:'relative', zIndex:2, display:'flex', flexDirection:'column', alignItems:'center' }}>
-            <div style={{ display:'inline-flex', alignItems:'center', gap:10, padding:'8px 14px', borderRadius:999, background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.25)', marginBottom:28 }}>
-              <span style={{ width:6, height:6, borderRadius:'50%', background:'var(--heat-pink)', boxShadow:'0 0 0 4px rgba(242,70,110,0.25)' }}/>
-              <span style={{ font:'700 11px var(--font-display)', textTransform:'uppercase', letterSpacing:'0.1em', color:'#fff' }}>PALANGA · S. DAUKANTO G. 24</span>
-            </div>
-            <h1 className="t-hero" style={{ maxWidth:1400, marginBottom:28, color:'#fff' }}>
-              VR nuotykiai<br/>Palangoje
-            </h1>
-            <p style={{ font:'500 22px/1.4 var(--font-body)', color:'rgba(255,255,255,0.9)', margin:'0 0 40px', maxWidth:720 }}>
-              Devyni komandiniai VR pabėgimo kambariai 2–6 žaidėjams.<br/>45 minutės, kurių neužmiršite.
-            </p>
-            <div style={{ display:'flex', gap:14, flexWrap:'wrap', justifyContent:'center' }}>
-              <Button variant="primary" onClick={onBook} style={{ padding:'18px 32px', fontSize:16 }}>Rezervuoti laiką</Button>
-              <Button variant="ghost" onClick={onScrollGames} style={{ padding:'18px 32px', fontSize:16 }}>Visi kambariai</Button>
-            </div>
-            {/* Stats */}
-            <div style={{ marginTop:56, display:'flex', gap:40, justifyContent:'center', flexWrap:'wrap' }}>
-              {[['9','pabėgimo kambariai'],['2 – 6','žaidėjai komandoje'],['~45 min','tikro adrenalino'],['nuo 20 €','vienam žmogui']].map(([n,l]) =>
-                <div key={l} style={{ display:'flex', flexDirection:'column', gap:4, alignItems:'center' }}>
-                  <span style={{ font:'800 32px var(--font-display)', color:'#fff', lineHeight:1 }}>{n}</span>
-                  <span style={{ font:'500 12px var(--font-display)', textTransform:'uppercase', letterSpacing:'0.06em', color:'rgba(255,255,255,0.7)' }}>{l}</span>
-                </div>
-              )}
-            </div>
+            {(() => { const t = useT(); const h = TRANSLATIONS[useLang()].hero; return (<>
+              <div style={{ display:'inline-flex', alignItems:'center', gap:10, padding:'8px 14px', borderRadius:999, background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.25)', marginBottom:28 }}>
+                <span style={{ width:6, height:6, borderRadius:'50%', background:'var(--heat-pink)', boxShadow:'0 0 0 4px rgba(242,70,110,0.25)' }}/>
+                <span style={{ font:'700 11px var(--font-display)', textTransform:'uppercase', letterSpacing:'0.1em', color:'#fff' }}>{h.badge}</span>
+              </div>
+              <h1 className="t-hero" style={{ maxWidth:1400, marginBottom:28, color:'#fff' }}>
+                {h.title.split('\n').map((ln,i)=><React.Fragment key={i}>{ln}{i===0&&<br/>}</React.Fragment>)}
+              </h1>
+              <p style={{ font:'500 22px/1.4 var(--font-body)', color:'rgba(255,255,255,0.9)', margin:'0 0 40px', maxWidth:720 }}>{h.sub}</p>
+              <div style={{ display:'flex', gap:14, flexWrap:'wrap', justifyContent:'center' }}>
+                <Button variant="primary" onClick={onBook} style={{ padding:'18px 32px', fontSize:16 }}>{h.cta}</Button>
+                <Button variant="ghost" onClick={onScrollGames} style={{ padding:'18px 32px', fontSize:16 }}>{h.cta2}</Button>
+              </div>
+              <div style={{ marginTop:56, display:'flex', gap:40, justifyContent:'center', flexWrap:'wrap' }}>
+                {[['9',h.stat1],['2 – 6',h.stat2],['~45 min',h.stat3],['nuo 20 €',h.stat4]].map(([n,l]) =>
+                  <div key={l} style={{ display:'flex', flexDirection:'column', gap:4, alignItems:'center' }}>
+                    <span style={{ font:'800 32px var(--font-display)', color:'#fff', lineHeight:1 }}>{n}</span>
+                    <span style={{ font:'500 12px var(--font-display)', textTransform:'uppercase', letterSpacing:'0.06em', color:'rgba(255,255,255,0.7)' }}>{l}</span>
+                  </div>
+                )}
+              </div>
+            </>); })()}
           </div>
         </section>
       );
@@ -413,50 +741,54 @@
       >
         <div style={{ width:'100%', aspectRatio:'5/7', borderRadius:'var(--radius-poster)', backgroundImage:`url(${game.poster})`, backgroundSize:'cover', backgroundPosition:'center' }}/>
         <h3 style={{ font:'700 22px/1.1 var(--font-display)', color:'#fff', margin:0 }}>{game.title}</h3>
+        {(() => { const t = useT(); return (
         <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12 }}>
           <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-            <span style={{ font:'700 11px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'0.04em' }}>Sudėtingumas</span>
+            <span style={{ font:'700 11px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'0.04em' }}>{t('grid.difficulty')}</span>
             <DifficultyMeter level={game.difficulty} size="sm"/>
           </div>
           <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-            <span style={{ font:'700 11px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'0.04em' }}>Žaidėjai</span>
+            <span style={{ font:'700 11px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'0.04em' }}>{t('grid.players')}</span>
             <span style={{ font:'400 12px var(--font-body)', color:'rgba(255,255,255,0.75)' }}>{game.players}</span>
           </div>
           <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-            <span style={{ font:'700 11px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'0.04em' }}>Trukmė</span>
+            <span style={{ font:'700 11px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'0.04em' }}>{t('grid.duration')}</span>
             <span style={{ font:'400 12px var(--font-body)', color:'rgba(255,255,255,0.75)' }}>{game.timeShort}</span>
           </div>
         </div>
+        ); })()}
       </button>
     );
 
     const GamesGrid = ({ onOpenGame }) => {
-      const [sort, setSort] = React.useState('Naujausi');
+      const t = useT();
+      const lang = useLang();
+      const sorts = TRANSLATIONS[lang].grid.sorts;
+      const [sortIdx, setSortIdx] = React.useState(0);
+      const sort = sorts[sortIdx];
       const sorted = React.useMemo(() => {
         const arr = [...GAMES];
-        if (sort==='Naujausi')   arr.sort((a,b)=>b.year-a.year);
-        if (sort==='Seniausi')   arr.sort((a,b)=>a.year-b.year);
-        if (sort==='Lengviausi') arr.sort((a,b)=>a.difficulty-b.difficulty);
-        if (sort==='Sunkiausi')  arr.sort((a,b)=>b.difficulty-a.difficulty);
+        if (sortIdx===0) arr.sort((a,b)=>b.year-a.year);
+        if (sortIdx===1) arr.sort((a,b)=>a.year-b.year);
+        if (sortIdx===2) arr.sort((a,b)=>a.difficulty-b.difficulty);
+        if (sortIdx===3) arr.sort((a,b)=>b.difficulty-a.difficulty);
         return arr;
-      }, [sort]);
+      }, [sortIdx]);
       return (
         <section id="games" style={{ background:'var(--bg-stage)', padding:'96px 32px', color:'#fff' }}>
           <div style={{ maxWidth:1320, margin:'0 auto' }}>
             <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', marginBottom:48, gap:24, flexWrap:'wrap' }}>
               <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
-                <span style={{ font:'700 12px var(--font-display)', color:'rgba(255,255,255,0.55)', textTransform:'uppercase', letterSpacing:'0.12em' }}>9 nuotykiai · 1 vieta</span>
+                <span style={{ font:'700 12px var(--font-display)', color:'rgba(255,255,255,0.55)', textTransform:'uppercase', letterSpacing:'0.12em' }}>{t('grid.eyebrow')}</span>
                 <h2 style={{ font:'800 clamp(40px,4.5vw,64px)/0.95 var(--font-display)', color:'#fff', textTransform:'uppercase', margin:0, display:'inline-flex', alignItems:'center', gap:32, flexWrap:'wrap' }}>
-                  Pabėgimo kambariai
+                  {t('grid.title')}
                   <span style={{ display:'inline-block', width:120, height:2, background:'rgba(255,255,255,0.4)' }}/>
                 </h2>
-                <p style={{ font:'500 18px/1.5 var(--font-body)', color:'rgba(255,255,255,0.75)', margin:0, maxWidth:600 }}>
-                  Kiekvienas pasaulis – azartiški nuotykiai, unikalios vietos, intriguojantys galvosūkiai.
-                </p>
+                <p style={{ font:'500 18px/1.5 var(--font-body)', color:'rgba(255,255,255,0.75)', margin:0, maxWidth:600 }}>{t('grid.sub')}</p>
               </div>
               <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
-                <span style={{ font:'700 11px var(--font-display)', color:'rgba(255,255,255,0.7)', textTransform:'uppercase', letterSpacing:'.05em' }}>Rūšiuoti pagal</span>
-                <SortDropdown value={sort} options={['Naujausi','Seniausi','Lengviausi','Sunkiausi']} onChange={setSort}/>
+                <span style={{ font:'700 11px var(--font-display)', color:'rgba(255,255,255,0.7)', textTransform:'uppercase', letterSpacing:'.05em' }}>{t('grid.sortLabel')}</span>
+                <SortDropdown value={sort} options={sorts} onChange={v=>setSortIdx(sorts.indexOf(v))}/>
               </div>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:24 }}>
@@ -471,25 +803,21 @@
        HOW IT WORKS
        =================================================================== */
     const HowItWorks = () => {
-      const steps = [
-        { n:'01', title:'Pasirink nuotykį', body:'Devyni unikalūs pasauliai – nuo lengvų šeimai tinkančių iki ekspertų lygio galvosūkių. Surink komandą nuo 2 iki 6 žaidėjų.', meta:'2 – 6 žaidėjų' },
-        { n:'02', title:'Rezervuok laiką', body:'Užsisakyk seansą internetu arba paskambink. Atvyk 10 min. anksčiau – pristatysime pabėgimo kambarį ir uždėsime VR įrangą.', meta:'~10 min pasiruošimas' },
-        { n:'03', title:'Įženk į kambarį', body:'45 minutės azartiškų nuotykių virtualioje realybėje. Įtraukiantys galvosūkiai, nepamirštami pasauliai ir adrenalinas.', meta:'~45 min žaidimo' },
-      ];
+      const t = useT();
+      const lang = useLang();
+      const steps = TRANSLATIONS[lang].how.steps;
       return (
         <section id="how" style={{ background:'#fff', padding:'120px 32px' }}>
           <div style={{ maxWidth:1320, margin:'0 auto' }}>
             <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', flexWrap:'wrap', gap:24, marginBottom:64 }}>
               <div>
-                <span style={{ font:'700 12px var(--font-display)', color:'var(--heat-pink)', textTransform:'uppercase', letterSpacing:'0.12em' }}>Kaip vyksta</span>
+                <span style={{ font:'700 12px var(--font-display)', color:'var(--heat-pink)', textTransform:'uppercase', letterSpacing:'0.12em' }}>{t('how.eyebrow')}</span>
                 <h2 style={{ font:'800 clamp(40px,5.5vw,72px)/0.95 var(--font-display)', color:'var(--fg)', textTransform:'uppercase', margin:'12px 0 0', display:'inline-flex', alignItems:'center', gap:24 }}>
-                  Trys žingsniai
+                  {t('how.title')}
                   <span style={{ display:'inline-block', width:120, height:2, background:'var(--gray-300)' }}/>
                 </h2>
               </div>
-              <p style={{ font:'500 17px/1.5 var(--font-body)', color:'var(--fg-muted)', margin:0, maxWidth:420 }}>
-                Nuo durų atidarymo iki pergalės – maždaug valanda jūsų laiko.
-              </p>
+              <p style={{ font:'500 17px/1.5 var(--font-body)', color:'var(--fg-muted)', margin:0, maxWidth:420 }}>{t('how.sub')}</p>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:24 }}>
               {steps.map((s,i) =>
@@ -500,7 +828,7 @@
                   display:'flex', flexDirection:'column', gap:20, minHeight:320,
                   position:'relative', overflow:'hidden'
                 }}>
-                  <div style={{ font:'800 96px/0.9 var(--font-display)', color: i===1 ? 'rgba(255,255,255,0.12)' : 'var(--gray-300)', letterSpacing:'-0.04em' }}>{s.n}</div>
+                  <div style={{ font:'800 96px/0.9 var(--font-display)', color: i===1 ? 'rgba(255,255,255,0.28)' : 'var(--gray-300)', letterSpacing:'-0.04em' }}>{s.n}</div>
                   <h3 style={{ font:'800 28px/1.05 var(--font-display)', color:'inherit', textTransform:'uppercase', margin:0 }}>{s.title}</h3>
                   <p style={{ font:'400 15px/1.55 var(--font-body)', color: i===1 ? 'rgba(255,255,255,0.8)' : 'var(--fg-muted)', margin:0 }}>{s.body}</p>
                   <div style={{ marginTop:'auto', paddingTop:16, borderTop:`1px solid ${i===1 ? 'rgba(255,255,255,0.15)' : 'var(--gray-300)'}` }}>
@@ -545,16 +873,16 @@
           }}>
             <div style={{ display:'flex', alignItems:'center', gap:12 }}>
               <span style={{ font:'800 48px/1 var(--font-display)', color:'inherit' }}>{p.players}</span>
-              <span style={{ font:'500 13px/1.2 var(--font-body)', color: p.popular ? 'rgba(255,255,255,0.7)' : 'var(--fg-muted)' }}>žaidėjai</span>
+              <span style={{ font:'500 13px/1.2 var(--font-body)', color: p.popular ? 'rgba(255,255,255,0.7)' : 'var(--fg-muted)' }}>{useT()('pricing.players')}</span>
             </div>
             <div style={{ display:'flex', flexDirection:'column', gap:4 }}>
               <PlayerDots count={p.players} dark={!p.popular}/>
-              {p.popular && <span style={{ font:'700 11px var(--font-display)', textTransform:'uppercase', letterSpacing:'0.1em', color:'var(--heat-orange)', marginTop:4 }}>★ Populiariausias pasirinkimas</span>}
+              {p.popular && <span style={{ font:'700 11px var(--font-display)', textTransform:'uppercase', letterSpacing:'0.1em', color:'var(--heat-orange)', marginTop:4 }}>{useT()('pricing.popular')}</span>}
             </div>
             <div style={{ textAlign:'right' }}>
               <div style={{ font:'800 36px/1 var(--font-display)', color:'inherit' }}>{p.price} €</div>
               <div style={{ font:'500 12px var(--font-body)', color: p.popular ? 'rgba(255,255,255,0.6)' : 'var(--fg-muted)', marginTop:4 }}>
-                {p.perPerson.toFixed(p.perPerson%1 ? 2 : 0)} € / žmogui
+                {p.perPerson.toFixed(p.perPerson%1 ? 2 : 0)} {useT()('pricing.perPerson')}
               </div>
             </div>
             <div style={{ textAlign:'right' }}>
@@ -562,32 +890,30 @@
                 padding:'14px 24px', borderRadius:999, border:'none',
                 background: p.popular ? 'var(--heat-gradient)' : 'var(--navy-900)',
                 color:'#fff', font:'700 14px var(--font-display)', cursor:'pointer', width:'100%'
-              }}>Rezervuoti {p.players}</button>
+              }}>{useT()('pricing.bookBtn').replace('{n}',p.players)}</button>
             </div>
           </div>
         )}
       </div>
     );
 
-    const Pricing = ({ onBook }) => (
+    const Pricing = ({ onBook }) => {
+      const t = useT();
+      const lang = useLang();
+      const info = TRANSLATIONS[lang].pricing.info;
+      return (
       <section id="pricing" style={{ background:'var(--bg-stage)', padding:'120px 32px', color:'#fff' }}>
         <div style={{ maxWidth:1320, margin:'0 auto' }}>
           <div style={{ textAlign:'center', marginBottom:64 }}>
-            <span style={{ font:'700 12px var(--font-display)', color:'var(--heat-orange)', textTransform:'uppercase', letterSpacing:'0.12em' }}>Kainos</span>
+            <span style={{ font:'700 12px var(--font-display)', color:'var(--heat-orange)', textTransform:'uppercase', letterSpacing:'0.12em' }}>{t('pricing.eyebrow')}</span>
             <h2 style={{ font:'800 clamp(48px,6.5vw,88px)/0.95 var(--font-display)', color:'#fff', textTransform:'uppercase', margin:'12px 0 16px' }}>
-              Nuo <span style={{ background:'var(--heat-gradient)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>20 €</span> žmogui
+              {t('pricing.title').replace('{n}','')}<span style={{ background:'var(--heat-gradient)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>20 €</span>{' '}{t('pricing.title').split('{n}')[1]}
             </h2>
-            <p style={{ font:'500 18px/1.5 var(--font-body)', color:'rgba(255,255,255,0.7)', margin:'0 auto', maxWidth:600 }}>
-              Vienodos kainos visiems pabėgimo kambariams. Mokate už grupę – nesvarbu, kurį nuotykį pasirenkate.
-            </p>
+            <p style={{ font:'500 18px/1.5 var(--font-body)', color:'rgba(255,255,255,0.7)', margin:'0 auto', maxWidth:600 }}>{t('pricing.sub')}</p>
           </div>
           <PricingRows onBook={onBook}/>
           <div style={{ marginTop:56, display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16 }}>
-            {[
-              ['Be paslėptų mokesčių','Kaina apima viską: įrangą, instruktažą, kambarį.'],
-              ['Apmokėjimas','Apmokėjimas grynais arba kortele.'],
-              ['Nuolaida','Du seansai iš eilės su 5 % nuolaida. Parašykite mums.'],
-            ].map(([h,b]) =>
+            {info.map(([h,b]) =>
               <div key={h} style={{ border:'1px solid rgba(255,255,255,0.12)', borderRadius:'var(--radius-card)', padding:'24px 28px', background:'rgba(255,255,255,0.03)' }}>
                 <h4 style={{ font:'700 16px var(--font-display)', color:'#fff', margin:'0 0 8px' }}>{h}</h4>
                 <p style={{ font:'400 14px/1.55 var(--font-body)', color:'rgba(255,255,255,0.7)', margin:0 }}>{b}</p>
@@ -596,7 +922,8 @@
           </div>
         </div>
       </section>
-    );
+      );
+    };
 
     /* ===================================================================
        FAQ
@@ -616,21 +943,24 @@
     );
 
     const FAQ = () => {
+      const t = useT();
+      const lang = useLang();
       const [open, setOpen] = React.useState(0);
+      const items = TRANSLATIONS[lang].faq.items;
       return (
         <section id="faq" style={{ background:'#fff', padding:'120px 32px' }}>
           <div style={{ maxWidth:1080, margin:'0 auto' }}>
             <div style={{ textAlign:'center', marginBottom:64 }}>
-              <span style={{ font:'700 12px var(--font-display)', color:'var(--heat-pink)', textTransform:'uppercase', letterSpacing:'0.12em' }}>D.U.K.</span>
-              <h2 style={{ font:'800 clamp(40px,5.5vw,72px)/0.95 var(--font-display)', color:'var(--fg)', textTransform:'uppercase', margin:'12px 0 0' }}>Dažniausi klausimai</h2>
+              <span style={{ font:'700 12px var(--font-display)', color:'var(--heat-pink)', textTransform:'uppercase', letterSpacing:'0.12em' }}>{t('faq.eyebrow')}</span>
+              <h2 style={{ font:'800 clamp(40px,5.5vw,72px)/0.95 var(--font-display)', color:'var(--fg)', textTransform:'uppercase', margin:'12px 0 0' }}>{t('faq.title')}</h2>
             </div>
             <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-              {FAQ_ITEMS.map((item,i) =>
+              {items.map((item,i) =>
                 <FAQItem key={i} item={item} open={open===i} onToggle={()=>setOpen(open===i ? -1 : i)}/>
               )}
             </div>
             <p style={{ textAlign:'center', font:'500 16px var(--font-body)', color:'var(--fg-muted)', marginTop:48 }}>
-              Klausimo nėra sąraše? Paskambinkite mums:{' '}
+              {t('faq.notFound')}{' '}
               <a href="tel:+37068426686" style={{ color:'var(--navy-900)', textDecoration:'underline', fontWeight:600 }}>+37068426686</a>
             </p>
           </div>
@@ -649,21 +979,27 @@
       </div>
     );
 
-    const Contact = ({ onBook }) => (
+    const Contact = ({ onBook }) => {
+      const t = useT();
+      const lang = useLang();
+      const c = TRANSLATIONS[lang].contact;
+      return (
       <section style={{ background:'var(--bg-stage)', padding:'120px 32px 80px', color:'#fff' }}>
         <div style={{ maxWidth:1320, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1.1fr', gap:48, alignItems:'center' }}>
           <div>
-            <span style={{ font:'700 12px var(--font-display)', color:'var(--heat-orange)', textTransform:'uppercase', letterSpacing:'0.12em' }}>Apsilankymas</span>
-            <h2 style={{ font:'800 clamp(40px,5.5vw,72px)/0.95 var(--font-display)', color:'#fff', textTransform:'uppercase', margin:'12px 0 32px' }}>Palangos<br/>centre</h2>
+            <span style={{ font:'700 12px var(--font-display)', color:'var(--heat-orange)', textTransform:'uppercase', letterSpacing:'0.12em' }}>{c.eyebrow}</span>
+            <h2 style={{ font:'800 clamp(40px,5.5vw,72px)/0.95 var(--font-display)', color:'#fff', textTransform:'uppercase', margin:'12px 0 32px' }}>
+              {c.title.split('\n').map((ln,i)=><React.Fragment key={i}>{ln}{i===0&&<br/>}</React.Fragment>)}
+            </h2>
             <div style={{ display:'flex', flexDirection:'column', gap:24 }}>
-              <ContactRow icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>} label="Adresas" value={<>S. Daukanto g. 24, Palanga<br/>Viešbutis "Palangos Vėtra"</>}/>
-              <ContactRow icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>} label="Telefonas" value={<a href="tel:+37068426686" style={{ color:'#fff', textDecoration:'none' }}>+370 684 26686</a>}/>
-              <ContactRow icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>} label="El. paštas" value={<a href="mailto:palanga-vr@gmail.com" style={{ color:'#fff', textDecoration:'none' }}>palanga-vr@gmail.com</a>}/>
-              <ContactRow icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>} label="Darbo laikas" value={<>Pir – Ket 14:00 – 22:00<br/>Pen 12:00 – 22:00 · Šeš 10:00 – 22:00 · Sek 10:00 – 22:00</>}/>
+              <ContactRow icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>} label={c.addrLabel} value={<>{c.addr1}<br/>{c.addr2}</>}/>
+              <ContactRow icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>} label={c.phoneLabel} value={<a href="tel:+37068426686" style={{ color:'#fff', textDecoration:'none' }}>+370 684 26686</a>}/>
+              <ContactRow icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>} label={c.emailLabel} value={<a href="mailto:palanga-vr@gmail.com" style={{ color:'#fff', textDecoration:'none' }}>palanga-vr@gmail.com</a>}/>
+              <ContactRow icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>} label={c.hoursLabel} value={c.hours.split('\n').map((ln,i)=><React.Fragment key={i}>{ln}{i===0&&<br/>}</React.Fragment>)}/>
             </div>
             <div style={{ marginTop:40, display:'flex', gap:12 }}>
-              <Button variant="primary" onClick={onBook} style={{ padding:'16px 28px' }}>Rezervuoti laiką</Button>
-              <a href="tel:+37068426686" className="btn btn--ghost" style={{ padding:'16px 28px' }}>Paskambinti</a>
+              <Button variant="primary" onClick={onBook} style={{ padding:'16px 28px' }}>{c.bookBtn}</Button>
+              <a href="tel:+37068426686" className="btn btn--ghost" style={{ padding:'16px 28px' }}>{c.callBtn}</a>
             </div>
           </div>
           {/* Map */}
@@ -702,25 +1038,22 @@
           </div>
         </div>
       </section>
-    );
+      );
+    };
 
     /* ===================================================================
        FOOTER
        =================================================================== */
-    const Footer = ({ onNav, onBook }) => (
+    const Footer = ({ onNav, onBook }) => {
+      const t = useT();
+      const lang = useLang();
+      const f = TRANSLATIONS[lang].footer;
+      return (
       <footer id="contact" style={{ background:'var(--bg-stage)', color:'rgba(255,255,255,0.7)', padding:'72px 32px 32px' }}>
         <div style={{ maxWidth:1320, margin:'0 auto', display:'grid', gridTemplateColumns:'1.4fr 1fr 1fr 1.2fr', gap:48 }}>
           <div>
-            <svg height="56" viewBox="0 0 230 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom:20 }}>
-              <rect width="48" height="48" rx="10" fill="rgba(255,255,255,0.08)"/>
-              <text x="24" y="32" fontFamily="Sora,sans-serif" fontWeight="800" fontSize="18" fill="url(#lgl)" textAnchor="middle">VR</text>
-              <defs><linearGradient id="lgl" x1="0" x2="1"><stop offset="0" stopColor="#F8A24B"/><stop offset="1" stopColor="#F2466E"/></linearGradient></defs>
-              <text x="62" y="20" fontFamily="Sora,sans-serif" fontWeight="800" fontSize="14" fill="#fff">PALANGA</text>
-              <text x="62" y="37" fontFamily="Sora,sans-serif" fontWeight="500" fontSize="11" fill="rgba(255,255,255,0.55)">VR pabėgimo kambariai</text>
-            </svg>
-            <p style={{ font:'400 14px/1.65 var(--font-body)', color:'rgba(255,255,255,0.65)', margin:0, maxWidth:320 }}>
-              Pabėgimo kambariai prie jūros. Komandiniai nuotykiai 2–6 žaidėjams Palangos centre.
-            </p>
+            <img src="assets/logo-palanga-vr.png" alt="Palanga VR" style={{ height:56, width:'auto', marginBottom:20, filter:'brightness(0) invert(1)' }}/>
+            <p style={{ font:'400 14px/1.65 var(--font-body)', color:'rgba(255,255,255,0.65)', margin:0, maxWidth:320 }}>{f.desc}</p>
             <div style={{ display:'flex', gap:12, marginTop:20 }}>
               {['instagram','facebook'].map(s =>
                 <a key={s} href="#" aria-label={s} style={{ width:36, height:36, borderRadius:999, border:'1px solid rgba(255,255,255,0.2)', display:'inline-flex', alignItems:'center', justifyContent:'center', color:'rgba(255,255,255,0.7)', textDecoration:'none' }}>
@@ -733,28 +1066,27 @@
             </div>
           </div>
           <div>
-            <h4 style={{ font:'700 12px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'.08em', margin:'0 0 18px' }}>Naršyti</h4>
+            <h4 style={{ font:'700 12px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'.08em', margin:'0 0 18px' }}>{f.navTitle}</h4>
             <ul style={{ listStyle:'none', padding:0, margin:0, display:'flex', flexDirection:'column', gap:12 }}>
-              {['games','how','pricing','faq'].map(id => {
-                const l = NAV_LINKS.find(x=>x.id===id);
-                return <li key={id}><a href="#" onClick={e=>{e.preventDefault();onNav(id);}} style={{ color:'rgba(255,255,255,0.7)', textDecoration:'none', font:'400 14px var(--font-body)' }}>{l.label}</a></li>;
-              })}
-              <li><a href="#" onClick={e=>{e.preventDefault();onBook();}} style={{ color:'#fff', textDecoration:'none', font:'600 14px var(--font-body)' }}>Rezervuoti laiką →</a></li>
+              {['games','how','pricing','faq'].map(id =>
+                <li key={id}><a href="#" onClick={e=>{e.preventDefault();onNav(id);}} style={{ color:'rgba(255,255,255,0.7)', textDecoration:'none', font:'400 14px var(--font-body)' }}>{t(`nav.${id}`)}</a></li>
+              )}
+              <li><a href="#" onClick={e=>{e.preventDefault();onBook();}} style={{ color:'#fff', textDecoration:'none', font:'600 14px var(--font-body)' }}>{f.bookLink}</a></li>
             </ul>
           </div>
           <div>
-            <h4 style={{ font:'700 12px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'.08em', margin:'0 0 18px' }}>Darbo laikas</h4>
+            <h4 style={{ font:'700 12px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'.08em', margin:'0 0 18px' }}>{f.hoursTitle}</h4>
             <ul style={{ listStyle:'none', padding:0, margin:0, display:'flex', flexDirection:'column', gap:10, font:'400 14px var(--font-body)', color:'rgba(255,255,255,0.7)' }}>
-              <li style={{ display:'flex', justifyContent:'space-between', gap:16 }}><span>Pir – Ket</span><span>14:00 – 22:00</span></li>
-              <li style={{ display:'flex', justifyContent:'space-between', gap:16 }}><span>Pen</span><span>12:00 – 22:00</span></li>
-              <li style={{ display:'flex', justifyContent:'space-between', gap:16 }}><span>Šeš</span><span>10:00 – 22:00</span></li>
-              <li style={{ display:'flex', justifyContent:'space-between', gap:16 }}><span>Sek</span><span>10:00 – 22:00</span></li>
+              <li style={{ display:'flex', justifyContent:'space-between', gap:16 }}><span>{f.days.pirKet}</span><span>14:00 – 22:00</span></li>
+              <li style={{ display:'flex', justifyContent:'space-between', gap:16 }}><span>{f.days.pen}</span><span>12:00 – 22:00</span></li>
+              <li style={{ display:'flex', justifyContent:'space-between', gap:16 }}><span>{f.days.ses}</span><span>10:00 – 22:00</span></li>
+              <li style={{ display:'flex', justifyContent:'space-between', gap:16 }}><span>{f.days.sek}</span><span>10:00 – 22:00</span></li>
             </ul>
           </div>
           <div>
-            <h4 style={{ font:'700 12px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'.08em', margin:'0 0 18px' }}>Susisiekti</h4>
+            <h4 style={{ font:'700 12px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'.08em', margin:'0 0 18px' }}>{f.contactTitle}</h4>
             <ul style={{ listStyle:'none', padding:0, margin:0, display:'flex', flexDirection:'column', gap:12, font:'400 14px/1.5 var(--font-body)', color:'rgba(255,255,255,0.75)' }}>
-              <li>S. Daukanto g. 24, Palanga<br/>Viešbutis "Palangos Vėtra"</li>
+              <li>{TRANSLATIONS[lang].contact.addr1}<br/>{TRANSLATIONS[lang].contact.addr2}</li>
               <li><a href="tel:+37068426686" style={{ color:'#fff', textDecoration:'none', font:'600 15px var(--font-display)' }}>+370 684 26686</a></li>
               <li><a href="mailto:palanga-vr@gmail.com" style={{ color:'rgba(255,255,255,0.85)', textDecoration:'none' }}>palanga-vr@gmail.com</a></li>
             </ul>
@@ -762,10 +1094,11 @@
         </div>
         <div style={{ maxWidth:1320, margin:'48px auto 0', paddingTop:24, borderTop:'1px solid rgba(255,255,255,0.1)', display:'flex', justifyContent:'space-between', font:'400 12px var(--font-body)', color:'rgba(255,255,255,0.45)', flexWrap:'wrap', gap:12 }}>
           <span>© 2026 Palanga VR.</span>
-          <span>Palanga, Lietuva</span>
+          <span>{f.copy}</span>
         </div>
       </footer>
-    );
+      );
+    };
 
     /* ===================================================================
        GAME DETAIL
@@ -778,6 +1111,14 @@
     );
 
     const GameDetail = ({ game, onBack, onOpenGame, onBook, onPlayVideo }) => {
+      const t = useT();
+      const lang = useLang();
+      const d = TRANSLATIONS[lang].detail;
+      const diff = TRANSLATIONS[lang].diff;
+      const gtr = GAME_TR[lang]?.[game.slug] || {};
+      const tagline = gtr.tagline || game.tagline;
+      const description = gtr.description || game.description;
+      const diffName = diff[game.difficultyName] || game.difficultyName;
       const hasBanner = game.slug==='ninja-trials' || game.slug==='alien-infection';
       const bannerSrc = hasBanner ? `assets/game-banner-${game.slug}.jpg` : null;
       const others = GAMES.filter(g=>g.slug!==game.slug).slice(0,3);
@@ -795,38 +1136,38 @@
                 <div>
                   <span style={{ font:'700 12px var(--font-display)', color:'var(--heat-orange)', textTransform:'uppercase', letterSpacing:'0.12em' }}>{game.year} · vrCAVE</span>
                   <h1 style={{ font:'800 clamp(48px,7vw,96px)/0.95 var(--font-display)', color:'#fff', textTransform:'uppercase', margin:'12px 0 16px' }}>{game.title}</h1>
-                  <p style={{ font:'500 20px/1.4 var(--font-body)', color:'rgba(255,255,255,0.85)', margin:0, maxWidth:540 }}>{game.tagline}</p>
+                  <p style={{ font:'500 20px/1.4 var(--font-body)', color:'rgba(255,255,255,0.85)', margin:0, maxWidth:540 }}>{tagline}</p>
                 </div>
               </div>
             }
             <button onClick={onBack} style={{ position:'absolute', top:24, left:32, background:'rgba(255,255,255,0.1)', color:'#fff', border:'1px solid rgba(255,255,255,0.25)', padding:'10px 18px', borderRadius:999, font:'600 13px var(--font-display)', textTransform:'uppercase', letterSpacing:'0.06em', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:8, backdropFilter:'blur(8px)' }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-              Visi kambariai
+              {d.back}
             </button>
           </div>
           <div style={{ background:'var(--bg-stage)', padding:'0 32px' }}>
             <div style={{ maxWidth:1320, margin:'0 auto', background:'#fff', borderRadius:'var(--radius-card-lg)', padding:40, display:'grid', gridTemplateColumns:'1.5fr 1fr', gap:48 }}>
               <div>
                 <h2 style={{ font:'800 40px/1 var(--font-display)', color:'var(--fg)', margin:'0 0 24px', display:'inline-flex', alignItems:'center', gap:24 }}>
-                  Apie {game.title}
+                  {d.about} {game.title}
                   <span style={{ display:'inline-block', width:140, height:2, background:'var(--gray-300)' }}/>
                 </h2>
                 <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
-                  {game.description.map((p,i) => <p key={i} style={{ font:'400 16px/1.6 var(--font-body)', color:'var(--fg)', margin:0 }}>{p}</p>)}
+                  {description.map((p,i) => <p key={i} style={{ font:'400 16px/1.6 var(--font-body)', color:'var(--fg)', margin:0 }}>{p}</p>)}
                 </div>
               </div>
               <div>
                 <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
-                  <StatRow label="Žaidėjai" value={game.players}/>
-                  <StatRow label="Trukmė" value={game.time}/>
-                  <StatRow label="Sudėtingumas" value={<DifficultyMeter level={game.difficulty} showLabel labelName={game.difficultyName}/>}/>
+                  <StatRow label={d.players} value={game.players}/>
+                  <StatRow label={d.duration} value={game.time}/>
+                  <StatRow label={d.difficulty} value={<DifficultyMeter level={game.difficulty} showLabel labelName={diffName}/>}/>
                 </div>
                 <div style={{ height:1, background:'var(--gray-300)', margin:'24px 0' }}/>
                 <div style={{ display:'flex', flexWrap:'wrap', gap:10 }}>
                   {game.tags.map(t => <Chip key={t}>{t}</Chip>)}
                 </div>
                 <div style={{ marginTop:28 }}>
-                  <Button variant="primary" onClick={onBook} style={{ width:'100%', padding:'16px 28px', fontSize:15 }}>Rezervuoti šį kambarį</Button>
+                  <Button variant="primary" onClick={onBook} style={{ width:'100%', padding:'16px 28px', fontSize:15 }}>{d.ctaBook}</Button>
                 </div>
               </div>
             </div>
@@ -850,7 +1191,7 @@
                       <div style={{ width:80, height:80, borderRadius:'50%', background:'#FF0000', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 8px 32px rgba(0,0,0,0.5)', flexShrink:0 }}>
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="white" style={{ marginLeft:4 }}><polygon points="6 4 20 12 6 20 6 4"/></svg>
                       </div>
-                      <span style={{ font:'700 14px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'0.08em', textShadow:'0 2px 8px rgba(0,0,0,0.6)' }}>Žiūrėti video</span>
+                      <span style={{ font:'700 14px var(--font-display)', color:'#fff', textTransform:'uppercase', letterSpacing:'0.08em', textShadow:'0 2px 8px rgba(0,0,0,0.6)' }}>{d.watchVideo}</span>
                     </div>
                   </button>
                 ) : (
@@ -873,7 +1214,7 @@
           <section style={{ padding:'80px 32px 16px' }}>
             <div style={{ maxWidth:1320, margin:'0 auto' }}>
               <h3 style={{ font:'800 40px/1 var(--font-display)', color:'#fff', textTransform:'uppercase', margin:'0 0 32px', display:'inline-flex', alignItems:'center', gap:24 }}>
-                Daugiau nuotykių
+                {d.moreGames}
                 <span style={{ display:'inline-block', width:120, height:2, background:'rgba(255,255,255,0.4)' }}/>
               </h3>
               <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:24 }}>
@@ -885,12 +1226,12 @@
           <section style={{ padding:'80px 32px 96px' }}>
             <div style={{ maxWidth:1320, margin:'0 auto', background:'var(--heat-gradient)', borderRadius:'var(--radius-card-lg)', padding:'56px 48px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:32, flexWrap:'wrap' }}>
               <div>
-                <h3 style={{ font:'800 36px/1.05 var(--font-display)', color:'#fff', textTransform:'uppercase', margin:'0 0 12px' }}>PASIRUOŠĘ PRAMOGAUTI?</h3>
-                <p style={{ font:'500 17px/1.5 var(--font-body)', color:'rgba(255,255,255,0.95)', margin:0, maxWidth:540 }}>Surinkite komandą nuo 2 iki 6 žaidėjų ir užsisakykite seansą jums patogiu metu.</p>
+                <h3 style={{ font:'800 36px/1.05 var(--font-display)', color:'#fff', textTransform:'uppercase', margin:'0 0 12px' }}>{d.ctaTitle}</h3>
+                <p style={{ font:'500 17px/1.5 var(--font-body)', color:'rgba(255,255,255,0.95)', margin:0, maxWidth:540 }}>{d.ctaSub}</p>
               </div>
               <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
-                <button onClick={onBack} style={{ padding:'16px 28px', borderRadius:999, background:'transparent', border:'2px solid rgba(255,255,255,0.6)', color:'#fff', font:'700 15px var(--font-display)', cursor:'pointer' }}>Visi kambariai</button>
-                <button onClick={onBook} style={{ padding:'16px 32px', borderRadius:999, background:'#fff', border:'none', color:'var(--navy-900)', font:'700 15px var(--font-display)', cursor:'pointer' }}>Rezervuoti laiką</button>
+                <button onClick={onBack} style={{ padding:'16px 28px', borderRadius:999, background:'transparent', border:'2px solid rgba(255,255,255,0.6)', color:'#fff', font:'700 15px var(--font-display)', cursor:'pointer' }}>{d.ctaBack}</button>
+                <button onClick={onBook} style={{ padding:'16px 32px', borderRadius:999, background:'#fff', border:'none', color:'var(--navy-900)', font:'700 15px var(--font-display)', cursor:'pointer' }}>{d.ctaBook}</button>
               </div>
             </div>
           </section>
@@ -902,10 +1243,9 @@
        BOOKING MODAL
        =================================================================== */
     const TIMES = ['12:00','13:30','15:00','16:30','18:00','19:30','21:00'];
-    const dayNamesShort = ['Sek','Pir','Ant','Tre','Ket','Pen','Šeš'];
-    const formatLtDate = d => {
-      const months = ['sausio','vasario','kovo','balandžio','gegužės','birželio','liepos','rugpjūčio','rugsėjo','spalio','lapkričio','gruodžio'];
-      return `${d.getDate()} ${months[d.getMonth()]}`;
+    const useFormatDate = () => {
+      const lang = useLang();
+      return (d) => `${d.getDate()} ${TRANSLATIONS[lang].months[d.getMonth()]}`;
     };
 
     const Label = ({ children }) => (
@@ -918,22 +1258,26 @@
       </label>
     );
 
-    const Step1 = ({ game, setGame, players, setPlayers }) => (
+    const Step1 = ({ game, setGame, players, setPlayers }) => {
+      const t = useT();
+      const lang = useLang();
+      const diff = TRANSLATIONS[lang].diff;
+      return (
       <div style={{ display:'flex', flexDirection:'column', gap:32 }}>
         <div>
-          <Label>Pabėgimo kambarys</Label>
+          <Label>{t('booking.roomLabel')}</Label>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:12 }}>
             {GAMES.map(g =>
               <button key={g.slug} onClick={()=>setGame(g.slug)} style={{ padding:8, border: game===g.slug ? '2px solid var(--navy-900)' : '2px solid transparent', borderRadius:16, background: game===g.slug ? 'var(--off-white)' : '#fff', cursor:'pointer', textAlign:'left', display:'flex', flexDirection:'column', gap:8 }}>
                 <div style={{ aspectRatio:'5/7', borderRadius:10, backgroundImage:`url(${g.poster})`, backgroundSize:'cover', backgroundPosition:'center' }}/>
                 <span style={{ font:'700 13px var(--font-display)', color:'var(--fg)', padding:'0 4px' }}>{g.title}</span>
-                <span style={{ font:'500 11px var(--font-body)', color:'var(--fg-muted)', padding:'0 4px' }}>{g.difficultyName}</span>
+                <span style={{ font:'500 11px var(--font-body)', color:'var(--fg-muted)', padding:'0 4px' }}>{diff[g.difficultyName]||g.difficultyName}</span>
               </button>
             )}
           </div>
         </div>
         <div>
-          <Label>Žaidėjų skaičius</Label>
+          <Label>{t('booking.playersLabel')}</Label>
           <div style={{ display:'flex', gap:8 }}>
             {[2,3,4,5,6].map(n =>
               <button key={n} onClick={()=>setPlayers(n)} style={{ flex:1, padding:'20px 0', border: players===n ? '2px solid var(--navy-900)' : '1.5px solid var(--gray-300)', borderRadius:16, background: players===n ? 'var(--navy-900)' : '#fff', color: players===n ? '#fff' : 'var(--fg)', cursor:'pointer', display:'flex', flexDirection:'column', gap:4, alignItems:'center' }}>
@@ -944,64 +1288,80 @@
           </div>
         </div>
       </div>
-    );
+      );
+    };
 
-    const Step2 = ({ dates, dateIdx, setDateIdx, time, setTime }) => (
+    const Step2 = ({ dates, dateIdx, setDateIdx, time, setTime }) => {
+      const t = useT();
+      const lang = useLang();
+      const formatDate = useFormatDate();
+      const dayNames = TRANSLATIONS[lang].days;
+      const months = TRANSLATIONS[lang].months;
+      return (
       <div style={{ display:'flex', flexDirection:'column', gap:32 }}>
         <div>
-          <Label>Data</Label>
+          <Label>{t('booking.dateLabel')}</Label>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(7,1fr)', gap:8 }}>
             {dates.map((d,i) => {
               const sel = dateIdx===i;
               return (
                 <button key={i} onClick={()=>setDateIdx(i)} style={{ padding:'14px 8px', border: sel ? '2px solid var(--navy-900)' : '1.5px solid var(--gray-300)', borderRadius:12, background: sel ? 'var(--navy-900)' : '#fff', color: sel ? '#fff' : 'var(--fg)', cursor:'pointer', display:'flex', flexDirection:'column', gap:4, alignItems:'center' }}>
-                  <span style={{ font:'500 11px var(--font-display)', textTransform:'uppercase', color: sel ? 'rgba(255,255,255,0.7)' : 'var(--fg-muted)', letterSpacing:'0.06em' }}>{i===0 ? 'Šiandien' : dayNamesShort[d.getDay()]}</span>
+                  <span style={{ font:'500 11px var(--font-display)', textTransform:'uppercase', color: sel ? 'rgba(255,255,255,0.7)' : 'var(--fg-muted)', letterSpacing:'0.06em' }}>{i===0 ? t('booking.today') : dayNames[d.getDay()]}</span>
                   <span style={{ font:'800 20px var(--font-display)' }}>{d.getDate()}</span>
-                  <span style={{ font:'400 10px var(--font-body)', color: sel ? 'rgba(255,255,255,0.6)' : 'var(--fg-subtle)' }}>{['saus.','vas.','kov.','bal.','geg.','birž.','liep.','rugp.','rugs.','spal.','lapkr.','gruod.'][d.getMonth()]}</span>
+                  <span style={{ font:'400 10px var(--font-body)', color: sel ? 'rgba(255,255,255,0.6)' : 'var(--fg-subtle)' }}>{months[d.getMonth()]}</span>
                 </button>
               );
             })}
           </div>
         </div>
         <div>
-          <Label>Laisvi laikai · {formatLtDate(dates[dateIdx])}</Label>
+          <Label>{t('booking.timesLabel').replace('{date}', formatDate(dates[dateIdx]))}</Label>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(7,1fr)', gap:8 }}>
-            {TIMES.map(t => {
-              const busy = (dateIdx + TIMES.indexOf(t)) % 5 === 0;
-              const sel = t===time;
+            {TIMES.map(tm => {
+              const busy = (dateIdx + TIMES.indexOf(tm)) % 5 === 0;
+              const sel = tm===time;
               return (
-                <button key={t} onClick={()=>!busy&&setTime(t)} disabled={busy} style={{ padding:'14px 0', border: sel ? '2px solid var(--navy-900)' : '1.5px solid var(--gray-300)', borderRadius:999, background: busy ? 'var(--gray-200)' : sel ? 'var(--navy-900)' : '#fff', color: busy ? 'var(--gray-500)' : sel ? '#fff' : 'var(--fg)', cursor: busy ? 'not-allowed' : 'pointer', font:'700 14px var(--font-display)', textDecoration: busy ? 'line-through' : 'none' }}>{t}</button>
+                <button key={tm} onClick={()=>!busy&&setTime(tm)} disabled={busy} style={{ padding:'14px 0', border: sel ? '2px solid var(--navy-900)' : '1.5px solid var(--gray-300)', borderRadius:999, background: busy ? 'var(--gray-200)' : sel ? 'var(--navy-900)' : '#fff', color: busy ? 'var(--gray-500)' : sel ? '#fff' : 'var(--fg)', cursor: busy ? 'not-allowed' : 'pointer', font:'700 14px var(--font-display)', textDecoration: busy ? 'line-through' : 'none' }}>{tm}</button>
               );
             })}
           </div>
-          <p style={{ font:'400 13px var(--font-body)', color:'var(--fg-muted)', marginTop:12 }}>Perbraukti laikai jau užimti. Sesijos trukmė – 45 min, atvykti rekomenduojame 10 min anksčiau.</p>
+          <p style={{ font:'400 13px var(--font-body)', color:'var(--fg-muted)', marginTop:12 }}>{t('booking.timesNote')}</p>
         </div>
       </div>
-    );
+      );
+    };
 
-    const Step3 = ({ name, setName, phone, setPhone, email, setEmail }) => (
+    const Step3 = ({ name, setName, phone, setPhone, email, setEmail }) => {
+      const t = useT();
+      const lang = useLang();
+      return (
       <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
-        <Field label="Vardas" value={name} onChange={setName} placeholder="Jonas Jonaitis"/>
+        <Field label={t('booking.nameLabel')} value={name} onChange={setName} placeholder={TRANSLATIONS[lang].booking.namePlaceholder}/>
         <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
-          <Field label="Telefonas" value={phone} onChange={setPhone} placeholder="+370 ___ _____" type="tel"/>
-          <Field label="El. paštas" value={email} onChange={setEmail} placeholder="vardas@email.lt" type="email"/>
+          <Field label={t('booking.phoneLabel')} value={phone} onChange={setPhone} placeholder="+370 ___ _____" type="tel"/>
+          <Field label={t('booking.emailLabel')} value={email} onChange={setEmail} placeholder="vardas@email.lt" type="email"/>
         </div>
         <div style={{ background:'var(--off-white)', borderRadius:16, padding:20, display:'flex', gap:12, alignItems:'flex-start' }}>
           <span style={{ width:28, height:28, borderRadius:999, background:'var(--navy-900)', color:'#fff', flexShrink:0, display:'inline-flex', alignItems:'center', justifyContent:'center', font:'700 13px var(--font-display)' }}>i</span>
-          <div style={{ font:'400 14px/1.55 var(--font-body)', color:'var(--fg-muted)' }}>Mokėjimas atliekamas vietoje grynaisiais arba kortele. Rezervacija nepatvirtina mokėjimo – tik laiką. Prašome apie atšaukimą informuoti telefonu. Tel. nr.: +37068426686</div>
+          <div style={{ font:'400 14px/1.55 var(--font-body)', color:'var(--fg-muted)' }}>{t('booking.infoNote')}</div>
         </div>
       </div>
-    );
+      );
+    };
 
-    const BookingSuccess = ({ game, date, time, players, onClose }) => (
+    const BookingSuccess = ({ game, date, time, players, onClose }) => {
+      const t = useT();
+      const formatDate = useFormatDate();
+      const b = TRANSLATIONS[useLang()].booking;
+      return (
       <div style={{ padding:'64px 48px 48px', textAlign:'center' }}>
         <div style={{ width:72, height:72, borderRadius:'50%', background:'var(--heat-gradient)', margin:'0 auto 24px', display:'inline-flex', alignItems:'center', justifyContent:'center', color:'#fff' }}>
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <h3 style={{ font:'800 32px var(--font-display)', color:'var(--fg)', textTransform:'uppercase', margin:'0 0 12px' }}>Rezervacija išsiųsta!</h3>
-        <p style={{ font:'500 16px/1.6 var(--font-body)', color:'var(--fg-muted)', margin:'0 auto 32px', maxWidth:440 }}>Per kelias minutes gausite patvirtinimo laišką el. paštu. Iki susitikimo Palangoje!</p>
+        <h3 style={{ font:'800 32px var(--font-display)', color:'var(--fg)', textTransform:'uppercase', margin:'0 0 12px' }}>{b.successTitle}</h3>
+        <p style={{ font:'500 16px/1.6 var(--font-body)', color:'var(--fg-muted)', margin:'0 auto 32px', maxWidth:440 }}>{b.successSub}</p>
         <div style={{ display:'inline-flex', flexDirection:'column', gap:12, padding:24, background:'var(--off-white)', borderRadius:16, textAlign:'left', minWidth:320 }}>
-          {[['Pabėgimo kambarys',game.title],['Data',formatLtDate(date)],['Laikas',time],['Komanda',`${players} žaidėjai`]].map(([l,v]) =>
+          {[[b.summaryRoom,game.title],[b.summaryDate,formatDate(date)],[b.summaryTime,time],[b.summaryTeam,b.teamVal.replace('{n}',players)]].map(([l,v]) =>
             <div key={l} style={{ display:'flex', justifyContent:'space-between', gap:32, font:'500 14px var(--font-body)' }}>
               <span style={{ color:'var(--fg-muted)' }}>{l}</span>
               <span style={{ color:'var(--fg)', fontWeight:700 }}>{v}</span>
@@ -1009,10 +1369,11 @@
           )}
         </div>
         <div style={{ marginTop:32 }}>
-          <button onClick={onClose} className="btn btn--primary" style={{ padding:'14px 32px' }}>Uždaryti</button>
+          <button onClick={onClose} className="btn btn--primary" style={{ padding:'14px 32px' }}>{b.close}</button>
         </div>
       </div>
-    );
+      );
+    };
 
     const BookingModal = ({ open, onClose, initialGameSlug, initialPlayers=4 }) => {
       const [step, setStep] = React.useState(1);
@@ -1046,12 +1407,14 @@
             ) : (
               <>
                 <div style={{ padding:'32px 40px 24px', borderBottom:'1px solid var(--gray-200)' }}>
-                  <span style={{ font:'700 12px var(--font-display)', color:'var(--heat-pink)', textTransform:'uppercase', letterSpacing:'0.12em' }}>Rezervacija · Žingsnis {step} / 3</span>
+                  {(() => { const b = TRANSLATIONS[useLang()].booking; return (<>
+                  <span style={{ font:'700 12px var(--font-display)', color:'var(--heat-pink)', textTransform:'uppercase', letterSpacing:'0.12em' }}>{b.title.replace('{n}',step)}</span>
                   <h3 style={{ font:'800 32px var(--font-display)', color:'var(--fg)', textTransform:'uppercase', margin:'8px 0 0' }}>
-                    {step===1 && 'Pasirinkite kambarį ir komandą'}
-                    {step===2 && 'Pasirinkite datą ir laiką'}
-                    {step===3 && 'Jūsų kontaktai'}
+                    {step===1 && b.step1Title}
+                    {step===2 && b.step2Title}
+                    {step===3 && b.step3Title}
                   </h3>
+                  </>); })()}
                   <div style={{ display:'flex', gap:6, marginTop:16 }}>
                     {[1,2,3].map(s => <div key={s} style={{ height:4, flex:1, borderRadius:999, background: s<=step ? 'var(--heat-gradient)' : 'var(--gray-200)' }}/>)}
                   </div>
@@ -1063,16 +1426,20 @@
                 </div>
                 <div style={{ borderTop:'1px solid var(--gray-200)', padding:'20px 40px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:16, background:'var(--off-white)', borderBottomLeftRadius:'var(--radius-card-lg)', borderBottomRightRadius:'var(--radius-card-lg)' }}>
                   <div style={{ display:'flex', flexDirection:'column', gap:2 }}>
-                    <span style={{ font:'500 12px var(--font-display)', color:'var(--fg-muted)', textTransform:'uppercase', letterSpacing:'0.06em' }}>Iš viso</span>
+                    {(() => { const b = TRANSLATIONS[useLang()].booking; return (<>
+                  <span style={{ font:'500 12px var(--font-display)', color:'var(--fg-muted)', textTransform:'uppercase', letterSpacing:'0.06em' }}>{b.total}</span>
                     <span style={{ font:'800 28px var(--font-display)', color:'var(--fg)' }}>{priceRow.price} €</span>
-                    <span style={{ font:'500 12px var(--font-body)', color:'var(--fg-muted)' }}>{priceRow.perPerson.toFixed(priceRow.perPerson%1?2:0)} € / žmogui · {players} žaidėjai</span>
+                    <span style={{ font:'500 12px var(--font-body)', color:'var(--fg-muted)' }}>{b.perPersonPlayers.replace('{price}',priceRow.perPerson.toFixed(priceRow.perPerson%1?2:0)).replace('{n}',players)}</span>
+                  </>); })()}
                   </div>
                   <div style={{ display:'flex', gap:12 }}>
-                    {step>1 && <button onClick={()=>setStep(step-1)} className="btn btn--outline" style={{ background:'#fff', padding:'14px 24px' }}>Atgal</button>}
+                    {(() => { const b = TRANSLATIONS[useLang()].booking; return (<>
+                    {step>1 && <button onClick={()=>setStep(step-1)} className="btn btn--outline" style={{ background:'#fff', padding:'14px 24px' }}>{b.back}</button>}
                     {step<3
-                      ? <button onClick={()=>setStep(step+1)} className="btn btn--primary" style={{ padding:'14px 28px' }}>Toliau</button>
-                      : <button onClick={()=>setDone(true)} className="btn btn--primary" style={{ padding:'14px 28px' }}>Patvirtinti rezervaciją</button>
+                      ? <button onClick={()=>setStep(step+1)} className="btn btn--primary" style={{ padding:'14px 28px' }}>{b.next}</button>
+                      : <button onClick={()=>setDone(true)} className="btn btn--primary" style={{ padding:'14px 28px' }}>{b.confirm}</button>
                     }
+                    </>); })()}
                   </div>
                 </div>
               </>
@@ -1099,6 +1466,7 @@
     };
 
     function App() {
+      const [lang, setLang] = React.useState('lt');
       const [route, setRoute] = React.useState({ name:'home' });
       const [booking, setBooking] = React.useState({ open:false, gameSlug:null, players:4 });
       const [activeSection, setActiveSection] = React.useState('');
@@ -1131,8 +1499,8 @@
       }, [route]);
 
       return (
-        <>
-          <Header current={activeSection} onNav={navTo} onBook={()=>openBooking()} onHome={goHome}/>
+        <LangContext.Provider value={lang}>
+          <Header current={activeSection} onNav={navTo} onBook={()=>openBooking()} onHome={goHome} lang={lang} setLang={setLang}/>
           {route.name==='home' && (
             <>
               <Hero onBook={()=>openBooking()} onScrollGames={goGames}/>
@@ -1148,7 +1516,7 @@
           )}
           <Footer onNav={navTo} onBook={()=>openBooking()}/>
           <BookingModal open={booking.open} onClose={closeBooking} initialGameSlug={booking.gameSlug} initialPlayers={booking.players}/>
-        </>
+        </LangContext.Provider>
       );
     }
 

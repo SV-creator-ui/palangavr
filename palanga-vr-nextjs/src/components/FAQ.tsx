@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { FAQ_ITEMS, type FaqItem } from '@/data/games';
+import { useLang } from '@/context/LangContext';
 
-function FAQItem({ item, open, onToggle }: { item: FaqItem; open: boolean; onToggle: () => void }) {
+function FAQItem({ item, open, onToggle }: { item: { q: string; a: string }; open: boolean; onToggle: () => void }) {
   return (
     <div style={{ border: '1px solid var(--gray-300)', borderRadius: 'var(--radius-card)', overflow: 'hidden', background: open ? 'var(--off-white)' : '#fff' }}>
       <button onClick={onToggle} style={{
@@ -35,23 +35,26 @@ function FAQItem({ item, open, onToggle }: { item: FaqItem; open: boolean; onTog
 }
 
 export default function FAQ() {
+  const { t } = useLang();
   const [open, setOpen] = useState(0);
+  const items = t.faq.items;
+
   return (
     <section id="faq" style={{ background: '#fff', padding: '120px 32px' }}>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 64 }}>
-          <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-pink)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>D.U.K.</span>
+          <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-pink)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{t.faq.eyebrow}</span>
           <h2 style={{ font: '800 clamp(40px, 5.5vw, 72px)/0.95 var(--font-display)', color: 'var(--fg)', textTransform: 'uppercase', margin: '12px 0 0' }}>
-            Dažniausi klausimai
+            {t.faq.title}
           </h2>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {FAQ_ITEMS.map((item, i) => (
+          {items.map((item, i) => (
             <FAQItem key={i} item={item} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} />
           ))}
         </div>
         <p style={{ textAlign: 'center', font: '500 16px var(--font-body)', color: 'var(--fg-muted)', marginTop: 48 }}>
-          Klausimo nėra sąraše? Paskambinkite mums:{' '}
+          {t.faq.notFound}{' '}
           <a href="tel:+37068426686" style={{ color: 'var(--navy-900)', textDecoration: 'underline', fontWeight: 600 }}>+37068426686</a>
         </p>
       </div>

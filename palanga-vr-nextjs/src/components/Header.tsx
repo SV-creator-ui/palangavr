@@ -4,14 +4,38 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from './ui/Button';
+import { useLang } from '@/context/LangContext';
+import { Lang } from '@/data/translations';
 
-const NAV_LINKS = [
-  { id: 'games', label: 'Pabėgimo kambariai' },
-  { id: 'how', label: 'Kaip vyksta' },
-  { id: 'pricing', label: 'Kainos' },
-  { id: 'faq', label: 'D.U.K.' },
-  { id: 'contact', label: 'Kontaktai' },
-];
+const NAV_IDS = ['games', 'how', 'pricing', 'faq', 'contact'] as const;
+
+function LanguageSwitcher() {
+  const { lang, setLang } = useLang();
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: 2,
+      padding: '4px', borderRadius: 999,
+      background: 'var(--off-white)', border: '1px solid var(--gray-300)',
+    }}>
+      {(['lt', 'en', 'ru'] as Lang[]).map((l) => (
+        <button
+          key={l}
+          onClick={() => setLang(l)}
+          style={{
+            padding: '5px 10px', borderRadius: 999, border: 'none', cursor: 'pointer',
+            background: lang === l ? 'var(--navy-900)' : 'transparent',
+            color: lang === l ? '#fff' : 'var(--fg-muted)',
+            font: '700 11px var(--font-display)',
+            textTransform: 'uppercase', letterSpacing: '0.05em',
+            transition: 'all 150ms',
+          }}
+        >
+          {l}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 interface Props {
   onBook: () => void;
@@ -19,8 +43,17 @@ interface Props {
 
 export default function Header({ onBook }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useLang();
 
   const close = () => setMenuOpen(false);
+
+  const navLabels: Record<string, string> = {
+    games: t.nav.games,
+    how: t.nav.how,
+    pricing: t.nav.pricing,
+    faq: t.nav.faq,
+    contact: t.nav.contact,
+  };
 
   return (
     <header style={{
@@ -38,8 +71,8 @@ export default function Header({ onBook }: Props) {
 
         {/* Desktop nav */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: 18 }} className="header-nav-links">
-          {NAV_LINKS.map((l) => (
-            <a key={l.id} href={`/#${l.id}`} style={{
+          {NAV_IDS.map((id) => (
+            <a key={id} href={`/#${id}`} style={{
               font: '700 14px var(--font-display)',
               color: 'var(--fg)',
               textDecoration: 'none',
@@ -48,7 +81,7 @@ export default function Header({ onBook }: Props) {
               padding: '6px 0',
               whiteSpace: 'nowrap',
             }}>
-              {l.label}
+              {navLabels[id]}
             </a>
           ))}
           <a href="tel:+37068426686" className="header-phone" style={{
@@ -62,15 +95,17 @@ export default function Header({ onBook }: Props) {
             </svg>
             +370 684 26686
           </a>
+          <LanguageSwitcher />
           <Button variant="primary" onClick={onBook} style={{ padding: '12px 22px', fontSize: 14 }}>
-            Rezervacija
+            {t.book}
           </Button>
         </nav>
 
         {/* Mobile controls */}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <LanguageSwitcher />
           <Button variant="primary" onClick={onBook} className="mob-book-btn" style={{ padding: '10px 16px', fontSize: 13 }}>
-            Rezervacija
+            {t.book}
           </Button>
           <button
             onClick={() => setMenuOpen((o) => !o)}
@@ -98,10 +133,10 @@ export default function Header({ onBook }: Props) {
           display: 'flex',
           flexDirection: 'column',
         }}>
-          {NAV_LINKS.map((l) => (
+          {NAV_IDS.map((id) => (
             <a
-              key={l.id}
-              href={`/#${l.id}`}
+              key={id}
+              href={`/#${id}`}
               onClick={close}
               style={{
                 padding: '14px 0',
@@ -113,7 +148,7 @@ export default function Header({ onBook }: Props) {
                 borderBottom: '1px solid var(--gray-200)',
               }}
             >
-              {l.label}
+              {navLabels[id]}
             </a>
           ))}
           <a

@@ -1,19 +1,19 @@
 'use client';
 
 import Image from 'next/image';
+import { useLang } from '@/context/LangContext';
+
+const NAV_IDS = ['games', 'how', 'pricing', 'faq'] as const;
 
 interface Props {
   onBook: () => void;
 }
 
-const NAV_LINKS = [
-  { id: 'games', label: 'Pabėgimo kambariai' },
-  { id: 'how', label: 'Kaip vyksta' },
-  { id: 'pricing', label: 'Kainos' },
-  { id: 'faq', label: 'D.U.K.' },
-];
-
 export default function Footer({ onBook }: Props) {
+  const { t } = useLang();
+  const f = t.footer;
+  const c = t.contact;
+
   return (
     <footer style={{
       background: 'var(--bg-stage)',
@@ -24,7 +24,7 @@ export default function Footer({ onBook }: Props) {
         <div>
           <Image src="/assets/logo-palanga-vr.png" alt="Palanga VR" width={200} height={56} style={{ height: 56, width: 'auto', marginBottom: 20 }} />
           <p style={{ font: '400 14px/1.65 var(--font-body)', color: 'rgba(255,255,255,0.65)', margin: 0, maxWidth: 320 }}>
-            Pabėgimo kambariai prie jūros. Komandiniai nuotykiai 2–6 žaidėjams Palangos centre.
+            {f.desc}
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
             {(['instagram', 'facebook'] as const).map((s) => (
@@ -49,12 +49,12 @@ export default function Footer({ onBook }: Props) {
         </div>
 
         <div>
-          <h4 style={{ font: '700 12px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '.08em', margin: '0 0 18px' }}>Naršyti</h4>
+          <h4 style={{ font: '700 12px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '.08em', margin: '0 0 18px' }}>{f.navTitle}</h4>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {NAV_LINKS.map((l) => (
-              <li key={l.id}>
-                <a href={`/#${l.id}`} style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', font: '400 14px var(--font-body)' }}>
-                  {l.label}
+            {NAV_IDS.map((id) => (
+              <li key={id}>
+                <a href={`/#${id}`} style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', font: '400 14px var(--font-body)' }}>
+                  {t.nav[id]}
                 </a>
               </li>
             ))}
@@ -63,26 +63,26 @@ export default function Footer({ onBook }: Props) {
                 background: 'none', border: 'none', padding: 0, cursor: 'pointer',
                 color: '#fff', textDecoration: 'none', font: '600 14px var(--font-body)',
               }}>
-                Rezervuoti laiką →
+                {f.bookLink}
               </button>
             </li>
           </ul>
         </div>
 
         <div>
-          <h4 style={{ font: '700 12px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '.08em', margin: '0 0 18px' }}>Darbo laikas</h4>
+          <h4 style={{ font: '700 12px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '.08em', margin: '0 0 18px' }}>{f.hoursTitle}</h4>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, font: '400 14px var(--font-body)', color: 'rgba(255,255,255,0.7)' }}>
-            <li style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}><span>Pir – Ket</span><span>14:00 – 22:00</span></li>
-            <li style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}><span>Pen</span><span>12:00 – 22:00</span></li>
-            <li style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}><span>Šeš</span><span>10:00 – 22:00</span></li>
-            <li style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}><span>Sek</span><span>10:00 – 22:00</span></li>
+            <li style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}><span>{f.days.pirKet}</span><span>14:00 – 22:00</span></li>
+            <li style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}><span>{f.days.pen}</span><span>12:00 – 22:00</span></li>
+            <li style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}><span>{f.days.ses}</span><span>10:00 – 22:00</span></li>
+            <li style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}><span>{f.days.sek}</span><span>10:00 – 22:00</span></li>
           </ul>
         </div>
 
         <div>
-          <h4 style={{ font: '700 12px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '.08em', margin: '0 0 18px' }}>Susisiekti</h4>
+          <h4 style={{ font: '700 12px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '.08em', margin: '0 0 18px' }}>{f.contactTitle}</h4>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12, font: '400 14px/1.5 var(--font-body)', color: 'rgba(255,255,255,0.75)' }}>
-            <li>Daukanto g. 35, Palanga<br />Viešbutis &ldquo;Palangos Vėtra&rdquo;</li>
+            <li>{c.addr1}<br />{c.addr2}</li>
             <li><a href="tel:+37068426686" style={{ color: '#fff', textDecoration: 'none', font: '600 15px var(--font-display)' }}>+370 684 26686</a></li>
             <li><a href="mailto:palanga-vr@gmail.com" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>palanga-vr@gmail.com</a></li>
           </ul>
@@ -97,7 +97,7 @@ export default function Footer({ onBook }: Props) {
         flexWrap: 'wrap', gap: 12,
       }}>
         <span>© 2026 Palanga VR.</span>
-        <span>Palanga, Lietuva</span>
+        <span>{f.copy}</span>
       </div>
     </footer>
   );
