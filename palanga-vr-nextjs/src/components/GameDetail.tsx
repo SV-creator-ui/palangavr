@@ -27,16 +27,16 @@ function GameCard({ game }: { game: Game }) {
       >
         <div style={{ width: '100%', aspectRatio: '5/7', borderRadius: 'var(--radius-poster)', backgroundImage: `url(${game.poster})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundColor: '#0B0B3A' }} />
         <h3 style={{ font: '700 22px/1.1 var(--font-display)', color: '#fff', margin: 0 }}>{game.title}</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 12 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
             <span style={{ font: '700 11px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Sudėtingumas</span>
             <DifficultyMeter level={game.difficulty} size="sm" />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
             <span style={{ font: '700 11px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Žaidėjai</span>
             <span style={{ font: '400 12px var(--font-body)', color: 'rgba(255,255,255,0.75)' }}>{game.players}</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
             <span style={{ font: '700 11px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Trukmė</span>
             <span style={{ font: '400 12px var(--font-body)', color: 'rgba(255,255,255,0.75)' }}>{game.timeShort}</span>
           </div>
@@ -72,12 +72,12 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
         padding: '40px 32px', position: 'relative',
       }}>
         {!hasBanner && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 40, maxWidth: 1320, width: '100%' }}>
-            <img src={game.poster} alt={game.title} style={{ height: 280, borderRadius: 16, boxShadow: '0 24px 60px -10px rgba(0,0,0,0.6)' }} />
-            <div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 40, maxWidth: 1320, width: '100%' }}>
+            <img src={game.poster} alt={game.title} style={{ height: 'clamp(180px, 40vw, 280px)', width: 'auto', borderRadius: 16, boxShadow: '0 24px 60px -10px rgba(0,0,0,0.6)' }} />
+            <div style={{ minWidth: 0, flex: '1 1 240px' }}>
               <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-orange)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{game.year} · vrCAVE</span>
-              <h1 style={{ font: '800 clamp(48px, 7vw, 96px)/0.95 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '12px 0 16px' }}>{game.title}</h1>
-              <p style={{ font: '500 20px/1.4 var(--font-body)', color: 'rgba(255,255,255,0.85)', margin: 0, maxWidth: 540 }}>{game.tagline}</p>
+              <h1 style={{ font: '800 clamp(34px, 7vw, 96px)/0.98 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '12px 0 16px', overflowWrap: 'break-word' }}>{game.title}</h1>
+              <p style={{ font: '500 clamp(16px, 4vw, 20px)/1.4 var(--font-body)', color: 'rgba(255,255,255,0.85)', margin: 0, maxWidth: 540 }}>{game.tagline}</p>
             </div>
           </div>
         )}
@@ -97,12 +97,12 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
       </div>
 
       {/* About card */}
-      <div style={{ background: 'var(--bg-stage)', padding: '0 32px' }}>
-        <div style={{ maxWidth: 1320, margin: '0 auto', background: '#fff', borderRadius: 'var(--radius-card-lg)', padding: 40 }} className="grid-detail">
+      <div className="px-page" style={{ background: 'var(--bg-stage)' }}>
+        <div style={{ maxWidth: 1320, margin: '0 auto', background: '#fff', borderRadius: 'var(--radius-card-lg)', padding: 'clamp(20px, 5vw, 40px)' }} className="grid-detail">
           <div>
-            <h2 style={{ font: '800 40px/1 var(--font-display)', color: 'var(--fg)', margin: '0 0 24px', display: 'inline-flex', alignItems: 'center', gap: 24 }}>
+            <h2 style={{ font: '800 clamp(28px, 6vw, 40px)/1.05 var(--font-display)', color: 'var(--fg)', margin: '0 0 24px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 24, minWidth: 0, overflowWrap: 'break-word' }}>
               Apie {game.title}
-              <span style={{ display: 'inline-block', width: 140, height: 2, background: 'var(--gray-300)' }} />
+              <span className="deco-line" style={{ display: 'inline-block', width: 140, height: 2, background: 'var(--gray-300)' }} />
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {game.description.map((p, i) => (
@@ -170,9 +170,9 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
       {/* More games */}
       <section style={{ padding: '80px 32px 16px' }}>
         <div style={{ maxWidth: 1320, margin: '0 auto' }}>
-          <h3 style={{ font: '800 40px/1 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '0 0 32px', display: 'inline-flex', alignItems: 'center', gap: 24 }}>
+          <h3 style={{ font: '800 clamp(28px, 6vw, 40px)/1.05 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '0 0 32px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 24, minWidth: 0 }}>
             Daugiau nuotykių
-            <span style={{ display: 'inline-block', width: 120, height: 2, background: 'rgba(255,255,255,0.4)' }} />
+            <span className="deco-line" style={{ display: 'inline-block', width: 120, height: 2, background: 'rgba(255,255,255,0.4)' }} />
           </h3>
           <div className="grid-games">
             {others.map((g) => <GameCard key={g.slug} game={g} />)}

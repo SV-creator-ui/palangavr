@@ -12,9 +12,9 @@ export default function HowItWorks() {
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24, marginBottom: 64 }}>
           <div>
             <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-pink)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{t.how.eyebrow}</span>
-            <h2 style={{ font: '800 clamp(40px, 5.5vw, 72px)/0.95 var(--font-display)', color: 'var(--fg)', textTransform: 'uppercase', margin: '12px 0 0', display: 'inline-flex', alignItems: 'center', gap: 24 }}>
+            <h2 style={{ font: '800 clamp(32px, 5.5vw, 72px)/1 var(--font-display)', color: 'var(--fg)', textTransform: 'uppercase', margin: '12px 0 0', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 24, minWidth: 0 }}>
               {t.how.title}
-              <span style={{ display: 'inline-block', width: 120, height: 2, background: 'var(--gray-300)' }} />
+              <span className="deco-line" style={{ display: 'inline-block', width: 120, height: 2, background: 'var(--gray-300)' }} />
             </h2>
           </div>
           <p style={{ font: '500 17px/1.5 var(--font-body)', color: 'var(--fg-muted)', margin: 0, maxWidth: 420 }}>

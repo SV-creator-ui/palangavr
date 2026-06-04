@@ -132,12 +132,12 @@ export default function GamesGrid() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <span style={{ font: '700 12px var(--font-display)', color: 'rgba(255,255,255,0.55)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{g.eyebrow}</span>
             <h2 style={{
-              font: '800 clamp(40px, 4.5vw, 64px)/0.95 var(--font-display)',
+              font: '800 clamp(32px, 4.5vw, 64px)/1 var(--font-display)',
               color: '#fff', textTransform: 'uppercase', margin: 0,
-              display: 'inline-flex', alignItems: 'center', gap: 32, flexWrap: 'wrap',
+              display: 'flex', alignItems: 'center', gap: 32, flexWrap: 'wrap', minWidth: 0,
             }}>
               {g.title}
-              <span style={{ display: 'inline-block', width: 120, height: 2, background: 'rgba(255,255,255,0.4)' }} />
+              <span className="deco-line" style={{ display: 'inline-block', width: 120, height: 2, background: 'rgba(255,255,255,0.4)' }} />
             </h2>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>

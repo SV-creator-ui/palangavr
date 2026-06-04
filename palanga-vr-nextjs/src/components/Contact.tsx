@@ -9,12 +9,12 @@ interface Props {
 
 function ContactRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: React.ReactNode }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '40px 120px 1fr', gap: 16, alignItems: 'flex-start' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '40px minmax(70px, 120px) minmax(0, 1fr)', gap: 16, alignItems: 'flex-start' }}>
       <span style={{ width: 36, height: 36, borderRadius: 999, background: 'rgba(255,255,255,0.08)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--heat-orange)', flexShrink: 0 }}>
         {icon}
       </span>
       <span style={{ font: '700 13px var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'rgba(255,255,255,0.6)', paddingTop: 8 }}>{label}</span>
-      <span style={{ font: '500 16px/1.55 var(--font-body)', color: '#fff', paddingTop: 6 }}>{value}</span>
+      <span style={{ font: '500 16px/1.55 var(--font-body)', color: '#fff', paddingTop: 6, minWidth: 0, overflowWrap: 'anywhere' }}>{value}</span>
     </div>
   );
 }
@@ -53,7 +53,7 @@ export default function Contact({ onBook }: Props) {
               value={c.hours.split('\n').map((ln, i) => <span key={i}>{ln}{i === 0 && <br />}</span>)}
             />
           </div>
-          <div style={{ marginTop: 40, display: 'flex', gap: 12 }}>
+          <div style={{ marginTop: 40, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Button variant="primary" onClick={onBook} style={{ padding: '16px 28px' }}>{c.bookBtn}</Button>
             <a href="tel:+37068426686" className="btn btn--ghost" style={{ padding: '16px 28px' }}>{c.callBtn}</a>
           </div>
