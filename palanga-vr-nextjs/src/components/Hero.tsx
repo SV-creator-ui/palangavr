@@ -66,7 +66,7 @@ export default function Hero({ onBook }: Props) {
   ];
 
   return (
-    <section style={{
+    <section className="hero-section" style={{
       position: 'relative',
       minHeight: 720,
       background: 'var(--bg-stage)',
@@ -97,7 +97,7 @@ export default function Hero({ onBook }: Props) {
             <span key={i}>{line}{i === 0 && <br />}</span>
           ))}
         </h1>
-        <p style={{ font: '500 22px/1.4 var(--font-body)', color: 'rgba(255,255,255,0.9)', margin: '0 0 40px', maxWidth: 720 }}>
+        <p style={{ font: '500 clamp(16px, 4.5vw, 22px)/1.4 var(--font-body)', color: 'rgba(255,255,255,0.9)', margin: '0 0 40px', maxWidth: 720 }}>
           {h.sub}
         </p>
         <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
