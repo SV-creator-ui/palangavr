@@ -35,10 +35,23 @@ function GameCard({ game }: { game: Game }) {
           width: '100%',
           aspectRatio: '5/7',
           borderRadius: 'var(--radius-poster)',
-          backgroundImage: `url(${game.poster})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }} />
+          overflow: 'hidden',
+          position: 'relative',
+        }}>
+          <img
+            src={game.poster}
+            alt={game.title}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              display: 'block',
+            }}
+          />
+        </div>
         <h3 style={{ font: '700 22px/1.1 var(--font-display)', color: '#fff', margin: 0 }}>{game.title}</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
