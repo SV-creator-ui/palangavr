@@ -36,10 +36,8 @@ function GameCard({ game }: { game: Game }) {
           aspectRatio: '5/7',
           borderRadius: 'var(--radius-poster)',
           backgroundImage: `url(${game.poster})`,
-          backgroundSize: 'contain',
+          backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundColor: '#0B0B3A',
         }} />
         <h3 style={{ font: '700 22px/1.1 var(--font-display)', color: '#fff', margin: 0 }}>{game.title}</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
