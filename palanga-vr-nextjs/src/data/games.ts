@@ -12,6 +12,8 @@
   tagline: string;
   description: string[];
   tags: string[];
+  /* Lokalizuoti tekstai (EN/RU). Jei nera – rodomas lietuviskas variantas. */
+  i18n?: Partial<Record<'en' | 'ru', { tagline?: string; description?: string[] }>>;
 }
 
 export interface PricingRow {
@@ -84,6 +86,26 @@ export const GAMES: Game[] = [
       'Cyberscape – greito tempo neoninis trileris: lengva pradėti, gilu pasinerti.',
     ],
     tags: ['Kibernetika', 'Hakeriai', 'Veiksmas', 'Komandinis', 'Galvosūkis'],
+    i18n: {
+      en: {
+        tagline: 'You enter the mainframe. Destroy the virus. Save the jobs.',
+        description: [
+          'The newest retro-style VR escape room.',
+          'S.R.F. – a world-leading technology manufacturer – has hired you, engineers, to eliminate a virus that infected its mainframe.',
+          'Digital transference technology drops you straight into the system: find the virus, cut the source and escape before it traces you.',
+          'Cyberscape – a fast-paced neon thriller: easy to start, deep to dive into.',
+        ],
+      },
+      ru: {
+        tagline: 'Вы вошли в мейнфрейм. Уничтожьте вирус. Спасите рабочие места.',
+        description: [
+          'Новейшая VR-комната побега в ретро-стиле.',
+          'S.R.F. – мировой лидер в производстве технологий – нанял вас, инженеров, уничтожить вирус, заразивший её мейнфрейм.',
+          'Технология цифрового переноса отправит вас прямо в систему: найдите вирус, отрубите источник и бегите, пока он вас не вычислил.',
+          'Cyberscape – неоновый триллер в быстром темпе: легко начать, трудно оторваться.',
+        ],
+      },
+    },
   },
   {
     slug: 'dragon-tower',

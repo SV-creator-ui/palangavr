@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { GAMES, type Game } from '@/data/games';
 import DifficultyMeter from './ui/DifficultyMeter';
 import Chip from './ui/Chip';
+import { useLang } from '@/context/LangContext';
 
 function GameCard({ game }: { game: Game }) {
   const [hovered, setHovered] = useState(false);
@@ -47,6 +48,11 @@ function GameCard({ game }: { game: Game }) {
 }
 
 export default function GameDetail({ game, onBook }: { game: Game; onBook: () => void }) {
+  const { lang } = useLang();
+  const loc = lang !== 'lt' ? game.i18n?.[lang] : undefined;
+  const tagline = loc?.tagline ?? game.tagline;
+  const description = loc?.description ?? game.description;
+
   const hasBanner = game.slug === 'ninja-trials' || game.slug === 'alien-infection';
   const bannerSrc = hasBanner ? `/assets/game-banner-${game.slug}.jpg` : null;
   const others = GAMES.filter((g) => g.slug !== game.slug).slice(0, 3);
@@ -76,7 +82,7 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
             <img src={game.poster} alt={game.title} style={{ height: 'clamp(180px, 40vw, 280px)', width: 'auto', borderRadius: 16, boxShadow: '0 24px 60px -10px rgba(0,0,0,0.6)' }} />
             <div style={{ minWidth: 0, flex: '1 1 240px' }}>
               <h1 style={{ font: '800 clamp(34px, 7vw, 96px)/0.98 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '0 0 16px', overflowWrap: 'break-word' }}>{game.title}</h1>
-              <p style={{ font: '500 clamp(16px, 4vw, 20px)/1.4 var(--font-body)', color: 'rgba(255,255,255,0.85)', margin: 0, maxWidth: 540 }}>{game.tagline}</p>
+              <p style={{ font: '500 clamp(16px, 4vw, 20px)/1.4 var(--font-body)', color: 'rgba(255,255,255,0.85)', margin: 0, maxWidth: 540 }}>{tagline}</p>
             </div>
           </div>
         )}
@@ -104,7 +110,7 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
               <span className="deco-line" style={{ display: 'inline-block', width: 140, height: 2, background: 'var(--gray-300)' }} />
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {game.description.map((p, i) => (
+              {description.map((p, i) => (
                 <p key={i} style={{ font: '400 16px/1.6 var(--font-body)', color: 'var(--fg)', margin: 0 }}>{p}</p>
               ))}
             </div>
