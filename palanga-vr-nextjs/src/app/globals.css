@@ -233,11 +233,31 @@ body {
   .pr-btn   { grid-column: 2; grid-row: 2; }
 }
 
+/* ── HEADER mobiliame ── */
+@media (max-width: 900px) {
+  .header-row     { padding: 12px 16px !important; gap: 10px !important; }
+  .mob-controls   { gap: 8px !important; }
+  /* Kompaktiskesnis kalbu perjungiklis, kad netemptu vietos */
+  .lang-switcher  { padding: 3px !important; gap: 0 !important; }
+  .lang-btn       { padding: 5px 8px !important; }
+  /* Rezervacijos mygtukas – ryskus (gradientas is .btn--primary) ir kompaktiskas */
+  .mob-book-btn   { padding: 10px 16px !important; font-size: 13px !important; }
+}
+
 /* ── MAŽI TELEFONAI (≤ 480px) ── */
 @media (max-width: 480px) {
   /* Viena kortele per eilute – telpa visa informacija ir pavadinimas */
   .grid-games        { grid-template-columns: 1fr; gap: 14px; }
   .grid-booking-games{ grid-template-columns: repeat(2, 1fr); }
+
+  /* Visi header elementai turi tilpti i siaura ekrana */
+  .header-row        { padding: 12px 8px !important; gap: 6px !important; }
+  .header-logo img   { height: 32px !important; }
+  .mob-controls      { gap: 6px !important; }
+  .lang-switcher     { padding: 2px !important; }
+  .lang-btn          { padding: 5px 6px !important; font-size: 11px !important; }
+  .mob-book-btn      { padding: 8px 11px !important; font-size: 12px !important; }
+  .mob-menu-btn      { width: 38px !important; height: 38px !important; }
 }
 
 @keyframes ping {

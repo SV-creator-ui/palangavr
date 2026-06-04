@@ -8,8 +8,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   style?: React.CSSProperties;
 }
 
-export default function Button({ variant = 'primary', children, onClick, style, href, ...rest }: ButtonProps) {
-  const cls = `btn btn--${variant}`;
+export default function Button({ variant = 'primary', children, onClick, style, href, className, ...rest }: ButtonProps) {
+  const cls = `btn btn--${variant}${className ? ` ${className}` : ''}`;
   if (href) {
     return <a className={cls} href={href} style={style}>{children}</a>;
   }

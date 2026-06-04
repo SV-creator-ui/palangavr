@@ -12,7 +12,7 @@ const NAV_IDS = ['games', 'how', 'pricing', 'faq', 'contact'] as const;
 function LanguageSwitcher() {
   const { lang, setLang } = useLang();
   return (
-    <div style={{
+    <div className="lang-switcher" style={{
       display: 'flex', alignItems: 'center', gap: 2,
       padding: '4px', borderRadius: 999,
       background: 'var(--off-white)', border: '1px solid var(--gray-300)',
@@ -21,6 +21,7 @@ function LanguageSwitcher() {
         <button
           key={l}
           onClick={() => setLang(l)}
+          className="lang-btn"
           style={{
             padding: '5px 10px', borderRadius: 999, border: 'none', cursor: 'pointer',
             background: lang === l ? 'var(--navy-900)' : 'transparent',
@@ -64,9 +65,9 @@ export default function Header({ onBook }: Props) {
       boxShadow: '0 6px 24px -16px rgba(11,11,58,0.25)',
     }}>
       {/* Main row */}
-      <div style={{ padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-        <Link href="/" style={{ display: 'inline-flex' }} onClick={close}>
-          <Image src="/assets/logo-palanga-vr.png" alt="Palanga VR" width={200} height={56} style={{ height: 44, width: 'auto' }} />
+      <div className="header-row" style={{ padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+        <Link href="/" className="header-logo" style={{ display: 'inline-flex', flexShrink: 0 }} onClick={close}>
+          <Image src="/assets/logo-palanga-vr.png" alt="Palanga VR" width={200} height={56} priority style={{ height: 44, width: 'auto' }} />
         </Link>
 
         {/* Desktop nav */}
