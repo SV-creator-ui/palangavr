@@ -177,10 +177,14 @@ body {
 /* Small reservation button for mobile header */
 .mob-book-btn { display: none !important; }
 
+/* Mobile controls (lang switcher + book + hamburger) – hidden on desktop */
+.mob-controls { display: none !important; }
+
 /* ── TABLET (≤ 900px) ── */
 @media (max-width: 900px) {
   .header-phone      { display: none !important; }
   .header-nav-links  { display: none !important; }
+  .mob-controls      { display: flex !important; }
   .mob-menu-btn      { display: flex !important; }
   .mob-book-btn      { display: inline-flex !important; }
 

@@ -102,7 +102,7 @@ export default function Header({ onBook }: Props) {
         </nav>
 
         {/* Mobile controls */}
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div className="mob-controls" style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <LanguageSwitcher />
           <Button variant="primary" onClick={onBook} className="mob-book-btn" style={{ padding: '10px 16px', fontSize: 13 }}>
             {t.book}
