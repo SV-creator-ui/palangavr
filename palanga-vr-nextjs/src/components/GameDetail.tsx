@@ -75,8 +75,7 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 40, maxWidth: 1320, width: '100%' }}>
             <img src={game.poster} alt={game.title} style={{ height: 'clamp(180px, 40vw, 280px)', width: 'auto', borderRadius: 16, boxShadow: '0 24px 60px -10px rgba(0,0,0,0.6)' }} />
             <div style={{ minWidth: 0, flex: '1 1 240px' }}>
-              <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-orange)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{game.year} · vrCAVE</span>
-              <h1 style={{ font: '800 clamp(34px, 7vw, 96px)/0.98 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '12px 0 16px', overflowWrap: 'break-word' }}>{game.title}</h1>
+              <h1 style={{ font: '800 clamp(34px, 7vw, 96px)/0.98 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '0 0 16px', overflowWrap: 'break-word' }}>{game.title}</h1>
               <p style={{ font: '500 clamp(16px, 4vw, 20px)/1.4 var(--font-body)', color: 'rgba(255,255,255,0.85)', margin: 0, maxWidth: 540 }}>{game.tagline}</p>
             </div>
           </div>
