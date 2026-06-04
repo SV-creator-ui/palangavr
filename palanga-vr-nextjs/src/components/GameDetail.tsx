@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 // useState still needed for GameCard hover state
 import { GAMES, type Game } from '@/data/games';
@@ -50,6 +50,15 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
   const hasBanner = game.slug === 'ninja-trials' || game.slug === 'alien-infection';
   const bannerSrc = hasBanner ? `/assets/game-banner-${game.slug}.jpg` : null;
   const others = GAMES.filter((g) => g.slug !== game.slug).slice(0, 3);
+  const [videoOpen, setVideoOpen] = useState(false);
+
+  useEffect(() => {
+    if (!videoOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setVideoOpen(false); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+  }, [videoOpen]);
 
   return (
     <div style={{ background: 'var(--bg-stage)', minHeight: '100vh' }}>
@@ -132,11 +141,10 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
         <div style={{ maxWidth: 1320, margin: '0 auto' }}>
           <div style={{ background: '#000', borderRadius: 'var(--radius-card-lg)', aspectRatio: '16/9', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
             {game.youtubeId ? (
-              <a
-                href={`https://www.youtube.com/watch?v=${game.youtubeId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ position: 'absolute', inset: 0, display: 'block', textDecoration: 'none', cursor: 'pointer' }}
+              <button
+                type="button"
+                onClick={() => setVideoOpen(true)}
+                style={{ position: 'absolute', inset: 0, display: 'block', width: '100%', height: '100%', border: 'none', padding: 0, background: 'none', cursor: 'pointer' }}
               >
                 <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${game.poster})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.42)' }} />
@@ -146,7 +154,7 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
                   </div>
                   <span style={{ font: '700 14px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.08em', textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>Žiūrėti video</span>
                 </div>
-              </a>
+              </button>
             ) : (
               <>
                 <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(${game.poster}) center/cover`, opacity: 0.7 }} />
@@ -191,6 +199,32 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
           </div>
         </div>
       </section>
+
+      {/* Video modal */}
+      {videoOpen && game.youtubeId && (
+        <div
+          onClick={() => setVideoOpen(false)}
+          style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, background: 'rgba(0,0,0,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
+        >
+          <div onClick={(e) => e.stopPropagation()} style={{ position: 'relative', width: '100%', maxWidth: 960, aspectRatio: '16/9' }}>
+            <iframe
+              src={`https://www.youtube.com/embed/${game.youtubeId}?autoplay=1&rel=0&playsinline=1`}
+              title={game.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', borderRadius: 8 }}
+            />
+            <button
+              type="button"
+              onClick={() => setVideoOpen(false)}
+              aria-label="Uždaryti"
+              style={{ position: 'absolute', top: -44, right: 0, background: 'none', border: 'none', color: '#fff', fontSize: 32, lineHeight: 1, cursor: 'pointer', padding: '4px 8px' }}
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
     </div>
   );
