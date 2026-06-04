@@ -189,9 +189,9 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
 
       {/* CTA strip */}
       <section style={{ padding: '80px 32px 96px' }}>
-        <div style={{ maxWidth: 1320, margin: '0 auto', background: 'var(--heat-gradient)', borderRadius: 'var(--radius-card-lg)', padding: '56px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
+        <div style={{ maxWidth: 1320, margin: '0 auto', background: 'var(--heat-gradient)', borderRadius: 'var(--radius-card-lg)', padding: 'clamp(28px, 6vw, 56px) clamp(20px, 5vw, 48px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
           <div>
-            <h3 style={{ font: '800 36px/1.05 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '0 0 12px' }}>{d.ctaTitle}</h3>
+            <h3 style={{ font: '800 clamp(24px, 5.5vw, 36px)/1.1 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '0 0 12px', overflowWrap: 'break-word' }}>{d.ctaTitle}</h3>
             <p style={{ font: '500 17px/1.5 var(--font-body)', color: 'rgba(255,255,255,0.95)', margin: 0, maxWidth: 540 }}>
               {d.ctaSub}
             </p>
