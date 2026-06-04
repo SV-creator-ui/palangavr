@@ -47,6 +47,24 @@ export const GAMES: Game[] = [
       'Drąsūs gelbėtojai leidžiasi į mišką ieškoti dingusio katino, nežinodami kokie priešai jų laukia. Ar spėsite pabėgti, išgelbėti kačiuką ir visą pasaulį nuo mirtinos infekcijos?',
     ],
     tags: ['Logika', 'Galvosūkis', 'Ateiviai', 'Pabėgimas', 'VR', 'Veiksmas', 'Šiurpuliukai', 'Komandinis'],
+    i18n: {
+      en: {
+        tagline: 'A VR escape room of terrifying sound and vision.',
+        description: [
+          'Strange events unfold in the local forest. Your firefighter team is called in to find a missing cat.',
+          'Sounds and lights in the sky send chills through the townsfolk.',
+          'Brave rescuers head into the forest to search for the lost cat, unaware of the enemies that await. Can you escape in time, save the kitten and the whole world from a deadly infection?',
+        ],
+      },
+      ru: {
+        tagline: 'VR-комната побега в пугающем звуке и образе.',
+        description: [
+          'Странные события происходят в местном лесу. Вашу команду пожарных вызвали найти пропавшего кота.',
+          'Звуки и огни в небе наводят ужас на людей.',
+          'Храбрые спасатели отправляются в лес на поиски пропавшего кота, не зная, какие враги их ждут. Успеете ли сбежать, спасти котёнка и весь мир от смертельной инфекции?',
+        ],
+      },
+    },
   },
   {
     slug: 'ninja-trials',
@@ -66,6 +84,24 @@ export const GAMES: Game[] = [
       'Ninja Trials – šeimai draugiškas pabėgimo kambarys, kupinas pramogų ir iššūkių visiems amžiams.',
     ],
     tags: ['Japonija', 'Kova', 'Kardai', 'Veiksmas', 'Magija', 'Boso kova', 'Pradedantiesiems'],
+    i18n: {
+      en: {
+        tagline: 'Tonight you become true ninjas.',
+        description: [
+          'Tonight you become true ninjas.',
+          'But it won\'t be easy. Your master has set three tasks: the Trials of Combat, Stealth and Spirit. Only by mastering the needed skills will you be ready to face him and prove your worth.',
+          'Ninja Trials is a family-friendly escape room, full of fun and challenges for all ages.',
+        ],
+      },
+      ru: {
+        tagline: 'Этой ночью вы становитесь настоящими ниндзя.',
+        description: [
+          'Этой ночью вы становитесь настоящими ниндзя.',
+          'Но это будет нелегко. Ваш учитель дал три задания: испытания Боя, Скрытности и Духа. Только овладев нужными навыками, вы будете готовы противостоять ему и доказать свою ценность.',
+          'Ninja Trials — комната побега для всей семьи, полная развлечений и испытаний для любого возраста.',
+        ],
+      },
+    },
   },
   {
     slug: 'cyberscape',
@@ -125,6 +161,24 @@ export const GAMES: Game[] = [
       'Dragon Tower – originalus, šeimai draugiškas, fantastinis nuotykis.',
     ],
     tags: ['Fantastika', 'Magija', 'Pabėgimas', 'Pradedantiesiems'],
+    i18n: {
+      en: {
+        tagline: 'Escape the prison. Brew elixirs. Defeat the dragon.',
+        description: [
+          'An alchemist has thrown you into a tower. Dragons are coming.',
+          'Brew elixirs and find your way out of the tower – or become the dragon\'s dinner.',
+          'Dragon Tower is an original, family-friendly fantasy adventure.',
+        ],
+      },
+      ru: {
+        tagline: 'Сбегите из темницы. Варите эликсиры. Победите дракона.',
+        description: [
+          'Алхимик бросил вас в башню. Прилетают драконы.',
+          'Варите эликсиры и найдите выход из башни — или станьте ужином дракона.',
+          'Dragon Tower — оригинальное семейное фэнтези-приключение.',
+        ],
+      },
+    },
   },
   {
     slug: 'manor-of-escape',
@@ -144,6 +198,24 @@ export const GAMES: Game[] = [
       'Ar išdrįsite įžengti į dvarą, įvykdyti misiją ir išgelbėti miestelį?',
     ],
     tags: ['Baimė', 'Paslaptis', 'Pabėgimas', 'Galvosūkis'],
+    i18n: {
+      en: {
+        tagline: 'The doors locked themselves. The house is watching you.',
+        description: [
+          'For a long time, eerie screams have echoed from the town manor, and people keep disappearing.',
+          'The mayor has hired you to capture the mad Count Molum, who carries out horrifying experiments.',
+          'Will you dare to enter the manor, complete the mission and save the town?',
+        ],
+      },
+      ru: {
+        tagline: 'Двери заперлись сами. Дом следит за вами.',
+        description: [
+          'Из городской усадьбы давно доносятся жуткие крики, а люди пропадают.',
+          'Мэр нанял вас поймать безумного графа Молума, который проводит ужасающие эксперименты.',
+          'Осмелитесь ли вы войти в усадьбу, выполнить миссию и спасти город?',
+        ],
+      },
+    },
   },
   {
     slug: 'pirates-plague',
@@ -163,6 +235,24 @@ export const GAMES: Game[] = [
       'Pirates Plague – šurmuliuojanti istorija su tikrais galvosūkiais įguloms, nebijančioms susitepti rankų.',
     ],
     tags: ['Piratai', 'Paslaptis', 'Galvosūkis', 'Nuotykis'],
+    i18n: {
+      en: {
+        tagline: 'The captain is sick. The crew is cursed. The sea wants you back.',
+        description: [
+          'Hurry! You have little time, or you and your team will be cursed forever!',
+          'Fight other pirates, solve puzzles! Active and intense! Perfect for those craving thrills and action. Recommended for families.',
+          'Pirates Plague is a bustling tale with real puzzles for crews not afraid to get their hands dirty.',
+        ],
+      },
+      ru: {
+        tagline: 'Капитан болен. Команда проклята. Море зовёт вас обратно.',
+        description: [
+          'Поторопитесь! У вас мало времени, иначе вы и ваша команда будете прокляты навсегда!',
+          'Сражайтесь с другими пиратами, решайте головоломки! Активно и интенсивно! Отлично подходит любителям азарта и экшена. Рекомендуется для семей.',
+          'Pirates Plague — бурлящая история с настоящими головоломками для команд, не боящихся запачкать руки.',
+        ],
+      },
+    },
   },
   {
     slug: 'runaway-train',
@@ -182,6 +272,24 @@ export const GAMES: Game[] = [
       'Aukšto intensyvumo Laukinių Vakarų trileris įguloms, mokančioms išlaikyti šaltą galvą.',
     ],
     tags: ['Vakarai', 'Veiksmas', 'Komandinis', 'Ekspertams'],
+    i18n: {
+      en: {
+        tagline: 'Only you can stop the runaway train.',
+        description: [
+          'The brakes are gone. The conductor is gone. The only thing between the train and the abyss is your team.',
+          'Move through the rocking cars, pull the right levers and pray you cut the right wire. There will be no second chance.',
+          'A high-intensity Wild West thriller for crews who can keep a cool head.',
+        ],
+      },
+      ru: {
+        tagline: 'Только вы можете остановить мчащийся поезд.',
+        description: [
+          'Тормозов нет. Кондуктора нет. Единственное, что отделяет поезд от пропасти, — ваша команда.',
+          'Пробирайтесь через движущиеся вагоны, тяните нужные рычаги и молитесь, что перерезали правильный провод. Второго шанса не будет.',
+          'Высокоинтенсивный триллер о Диком Западе для команд, умеющих сохранять хладнокровие.',
+        ],
+      },
+    },
   },
   {
     slug: 'depths-of-osiris',
@@ -201,6 +309,24 @@ export const GAMES: Game[] = [
       'Depths of Osiris – įtempta povandeninės archeologijos istorija įguloms, mėgstančioms tamsą.',
     ],
     tags: ['Po vandeniu', 'Paslaptis', 'Įtampa', 'Komandinis', 'Rykliai'],
+    i18n: {
+      en: {
+        tagline: 'Down there – something is with you.',
+        description: [
+          'An adventure on the ocean floor.',
+          'You and your team descend into the ocean depths, where a lost temple of Osiris was recently discovered, to recover a legendary artifact. Danger lurks everywhere.',
+          'Depths of Osiris is a tense underwater-archaeology tale for crews who love the dark.',
+        ],
+      },
+      ru: {
+        tagline: 'Там, внизу, — кто-то рядом с вами.',
+        description: [
+          'Приключение на дне океана.',
+          'Вы с командой спускаетесь в океанские глубины, где недавно обнаружили затерянный храм Осириса, чтобы вернуть легендарный артефакт. Опасность подстерегает повсюду.',
+          'Depths of Osiris — напряжённая история подводной археологии для команд, любящих темноту.',
+        ],
+      },
+    },
   },
   {
     slug: 'space-station-tiberia',
@@ -220,6 +346,24 @@ export const GAMES: Game[] = [
       'Tu ir tavo komanda yra vienintelė viltis išgelbėti žemę.',
     ],
     tags: ['Mokslinė fantastika', 'Kosmosas', 'Galvosūkis', 'Paslaptis'],
+    i18n: {
+      en: {
+        tagline: 'A meteor is approaching. Can you save the world in time?',
+        description: [
+          'A massive meteor is about to strike the Earth.',
+          'There\'s very little time left. You must fly to the space station and repair it.',
+          'You and your team are the only hope to save the Earth.',
+        ],
+      },
+      ru: {
+        tagline: 'Приближается метеорит. Успеете ли спасти мир?',
+        description: [
+          'Огромный метеорит вот-вот врежется в Землю.',
+          'Времени почти не осталось. Вы должны долететь до космической станции и починить её.',
+          'Вы и ваша команда — единственная надежда спасти Землю.',
+        ],
+      },
+    },
   },
 ];
 

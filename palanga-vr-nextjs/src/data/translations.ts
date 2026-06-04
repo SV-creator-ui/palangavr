@@ -67,7 +67,7 @@ export const TRANSLATIONS = {
     },
     detail: {
       back: 'Visi kambariai', about: 'Apie', players: 'Žaidėjai', duration: 'Trukmė', difficulty: 'Sudėtingumas',
-      watchVideo: 'Žiūrėti video', moreGames: 'Daugiau nuotykių',
+      watchVideo: 'Žiūrėti video', moreGames: 'Daugiau nuotykių', bookRoom: 'Rezervuoti šį kambarį',
       ctaTitle: 'PASIRUOŠĘ PRAMOGAUTI?',
       ctaSub: 'Surinkite komandą nuo 2 iki 6 žaidėjų ir užsisakykite seansą jums patogiu metu.',
       ctaBack: 'Visi kambariai', ctaBook: 'Rezervuoti laiką',
@@ -161,7 +161,7 @@ export const TRANSLATIONS = {
     },
     detail: {
       back: 'All rooms', about: 'About', players: 'Players', duration: 'Duration', difficulty: 'Difficulty',
-      watchVideo: 'Watch video', moreGames: 'More adventures',
+      watchVideo: 'Watch video', moreGames: 'More adventures', bookRoom: 'Book this room',
       ctaTitle: 'READY FOR FUN?',
       ctaSub: 'Gather a team of 2 to 6 players and book a session at a time that suits you.',
       ctaBack: 'All rooms', ctaBook: 'Book now',
@@ -255,7 +255,7 @@ export const TRANSLATIONS = {
     },
     detail: {
       back: 'Все комнаты', about: 'О', players: 'Игроки', duration: 'Длительность', difficulty: 'Сложность',
-      watchVideo: 'Смотреть видео', moreGames: 'Больше приключений',
+      watchVideo: 'Смотреть видео', moreGames: 'Больше приключений', bookRoom: 'Забронировать эту комнату',
       ctaTitle: 'ГОТОВЫ К ПРИКЛЮЧЕНИЮ?',
       ctaSub: 'Соберите команду от 2 до 6 игроков и забронируйте сеанс в удобное для вас время.',
       ctaBack: 'Все комнаты', ctaBook: 'Забронировать',

@@ -10,6 +10,7 @@ import { useLang } from '@/context/LangContext';
 
 function GameCard({ game }: { game: Game }) {
   const [hovered, setHovered] = useState(false);
+  const { t } = useLang();
   return (
     <Link href={`/games/${game.slug}`} style={{ textDecoration: 'none' }}>
       <div
@@ -30,15 +31,15 @@ function GameCard({ game }: { game: Game }) {
         <h3 style={{ font: '700 22px/1.1 var(--font-display)', color: '#fff', margin: 0 }}>{game.title}</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 12 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
-            <span style={{ font: '700 11px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Sudėtingumas</span>
+            <span style={{ font: '700 11px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{t.detail.difficulty}</span>
             <DifficultyMeter level={game.difficulty} size="sm" />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
-            <span style={{ font: '700 11px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Žaidėjai</span>
+            <span style={{ font: '700 11px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{t.detail.players}</span>
             <span style={{ font: '400 12px var(--font-body)', color: 'rgba(255,255,255,0.75)' }}>{game.players}</span>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
-            <span style={{ font: '700 11px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Trukmė</span>
+            <span style={{ font: '700 11px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{t.detail.duration}</span>
             <span style={{ font: '400 12px var(--font-body)', color: 'rgba(255,255,255,0.75)' }}>{game.timeShort}</span>
           </div>
         </div>
@@ -48,7 +49,8 @@ function GameCard({ game }: { game: Game }) {
 }
 
 export default function GameDetail({ game, onBook }: { game: Game; onBook: () => void }) {
-  const { lang } = useLang();
+  const { lang, t } = useLang();
+  const d = t.detail;
   const loc = lang !== 'lt' ? game.i18n?.[lang] : undefined;
   const tagline = loc?.tagline ?? game.tagline;
   const description = loc?.description ?? game.description;
@@ -97,7 +99,7 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
           backdropFilter: 'blur(8px)', textDecoration: 'none',
         }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
-          Visi kambariai
+          {d.back}
         </Link>
       </div>
 
@@ -106,7 +108,7 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
         <div style={{ maxWidth: 1320, margin: '0 auto', background: '#fff', borderRadius: 'var(--radius-card-lg)', padding: 'clamp(20px, 5vw, 40px)' }} className="grid-detail">
           <div>
             <h2 style={{ font: '800 clamp(28px, 6vw, 40px)/1.05 var(--font-display)', color: 'var(--fg)', margin: '0 0 24px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 24, minWidth: 0, overflowWrap: 'break-word' }}>
-              Apie {game.title}
+              {d.about} {game.title}
               <span className="deco-line" style={{ display: 'inline-block', width: 140, height: 2, background: 'var(--gray-300)' }} />
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -117,15 +119,15 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
           </div>
           <div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {[['Žaidėjai', game.players], ['Trukmė', game.time]].map(([l, v]) => (
+              {[[d.players, game.players], [d.duration, game.time]].map(([l, v]) => (
                 <div key={l} style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', gap: 16 }}>
                   <span style={{ font: '700 15px var(--font-display)', color: 'var(--fg)' }}>{l}</span>
                   <span style={{ font: '400 15px var(--font-body)', color: 'var(--fg)' }}>{v}</span>
                 </div>
               ))}
               <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', gap: 16 }}>
-                <span style={{ font: '700 15px var(--font-display)', color: 'var(--fg)' }}>Sudėtingumas</span>
-                <DifficultyMeter level={game.difficulty} showLabel labelName={game.difficultyName} />
+                <span style={{ font: '700 15px var(--font-display)', color: 'var(--fg)' }}>{d.difficulty}</span>
+                <DifficultyMeter level={game.difficulty} showLabel labelName={t.diff[game.difficultyName] ?? game.difficultyName} />
               </div>
             </div>
             <div style={{ height: 1, background: 'var(--gray-300)', margin: '24px 0' }} />
@@ -134,7 +136,7 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
             </div>
             <div style={{ marginTop: 28 }}>
               <button onClick={() => onBook()} className="btn btn--primary" style={{ width: '100%', padding: '16px 28px', fontSize: 15 }}>
-                Rezervuoti šį kambarį
+                {d.bookRoom}
               </button>
             </div>
           </div>
@@ -157,7 +159,7 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
                   <div style={{ width: 80, height: 80, borderRadius: '50%', background: '#FF0000', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="white" style={{ marginLeft: 4 }}><polygon points="6 4 20 12 6 20 6 4" /></svg>
                   </div>
-                  <span style={{ font: '700 14px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.08em', textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>Žiūrėti video</span>
+                  <span style={{ font: '700 14px var(--font-display)', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.08em', textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>{d.watchVideo}</span>
                 </div>
               </button>
             ) : (
@@ -176,7 +178,7 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
       <section style={{ padding: '80px 32px 16px' }}>
         <div style={{ maxWidth: 1320, margin: '0 auto' }}>
           <h3 style={{ font: '800 clamp(28px, 6vw, 40px)/1.05 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '0 0 32px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 24, minWidth: 0 }}>
-            Daugiau nuotykių
+            {d.moreGames}
             <span className="deco-line" style={{ display: 'inline-block', width: 120, height: 2, background: 'rgba(255,255,255,0.4)' }} />
           </h3>
           <div className="grid-games">
@@ -189,17 +191,17 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
       <section style={{ padding: '80px 32px 96px' }}>
         <div style={{ maxWidth: 1320, margin: '0 auto', background: 'var(--heat-gradient)', borderRadius: 'var(--radius-card-lg)', padding: '56px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
           <div>
-            <h3 style={{ font: '800 36px/1.05 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '0 0 12px' }}>PASIRUOŠĘ PRAMOGAUTI?</h3>
+            <h3 style={{ font: '800 36px/1.05 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '0 0 12px' }}>{d.ctaTitle}</h3>
             <p style={{ font: '500 17px/1.5 var(--font-body)', color: 'rgba(255,255,255,0.95)', margin: 0, maxWidth: 540 }}>
-              Surinkite komandą nuo 2 iki 6 žaidėjų ir užsisakykite seansą jums patogiu metu.
+              {d.ctaSub}
             </p>
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Link href="/" style={{ padding: '16px 28px', borderRadius: 999, background: 'transparent', border: '2px solid rgba(255,255,255,0.6)', color: '#fff', font: '700 15px var(--font-display)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}>
-              Visi kambariai
+              {d.ctaBack}
             </Link>
             <button onClick={() => onBook()} style={{ padding: '16px 32px', borderRadius: 999, background: '#fff', border: 'none', color: 'var(--navy-900)', font: '700 15px var(--font-display)', cursor: 'pointer' }}>
-              Rezervuoti laiką
+              {d.ctaBook}
             </button>
           </div>
         </div>
