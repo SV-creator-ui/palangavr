@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import GamesGrid from '@/components/GamesGrid';
@@ -9,34 +8,23 @@ import Pricing from '@/components/Pricing';
 import FAQ from '@/components/FAQ';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
-import BookingModal from '@/components/BookingModal';
+import { goToBooking } from '@/config/booking';
 
 export default function HomePage() {
-  const [bookingOpen, setBookingOpen] = useState(false);
-  const [initialPlayers, setInitialPlayers] = useState(4);
-
-  const openBooking = (players?: number) => {
-    if (players) setInitialPlayers(players);
-    setBookingOpen(true);
-  };
+  const onBook = () => goToBooking();
 
   return (
     <>
-      <Header onBook={() => openBooking()} />
+      <Header onBook={onBook} />
       <main>
-        <Hero onBook={() => openBooking()} />
+        <Hero onBook={onBook} />
         <GamesGrid />
         <HowItWorks />
-        <Pricing onBook={openBooking} />
+        <Pricing onBook={onBook} />
         <FAQ />
-        <Contact onBook={() => openBooking()} />
+        <Contact onBook={onBook} />
       </main>
-      <Footer onBook={() => openBooking()} />
-      <BookingModal
-        open={bookingOpen}
-        onClose={() => setBookingOpen(false)}
-        initialPlayers={initialPlayers}
-      />
+      <Footer onBook={onBook} />
     </>
   );
 }
