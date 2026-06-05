@@ -256,13 +256,13 @@ body {
   /* Hero – maziau saliniu tarpu telefonuose */
   .hero-section      { padding: 96px 16px 64px !important; }
 
-  /* Visi header elementai turi tilpti i siaura ekrana */
-  .header-row        { padding: 12px 8px !important; gap: 6px !important; }
-  .header-logo img   { height: 32px !important; }
-  .mob-controls      { gap: 6px !important; }
+  /* Visi header elementai turi tilpti i siaura ekrana (net ilgi RU zodziai) */
+  .header-row        { padding: 12px 8px !important; gap: 5px !important; }
+  .header-logo img   { height: 31px !important; }
+  .mob-controls      { gap: 5px !important; }
   .lang-switcher     { padding: 2px !important; }
-  .lang-btn          { padding: 5px 6px !important; font-size: 11px !important; }
-  .mob-book-btn      { padding: 8px 11px !important; font-size: 12px !important; }
+  .lang-btn          { padding: 5px 5px !important; font-size: 11px !important; }
+  .mob-book-btn      { padding: 8px 9px !important; font-size: 11px !important; }
   .mob-menu-btn      { width: 38px !important; height: 38px !important; }
 }
 
