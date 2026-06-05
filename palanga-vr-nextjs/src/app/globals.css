@@ -39,8 +39,10 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
-/* Niekada neleisti horizontalaus slinkimo / teksto nukirpimo mobiliame */
-html, body { max-width: 100%; overflow-x: hidden; }
+/* Niekada neleisti horizontalaus slinkimo / teksto nukirpimo mobiliame.
+   `clip` (ne `hidden`) – nesukuria slinkimo konteksto, todel `position: sticky`
+   header'is veikia (visada matomas slenkant). */
+html, body { max-width: 100%; overflow-x: clip; }
 img, svg, video, iframe { max-width: 100%; }
 
 /* Dekoratyvine linija antrasciu sone – slepiama mobiliame, kad netrumpintu teksto */
