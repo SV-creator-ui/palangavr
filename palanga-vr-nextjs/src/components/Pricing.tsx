@@ -71,7 +71,7 @@ export default function Pricing({ onBook }: Props) {
                   color: '#fff', font: '700 14px var(--font-display)', cursor: 'pointer',
                   width: '100%',
                 }}>
-                  {p2.bookBtn} {p.players}
+                  {p2.bookBtn}
                 </button>
               </div>
             </div>
