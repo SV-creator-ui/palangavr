@@ -67,6 +67,17 @@ function GameCard({ game }: { game: Game }) {
             <span style={{ font: '400 12px var(--font-body)', color: 'rgba(255,255,255,0.75)' }}>{game.timeShort}</span>
           </div>
         </div>
+        <span style={{
+          display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 4,
+          font: '700 13px var(--font-display)', color: 'var(--heat-orange)',
+          textTransform: 'uppercase', letterSpacing: '0.04em',
+        }}>
+          {g.learnMore}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"
+            style={{ transform: hovered ? 'translateX(4px)' : 'none', transition: 'transform 200ms var(--ease-out)' }}>
+            <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+          </svg>
+        </span>
       </div>
     </Link>
   );

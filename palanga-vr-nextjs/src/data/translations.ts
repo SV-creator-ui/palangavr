@@ -17,6 +17,7 @@ export const TRANSLATIONS = {
       sortLabel: 'Rūšiuoti pagal',
       sorts: ['Naujausi', 'Seniausi', 'Lengviausi', 'Sunkiausi'],
       difficulty: 'Sudėtingumas', players: 'Žaidėjai', duration: 'Trukmė',
+      learnMore: 'Sužinoti daugiau',
     },
     how: {
       eyebrow: 'Kaip vyksta', title: 'Trys žingsniai',
@@ -111,6 +112,7 @@ export const TRANSLATIONS = {
       sortLabel: 'Sort by',
       sorts: ['Newest', 'Oldest', 'Easiest', 'Hardest'],
       difficulty: 'Difficulty', players: 'Players', duration: 'Duration',
+      learnMore: 'Learn more',
     },
     how: {
       eyebrow: 'How it works', title: 'Three steps',
@@ -205,6 +207,7 @@ export const TRANSLATIONS = {
       sortLabel: 'Сортировать',
       sorts: ['Новейшие', 'Старейшие', 'Лёгкие', 'Сложные'],
       difficulty: 'Сложность', players: 'Игроки', duration: 'Длительность',
+      learnMore: 'Узнать больше',
     },
     how: {
       eyebrow: 'Как это работает', title: 'Три шага',
