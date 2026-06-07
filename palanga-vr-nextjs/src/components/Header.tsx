@@ -65,9 +65,9 @@ export default function Header({ onBook }: Props) {
       boxShadow: '0 6px 24px -16px rgba(11,11,58,0.25)',
     }}>
       {/* Main row */}
-      <div className="header-row" style={{ padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+      <div className="header-row" style={{ padding: '18px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
         <Link href="/" className="header-logo" style={{ display: 'inline-flex', flexShrink: 0 }} onClick={close}>
-          <Image src="/assets/logo-palanga-vr.png" alt="Palanga VR" width={200} height={56} priority style={{ height: 44, width: 'auto' }} />
+          <Image src="/assets/logo-palanga-vr.png" alt="Palanga VR" width={200} height={56} priority style={{ height: 52, width: 'auto' }} />
         </Link>
 
         {/* Desktop nav */}
@@ -91,13 +91,13 @@ export default function Header({ onBook }: Props) {
             marginLeft: 6, paddingLeft: 16, borderLeft: '1px solid var(--gray-300)',
             whiteSpace: 'nowrap',
           }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
             </svg>
             +370 684 26686
           </a>
           <LanguageSwitcher />
-          <Button variant="primary" onClick={onBook} style={{ padding: '12px 22px', fontSize: 14 }}>
+          <Button variant="primary" onClick={onBook} style={{ padding: '14px 28px', fontSize: 15 }}>
             {t.book}
           </Button>
         </nav>
