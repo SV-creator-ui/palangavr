@@ -5,9 +5,11 @@ import Header from './Header';
 import Footer from './Footer';
 import GameDetail from './GameDetail';
 import { goToBooking } from '@/config/booking';
+import { useLang } from '@/context/LangContext';
 
 export default function GameDetailPage({ game }: { game: Game }) {
-  const onBook = () => goToBooking(game.slug);
+  const { lang } = useLang();
+  const onBook = () => goToBooking(lang);
 
   return (
     <>

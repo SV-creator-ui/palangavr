@@ -1,34 +1,27 @@
 /**
- * REZERVACIJOS NUORODOS
+ * REZERVACIJOS NUORODOS (pagal kalbą)
  * ─────────────────────────────────────────────────────────────
  * Vidinė rezervacijos sistema pašalinta. Visi „Rezervuoti" mygtukai
- * naudoja šią konfigūraciją.
+ * naudoja šią konfigūraciją ir veda į išorinę rezervavimo sistemą.
  *
- * KAIP PRIJUNGTI IŠORINĘ REZERVAVIMO SISTEMĄ ATEITYJE:
+ * KAIP PRIDĖTI / PAKEISTI NUORODĄ:
+ *   Įrašykite nuorodą prie atitinkamos kalbos žemiau.
+ *   Tuščia reikšmė ('') = tos kalbos mygtukai nieko nedaro.
  *
- *  1. Bendra nuoroda visiems mygtukams – įrašykite ją į BOOKING_URL:
- *       export const BOOKING_URL = 'https://jusu-rezervacija.lt';
- *
- *  2. Atskira nuoroda konkretiems kambariams – įrašykite į BOOKING_URLS
- *     pagal kambario „slug" (jis turi pirmenybę prieš BOOKING_URL):
- *       export const BOOKING_URLS = {
- *         'cyberscape': 'https://jusu-rezervacija.lt/cyberscape',
- *         'ninja-trials': 'https://jusu-rezervacija.lt/ninja-trials',
- *       };
- *
- * Kol abu palikti tušti – mygtukai veikia (paspaudžiami), bet niekur
- * neveda ir nieko neatidaro.
+ * Šiuo metu nuoroda nustatyta tik lietuvių (lt) kalbai.
  */
 
-export const BOOKING_URL = '';
+export const BOOKING_URL_BY_LANG: Record<string, string> = {
+  lt: 'https://booking.moizmo.com/lt/booking/963a95eb-95b9-41d6-935d-1bde89925310',
+  en: '',
+  ru: '',
+};
 
-export const BOOKING_URLS: Record<string, string> = {};
-
-/** Atidaro rezervacijos nuorodą naujame lange, jei ji nustatyta. */
-export function goToBooking(slug?: string) {
-  const url = (slug && BOOKING_URLS[slug]) || BOOKING_URL;
+/** Atidaro tos kalbos rezervacijos nuorodą naujame lange, jei ji nustatyta. */
+export function goToBooking(lang: string) {
+  const url = BOOKING_URL_BY_LANG[lang] || '';
   if (url) {
     window.open(url, '_blank', 'noopener,noreferrer');
   }
-  // Jei nuorodos nėra – nieko nedaro (mygtukas tiesiog neaktyvus).
+  // Jei nuorodos tai kalbai nėra – nieko nedaro (mygtukas neaktyvus).
 }

@@ -9,9 +9,11 @@ import FAQ from '@/components/FAQ';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import { goToBooking } from '@/config/booking';
+import { useLang } from '@/context/LangContext';
 
 export default function HomePage() {
-  const onBook = () => goToBooking();
+  const { lang } = useLang();
+  const onBook = () => goToBooking(lang);
 
   return (
     <>
