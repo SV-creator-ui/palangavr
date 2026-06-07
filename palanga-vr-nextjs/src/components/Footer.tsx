@@ -84,7 +84,7 @@ export default function Footer({ onBook }: Props) {
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12, font: '400 14px/1.5 var(--font-body)', color: 'rgba(255,255,255,0.75)' }}>
             <li>{c.addr1}<br />{c.addr2}</li>
             <li><a href="tel:+37068426686" style={{ color: '#fff', textDecoration: 'none', font: '600 15px var(--font-display)' }}>+370 684 26686</a></li>
-            <li><a href="mailto:palanga-vr@gmail.com" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>palanga-vr@gmail.com</a></li>
+            <li><a href="mailto:palangavr@gmail.com" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>palangavr@gmail.com</a></li>
           </ul>
         </div>
       </div>
