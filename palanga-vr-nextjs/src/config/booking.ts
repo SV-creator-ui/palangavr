@@ -14,7 +14,7 @@
 export const BOOKING_URL_BY_LANG: Record<string, string> = {
   lt: 'https://booking.moizmo.com/lt/booking/963a95eb-95b9-41d6-935d-1bde89925310',
   en: 'https://booking.moizmo.com/booking/963a95eb-95b9-41d6-935d-1bde89925310',
-  ru: '',
+  ru: 'https://booking.moizmo.com/ru/booking/963a95eb-95b9-41d6-935d-1bde89925310',
 };
 
 /** Atidaro tos kalbos rezervacijos nuorodą naujame lange, jei ji nustatyta. */
