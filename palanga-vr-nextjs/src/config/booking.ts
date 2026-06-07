@@ -13,7 +13,7 @@
 
 export const BOOKING_URL_BY_LANG: Record<string, string> = {
   lt: 'https://booking.moizmo.com/lt/booking/963a95eb-95b9-41d6-935d-1bde89925310',
-  en: '',
+  en: 'https://booking.moizmo.com/booking/963a95eb-95b9-41d6-935d-1bde89925310',
   ru: '',
 };
 
