@@ -1,13 +1,14 @@
 'use client';
 
 import { useLang } from '@/context/LangContext';
+import { sectionId } from '@/config/sections';
 
 export default function HowItWorks() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const steps = t.how.steps;
 
   return (
-    <section id="how" style={{ background: '#fff' }} className="section-pad">
+    <section id={sectionId(lang, 'how')} style={{ background: '#fff' }} className="section-pad">
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24, marginBottom: 64 }}>
           <div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useLang } from '@/context/LangContext';
+import { sectionId } from '@/config/sections';
 
 function FAQItem({ item, open, onToggle }: { item: { q: string; a: string }; open: boolean; onToggle: () => void }) {
   return (
@@ -35,12 +36,12 @@ function FAQItem({ item, open, onToggle }: { item: { q: string; a: string }; ope
 }
 
 export default function FAQ() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [open, setOpen] = useState(0);
   const items = t.faq.items;
 
   return (
-    <section id="faq" style={{ background: '#fff', padding: '120px 32px' }}>
+    <section id={sectionId(lang, 'faq')} style={{ background: '#fff', padding: '120px 32px' }}>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 64 }}>
           <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-pink)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{t.faq.eyebrow}</span>

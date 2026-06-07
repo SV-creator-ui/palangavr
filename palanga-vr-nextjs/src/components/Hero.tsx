@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Button from './ui/Button';
 import { useLang } from '@/context/LangContext';
+import { sectionId } from '@/config/sections';
 
 const HERO_BG_IMAGES = [
   '/assets/game-banner-alien-infection.jpg',
@@ -56,7 +57,7 @@ interface Props {
 }
 
 export default function Hero({ onBook }: Props) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const h = t.hero;
   const stats: [string, string][] = [
     ['9', h.stat1],
@@ -102,7 +103,7 @@ export default function Hero({ onBook }: Props) {
         </p>
         <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
           <Button variant="primary" onClick={onBook} style={{ padding: '18px 32px', fontSize: 16 }}>{h.cta}</Button>
-          <Button variant="ghost" href="/#games" style={{ padding: '18px 32px', fontSize: 16 }}>{h.cta2}</Button>
+          <Button variant="ghost" href={`/#${sectionId(lang, 'games')}`} style={{ padding: '18px 32px', fontSize: 16 }}>{h.cta2}</Button>
         </div>
         <div style={{ marginTop: 56, display: 'flex', gap: 40, justifyContent: 'center', flexWrap: 'wrap' }}>
           {stats.map(([n, l]) => (

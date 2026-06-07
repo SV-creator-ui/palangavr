@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Button from './ui/Button';
 import { useLang } from '@/context/LangContext';
 import { Lang } from '@/data/translations';
+import { sectionId } from '@/config/sections';
 
 const NAV_IDS = ['games', 'how', 'pricing', 'faq', 'contact'] as const;
 
@@ -44,7 +45,7 @@ interface Props {
 
 export default function Header({ onBook }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { t } = useLang();
+  const { t, lang } = useLang();
 
   const close = () => setMenuOpen(false);
 
@@ -73,7 +74,7 @@ export default function Header({ onBook }: Props) {
         {/* Desktop nav */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: 18 }} className="header-nav-links">
           {NAV_IDS.map((id) => (
-            <a key={id} href={`/#${id}`} style={{
+            <a key={id} href={`/#${sectionId(lang, id)}`} style={{
               font: '700 14px var(--font-display)',
               color: 'var(--fg)',
               textDecoration: 'none',
@@ -137,7 +138,7 @@ export default function Header({ onBook }: Props) {
           {NAV_IDS.map((id) => (
             <a
               key={id}
-              href={`/#${id}`}
+              href={`/#${sectionId(lang, id)}`}
               onClick={close}
               style={{
                 padding: '14px 0',

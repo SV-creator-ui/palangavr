@@ -2,6 +2,7 @@
 
 import Button from './ui/Button';
 import { useLang } from '@/context/LangContext';
+import { sectionId } from '@/config/sections';
 
 interface Props {
   onBook: () => void;
@@ -20,11 +21,11 @@ function ContactRow({ icon, label, value }: { icon: React.ReactNode; label: stri
 }
 
 export default function Contact({ onBook }: Props) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const c = t.contact;
 
   return (
-    <section id="contact" style={{ background: 'var(--bg-stage)', color: '#fff' }} className="section-pad">
+    <section id={sectionId(lang, 'contact')} style={{ background: 'var(--bg-stage)', color: '#fff' }} className="section-pad">
       <div style={{ maxWidth: 1320, margin: '0 auto' }} className="grid-2col">
         <div>
           <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-orange)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{c.eyebrow}</span>

@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useLang } from '@/context/LangContext';
+import { sectionId } from '@/config/sections';
 
 const NAV_IDS = ['games', 'how', 'pricing', 'faq'] as const;
 
@@ -10,7 +11,7 @@ interface Props {
 }
 
 export default function Footer({ onBook }: Props) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const f = t.footer;
   const c = t.contact;
 
@@ -53,7 +54,7 @@ export default function Footer({ onBook }: Props) {
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
             {NAV_IDS.map((id) => (
               <li key={id}>
-                <a href={`/#${id}`} style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', font: '400 14px var(--font-body)' }}>
+                <a href={`/#${sectionId(lang, id)}`} style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', font: '400 14px var(--font-body)' }}>
                   {t.nav[id]}
                 </a>
               </li>

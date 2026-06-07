@@ -2,6 +2,7 @@
 
 import { PRICING } from '@/data/games';
 import { useLang } from '@/context/LangContext';
+import { sectionId } from '@/config/sections';
 
 function PlayerDots({ count, dark = true }: { count: number; dark?: boolean }) {
   return (
@@ -23,10 +24,10 @@ interface Props {
 }
 
 export default function Pricing({ onBook }: Props) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const p2 = t.pricing;
   return (
-    <section id="pricing" style={{ background: 'var(--bg-stage)', color: '#fff' }} className="section-pad">
+    <section id={sectionId(lang, 'pricing')} style={{ background: 'var(--bg-stage)', color: '#fff' }} className="section-pad">
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 64 }}>
           <span style={{ font: '700 12px var(--font-display)', color: 'var(--heat-orange)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{p2.eyebrow}</span>

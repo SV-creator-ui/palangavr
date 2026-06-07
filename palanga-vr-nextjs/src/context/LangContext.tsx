@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Lang, TRANSLATIONS } from '@/data/translations';
 
 interface LangContextValue {
@@ -16,7 +16,19 @@ const LangContext = createContext<LangContextValue>({
 });
 
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>('lt');
+  const [lang, setLangState] = useState<Lang>('lt');
+
+  // Po prisikrovimo atstatom įsimintą kalbą (kad išliktų perkrovus / kituose puslapiuose)
+  useEffect(() => {
+    const saved = localStorage.getItem('lang');
+    if (saved === 'lt' || saved === 'en' || saved === 'ru') setLangState(saved);
+  }, []);
+
+  const setLang = (l: Lang) => {
+    setLangState(l);
+    try { localStorage.setItem('lang', l); } catch {}
+  };
+
   return (
     <LangContext.Provider value={{ lang, setLang, t: TRANSLATIONS[lang] }}>
       {children}

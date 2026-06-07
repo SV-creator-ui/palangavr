@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { GAMES, type Game } from '@/data/games';
 import DifficultyMeter from './ui/DifficultyMeter';
 import { useLang } from '@/context/LangContext';
+import { sectionId } from '@/config/sections';
 
 function GameCard({ game }: { game: Game }) {
   const [hovered, setHovered] = useState(false);
@@ -122,7 +123,7 @@ function SortDropdown({ value, options, onChange }: { value: string; options: st
 }
 
 export default function GamesGrid() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const g = t.grid;
   const sorts = g.sorts;
   const [sortIdx, setSortIdx] = useState(0);
@@ -137,7 +138,7 @@ export default function GamesGrid() {
   }, [sortIdx]);
 
   return (
-    <section id="games" style={{ background: 'var(--bg-stage)', color: '#fff' }} className="section-pad-sm">
+    <section id={sectionId(lang, 'games')} style={{ background: 'var(--bg-stage)', color: '#fff' }} className="section-pad-sm">
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48, gap: 24, flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
