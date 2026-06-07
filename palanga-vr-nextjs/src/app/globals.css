@@ -259,13 +259,19 @@ body {
   .hero-section      { padding: 96px 16px 64px !important; }
 
   /* Visi header elementai turi tilpti i siaura ekrana (net ilgi RU zodziai) */
-  .header-row        { padding: 12px 8px !important; gap: 5px !important; }
-  .header-logo img   { height: 31px !important; }
+  .header-row        { padding: 10px 8px !important; gap: 5px !important; }
+  .header-logo img   { height: 40px !important; }
   .mob-controls      { gap: 5px !important; }
   .lang-switcher     { padding: 2px !important; }
   .lang-btn          { padding: 5px 5px !important; font-size: 11px !important; }
   .mob-book-btn      { padding: 8px 9px !important; font-size: 11px !important; }
   .mob-menu-btn      { width: 38px !important; height: 38px !important; }
+}
+
+/* ── LABAI SIAURI TELEFONAI (≤ 380px) – logotipas siek tiek mazesnis, kad viskas tilptu ── */
+@media (max-width: 380px) {
+  .header-row      { padding: 10px 6px !important; }
+  .header-logo img { height: 33px !important; }
 }
 
 @keyframes ping {
