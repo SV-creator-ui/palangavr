@@ -43,6 +43,7 @@ export const TRANSLATIONS = {
       eyebrow: 'D.U.K.', title: 'Dažniausi klausimai',
       notFound: 'Klausimo nėra sąraše? Paskambinkite mums:',
       items: [
+        { q: 'Kas yra VR pabėgimo kambarys?', a: 'Tai nuotykis virtualioje realybėje: užsidėję VR akinius su komanda patenkate į kitą pasaulį, sprendžiate galvosūkius ir atliekate užduotis, kad spėtumėte „pabėgti" per nustatytą laiką. Patirties nereikia.' },
         { q: 'Nuo kokio amžiaus galima žaisti?', a: 'Rekomenduojame nuo 9 metų. Vaikai iki 13 m. žaidžia tik kartu su suaugusiais.' },
         { q: 'Kiek žmonių telpa viename kambaryje?', a: 'Vienoje komandoje žaidžia nuo 2 iki 6 žaidėjų. Visi pabėgimo kambariai – komandiniai, todėl smagiausia atvykti su draugais, šeima ar kolegomis.' },
         { q: 'Ar reikia patirties su VR?', a: 'Visiškai ne. Prieš seansą operatorius supažindina su įranga ir valdymu. Pradedančiajam puikiai tinka Ninja Trials arba Dragon Tower.' },
@@ -138,6 +139,7 @@ export const TRANSLATIONS = {
       eyebrow: 'FAQ', title: 'Frequently asked questions',
       notFound: 'Question not on the list? Call us:',
       items: [
+        { q: 'What is a VR escape room?', a: 'It\'s a virtual-reality adventure: put on a VR headset and your team enters another world, solving puzzles and completing tasks to "escape" within the time limit. No experience needed.' },
         { q: 'From what age can you play?', a: 'We recommend from age 9. Children under 13 must play accompanied by adults.' },
         { q: 'How many people fit in one room?', a: 'One team plays with 2 to 6 players. All escape rooms are team-based, so it\'s most fun with friends, family or colleagues.' },
         { q: 'Is VR experience required?', a: 'Not at all. Before the session the operator introduces you to the equipment and controls. Ninja Trials or Dragon Tower are perfect for beginners.' },
@@ -233,6 +235,7 @@ export const TRANSLATIONS = {
       eyebrow: 'Вопросы', title: 'Часто задаваемые вопросы',
       notFound: 'Не нашли ответ? Позвоните нам:',
       items: [
+        { q: 'Что такое VR-комната побега?', a: 'Это приключение в виртуальной реальности: надев VR-очки, ваша команда попадает в другой мир, решает головоломки и выполняет задания, чтобы «сбежать» за отведённое время. Опыт не нужен.' },
         { q: 'С какого возраста можно играть?', a: 'Рекомендуем с 9 лет. Дети до 13 лет играют только в сопровождении взрослых.' },
         { q: 'Сколько человек помещается в одну комнату?', a: 'В одной команде играют от 2 до 6 игроков. Все комнаты побега командные, поэтому веселее всего приходить с друзьями, семьёй или коллегами.' },
         { q: 'Нужен ли опыт в VR?', a: 'Совсем нет. Перед сеансом оператор знакомит с оборудованием и управлением. Ninja Trials или Dragon Tower отлично подходят для начинающих.' },
