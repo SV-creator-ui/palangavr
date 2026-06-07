@@ -99,6 +99,14 @@ export default function GameDetail({ game, onBook }: { game: Game; onBook: () =>
             </div>
           </div>
         )}
+        {hasBanner && (
+          <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 'clamp(20px, 4vw, 40px) clamp(16px, 5vw, 32px)', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ maxWidth: 1320, width: '100%', minWidth: 0 }}>
+              <h1 style={{ font: '800 clamp(34px, 7vw, 96px)/0.98 var(--font-display)', color: '#fff', textTransform: 'uppercase', margin: '0 0 12px', overflowWrap: 'break-word' }}>{game.title}</h1>
+              <p style={{ font: '500 clamp(16px, 4vw, 20px)/1.4 var(--font-body)', color: 'rgba(255,255,255,0.9)', margin: 0, maxWidth: 540 }}>{tagline}</p>
+            </div>
+          </div>
+        )}
         <Link href="/" style={{
           position: 'absolute', top: 24, left: 32,
           background: 'rgba(255,255,255,0.1)', color: '#fff',
