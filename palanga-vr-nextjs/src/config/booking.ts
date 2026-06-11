@@ -20,8 +20,14 @@ export const BOOKING_URL_BY_LANG: Record<string, string> = {
 /** Atidaro tos kalbos rezervacijos nuorodą naujame lange, jei ji nustatyta. */
 export function goToBooking(lang: string) {
   const url = BOOKING_URL_BY_LANG[lang] || '';
-  if (url) {
-    window.open(url, '_blank', 'noopener,noreferrer');
+  if (!url) return; // Jei nuorodos tai kalbai nėra – nieko nedaro (mygtukas neaktyvus).
+
+  // iOS Safari su įjungtu „Block Pop-ups" užblokuoja window.open ir grąžina null.
+  // Tokiu atveju atidarome tame pačiame lange – rezervacija visada pasiekiama.
+  const win = window.open(url, '_blank');
+  if (win) {
+    win.opener = null;
+  } else {
+    window.location.href = url;
   }
-  // Jei nuorodos tai kalbai nėra – nieko nedaro (mygtukas neaktyvus).
 }
