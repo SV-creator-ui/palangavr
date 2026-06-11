@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { LangProvider } from '@/context/LangContext';
+import Analytics from '@/components/Analytics';
 
 const BASE_URL = 'https://palangavr.lt';
 
@@ -36,7 +37,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="lt">
       <body>
-        <LangProvider>{children}</LangProvider>
+        <LangProvider>
+          {children}
+          <Analytics />
+        </LangProvider>
       </body>
     </html>
   );

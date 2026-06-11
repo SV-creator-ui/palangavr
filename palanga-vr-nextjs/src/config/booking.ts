@@ -11,6 +11,8 @@
  * Šiuo metu nuoroda nustatyta tik lietuvių (lt) kalbai.
  */
 
+import { trackEvent } from '@/config/analytics';
+
 export const BOOKING_URL_BY_LANG: Record<string, string> = {
   lt: 'https://booking.moizmo.com/lt/booking/963a95eb-95b9-41d6-935d-1bde89925310',
   en: 'https://booking.moizmo.com/booking/963a95eb-95b9-41d6-935d-1bde89925310',
@@ -21,6 +23,9 @@ export const BOOKING_URL_BY_LANG: Record<string, string> = {
 export function goToBooking(lang: string) {
   const url = BOOKING_URL_BY_LANG[lang] || '';
   if (!url) return; // Jei nuorodos tai kalbai nėra – nieko nedaro (mygtukas neaktyvus).
+
+  // Konversija: GA4 įvykis (GA4 sąsajoje pažymėkite 'booking_click' kaip Key event)
+  trackEvent('booking_click', { lang });
 
   // iOS Safari su įjungtu „Block Pop-ups" užblokuoja window.open ir grąžina null.
   // Tokiu atveju atidarome tame pačiame lange – rezervacija visada pasiekiama.
