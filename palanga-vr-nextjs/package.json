@@ -2,6 +2,13 @@
   "name": "palanga-vr-nextjs",
   "version": "0.1.0",
   "private": true,
+  "browserslist": [
+    "chrome 80",
+    "edge 80",
+    "firefox 78",
+    "safari 12",
+    "ios_saf 12"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
