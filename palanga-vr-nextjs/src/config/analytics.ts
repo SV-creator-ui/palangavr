@@ -13,7 +13,7 @@
  * Google Ads kaip konversiją.
  */
 
-export const GA4_ID = 'G-V3YWM16KB3';
+export const GA4_ID = 'G-G6MDZHH3PX';
 
 declare global {
   interface Window {
