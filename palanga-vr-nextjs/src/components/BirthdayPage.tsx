@@ -61,6 +61,18 @@ const HZ_GAMES = [
     desc: 'Draugiškos komandų kautynės su atšokančiomis kulkomis ir spąstais',
     age: '8+', time: '10–12 min',
   },
+  {
+    img: '/assets/herozone/dead-ahead.jpg',
+    title: 'Dead Ahead',
+    desc: 'Atremkite zombių bangas – turite 30 sekundžių pasiruošti gynybai',
+    age: '8+', time: '10–12 min',
+  },
+  {
+    img: '/assets/herozone/terminator-uprising.jpg',
+    title: 'Terminator Uprising',
+    desc: 'Paskutinė žmonijos kova prieš mašinas – nuotykis drąsiausiems',
+    age: '8+', time: '10–12 min',
+  },
 ];
 
 const STEPS: [string, string, string][] = [
