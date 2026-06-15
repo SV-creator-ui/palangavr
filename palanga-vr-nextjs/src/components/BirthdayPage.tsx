@@ -1,7 +1,7 @@
 'use client';
 
 import { goToBooking } from '@/config/booking';
-import { trackEvent } from '@/config/analytics';
+import { trackEvent, trackPixel } from '@/config/analytics';
 
 /**
  * GIMTADIENIŲ NUKREIPIMO PUSLAPIS (/gimtadieniai)
@@ -98,7 +98,10 @@ const Kicker = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default function BirthdayPage() {
-  const onCall = () => trackEvent('phone_click', { page: 'gimtadieniai' });
+  const onCall = () => {
+    trackEvent('phone_click', { page: 'gimtadieniai' });
+    trackPixel('Contact', { content_name: 'gimtadieniai' });
+  };
   const onBook = () => goToBooking('lt');
 
   return (
