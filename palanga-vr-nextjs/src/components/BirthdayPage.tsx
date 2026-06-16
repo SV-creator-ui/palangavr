@@ -85,7 +85,7 @@ const FACTS: [string, string][] = [
   ['Amžius', 'Nuo 8 metų – specialūs VR nuotykių žaidimai, pritaikyti vaikams'],
   ['Grupės dydis', 'Iki 10 vaikų (žaidžia dviem komandomis po 5, viena po kitos)'],
   ['Trukmė', '~1–1,5 val. visai šventei, priklausomai nuo grupės dydžio'],
-  ['Vieta', 'S. Daukanto g. 24, Palangos centre'],
+  ['Vieta', 'S. Daukanto g. 35, Palangos centre'],
   ['Vaišės', 'Staliukas gėrimams – atsineškite savo sulčių ar limonado'],
   ['Mokėjimas', 'Jokio išankstinio mokėjimo – atsiskaitote šventės dieną vietoje'],
 ];
@@ -263,7 +263,7 @@ export default function BirthdayPage() {
           <button onClick={onBook} className="btn btn--ghost">Rezervuoti internetu</button>
         </div>
         <div style={{ font: '400 13px var(--font-body)', color: 'rgba(255,255,255,0.5)' }}>
-          Palanga VR · S. Daukanto g. 24, Palanga · <a href="/" style={{ color: 'rgba(255,255,255,0.7)' }}>palangavr.lt</a>
+          Palanga VR · S. Daukanto g. 35, Palanga · <a href="/" style={{ color: 'rgba(255,255,255,0.7)' }}>palangavr.lt</a>
         </div>
       </section>
     </div>

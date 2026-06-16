@@ -86,7 +86,7 @@ const FACTS: [string, string][] = [
   ['Grupės dydis', 'Iki 5 žmonių vienoje komandoje'],
   ['Trukmė', '50 min nuotykių'],
   ['Kaina', '20 € asmeniui'],
-  ['Vieta', 'S. Daukanto g. 24, Palangos centre'],
+  ['Vieta', 'S. Daukanto g. 35, Palangos centre'],
   ['Mokėjimas', 'Jokio išankstinio mokėjimo – atsiskaitote vietoje'],
 ];
 
@@ -263,7 +263,7 @@ export default function VisitPage() {
           <button onClick={onBook} className="btn btn--ghost">Rezervuoti internetu</button>
         </div>
         <div style={{ font: '400 13px var(--font-body)', color: 'rgba(255,255,255,0.5)' }}>
-          Palanga VR · S. Daukanto g. 24, Palanga · <a href="/" style={{ color: 'rgba(255,255,255,0.7)' }}>palangavr.lt</a>
+          Palanga VR · S. Daukanto g. 35, Palanga · <a href="/" style={{ color: 'rgba(255,255,255,0.7)' }}>palangavr.lt</a>
         </div>
       </section>
     </div>

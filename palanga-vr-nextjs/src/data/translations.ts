@@ -56,7 +56,7 @@ export const TRANSLATIONS = {
     contact: {
       eyebrow: 'Apsilankymas', title: 'Palangos\ncentre',
       addrLabel: 'Adresas', phoneLabel: 'Telefonas', emailLabel: 'El. paštas', hoursLabel: 'Darbo laikas',
-      addr1: 'S. Daukanto g. 24, Palanga', addr2: 'Viešbutis „Palangos Vėtra"',
+      addr1: 'S. Daukanto g. 35, Palanga', addr2: 'Viešbutis „Palangos Vėtra"',
       hours: 'Pir – Ket 14:00 – 22:00\nPen 12:00 – 22:00 · Šeš 10:00 – 22:00 · Sek 10:00 – 22:00',
       bookBtn: 'Rezervuoti laiką', callBtn: 'Paskambinti',
     },
@@ -152,7 +152,7 @@ export const TRANSLATIONS = {
     contact: {
       eyebrow: 'Visit us', title: 'In the heart\nof Palanga',
       addrLabel: 'Address', phoneLabel: 'Phone', emailLabel: 'Email', hoursLabel: 'Opening hours',
-      addr1: 'S. Daukanto st. 24, Palanga', addr2: 'Hotel "Palangos Vėtra"',
+      addr1: 'S. Daukanto st. 35, Palanga', addr2: 'Hotel "Palangos Vėtra"',
       hours: 'Mon – Thu 14:00 – 22:00\nFri 12:00 – 22:00 · Sat 10:00 – 22:00 · Sun 10:00 – 22:00',
       bookBtn: 'Book now', callBtn: 'Call us',
     },
@@ -248,7 +248,7 @@ export const TRANSLATIONS = {
     contact: {
       eyebrow: 'Посещение', title: 'В центре\nПаланги',
       addrLabel: 'Адрес', phoneLabel: 'Телефон', emailLabel: 'Эл. почта', hoursLabel: 'Часы работы',
-      addr1: 'Ул. С. Даукантас 24, Паланга', addr2: 'Отель „Palangos Vėtra"',
+      addr1: 'Ул. С. Даукантас 35, Паланга', addr2: 'Отель „Palangos Vėtra"',
       hours: 'Пн – Чт 14:00 – 22:00\nПт 12:00 – 22:00 · Сб 10:00 – 22:00 · Вс 10:00 – 22:00',
       bookBtn: 'Забронировать', callBtn: 'Позвонить',
     },
