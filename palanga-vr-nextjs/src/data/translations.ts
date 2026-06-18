@@ -5,7 +5,7 @@ export const TRANSLATIONS = {
     nav: { games: 'Pabėgimo kambariai', how: 'Kaip vyksta', pricing: 'Kainos', faq: 'D.U.K.', contact: 'Kontaktai' },
     book: 'Rezervacija',
     hero: {
-      badge: 'PALANGA · S. DAUKANTO G. 24',
+      badge: 'PALANGA · S. DAUKANTO G. 35',
       title: 'VR nuotykiai\nPalangoje',
       sub: 'Devyni komandiniai VR pabėgimo kambariai 2–6 žaidėjams. ~45 minutės, kurių neužmiršite.',
       cta: 'Rezervuoti laiką', cta2: 'Visi kambariai',
@@ -101,7 +101,7 @@ export const TRANSLATIONS = {
     nav: { games: 'Escape Rooms', how: 'How it works', pricing: 'Prices', faq: 'FAQ', contact: 'Contact' },
     book: 'Book now',
     hero: {
-      badge: 'PALANGA · S. DAUKANTO ST. 24',
+      badge: 'PALANGA · S. DAUKANTO ST. 35',
       title: 'VR Adventures\nin Palanga',
       sub: 'Nine team VR escape rooms for 2–6 players. ~45 minutes you won\'t forget.',
       cta: 'Book now', cta2: 'All rooms',
@@ -197,7 +197,7 @@ export const TRANSLATIONS = {
     nav: { games: 'Комнаты побега', how: 'Как это работает', pricing: 'Цены', faq: 'Вопросы', contact: 'Контакты' },
     book: 'Забронировать',
     hero: {
-      badge: 'ПАЛАНГА · УЛ. С. ДАУКАНТАС 24',
+      badge: 'ПАЛАНГА · УЛ. С. ДАУКАНТАС 35',
       title: 'VR приключения\nв Паланге',
       sub: 'Девять командных VR квест-комнат для 2–6 игроков. ~45 минут, которые вы не забудете.',
       cta: 'Забронировать', cta2: 'Все комнаты',
