@@ -86,7 +86,7 @@ const FACTS: [string, string][] = [
   ['Grupės dydis', 'Iki 5 žmonių vienoje komandoje'],
   ['Trukmė', '50 min nuotykių'],
   ['Kaina', '20 € asmeniui'],
-  ['Vieta', 'S. Daukanto g. 35, Palangos centre'],
+  ['Vieta', 'Pajūrio g. 5b, Klaipėda (PC „Green Square", 2 a.)'],
   ['Mokėjimas', 'Jokio išankstinio mokėjimo – atsiskaitote vietoje'],
 ];
 
@@ -122,7 +122,7 @@ export default function VisitPage() {
 
       {/* ── Hero ── */}
       <section style={{ textAlign: 'center', padding: '56px 24px 64px', maxWidth: 880, margin: '0 auto' }}>
-        <Kicker>VR pramogos · Palanga</Kicker>
+        <Kicker>VR pramogos · Klaipėda</Kicker>
         <h1 style={{
           font: '800 clamp(34px, 7vw, 72px)/1.02 var(--font-display)',
           textTransform: 'uppercase', letterSpacing: '-0.01em', margin: '14px 0 20px',
@@ -139,7 +139,7 @@ export default function VisitPage() {
           <button onClick={onBook} className="btn btn--ghost">Rezervuoti laiką</button>
         </div>
         <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
-          {[['20 €', 'asmeniui'], ['50 min', 'nuotykių'], ['Iki 5', 'žmonių'], ['Centre', 'Palangos']].map(([v, l]) => (
+          {[['20 €', 'asmeniui'], ['50 min', 'nuotykių'], ['Iki 5', 'žmonių'], ['Green Sq.', 'Klaipėda']].map(([v, l]) => (
             <div key={v} style={{
               background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.14)',
               borderRadius: 16, padding: '12px 20px', minWidth: 110,
@@ -263,7 +263,7 @@ export default function VisitPage() {
           <button onClick={onBook} className="btn btn--ghost">Rezervuoti internetu</button>
         </div>
         <div style={{ font: '400 13px var(--font-body)', color: 'rgba(255,255,255,0.5)' }}>
-          Palanga VR · S. Daukanto g. 35, Palanga · <a href="/" style={{ color: 'rgba(255,255,255,0.7)' }}>palangavr.lt</a>
+          Palanga VR · Pajūrio g. 5b, Klaipėda · <a href="/" style={{ color: 'rgba(255,255,255,0.7)' }}>palangavr.lt</a>
         </div>
       </section>
     </div>
