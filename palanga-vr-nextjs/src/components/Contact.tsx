@@ -66,7 +66,7 @@ export default function Contact({ onBook }: Props) {
           overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)',
         }}>
           <iframe
-            src="https://maps.google.com/maps?q=Green+Square+Pajūrio+g.+5b+Klaipėda&z=17&output=embed"
+            src="https://maps.google.com/maps?q=Pajūrio+g.+5B,+Klaipėda,+Lietuva&z=18&output=embed"
             width="100%"
             height="100%"
             style={{ border: 0, display: 'block' }}
