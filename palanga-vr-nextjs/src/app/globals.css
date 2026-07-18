@@ -328,5 +328,30 @@ body {
 .hero-btn { transition: transform 200ms var(--ease-out); will-change: transform; }
 .hero-btn:hover { transform: translateY(-2px) scale(1.045); }
 .hero-btn:active { transform: scale(0.97); }
-.hero-stat { transition: transform 220ms var(--ease-out); }
-.hero-stat:hover { transform: translateY(-4px); }
+.hero-stat {
+  transition: transform 220ms var(--ease-out), border-color 220ms var(--ease-out), background 220ms var(--ease-out);
+}
+.hero-stat:hover {
+  transform: translateY(-4px);
+  border-color: rgba(248,162,75,0.55) !important;
+  background: rgba(255,255,255,0.09) !important;
+}
+
+/* Gradientine sviecianti antraste (premium blizgesys) */
+@keyframes heroShimmer { from { background-position: 0% center; } to { background-position: 220% center; } }
+.hero-title-shimmer {
+  background: linear-gradient(100deg, #ffffff 0%, #ffffff 28%, #F8A24B 44%, #F2466E 56%, #ffffff 72%, #ffffff 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: heroShimmer 6s linear infinite;
+}
+
+/* Sviecianti CTA aureole */
+@keyframes heroCtaGlow {
+  0%,100% { box-shadow: 0 0 0 0 rgba(242,70,110,0.45), 0 12px 32px -8px rgba(242,70,110,0.55); }
+  50%     { box-shadow: 0 0 32px 6px rgba(248,162,75,0.35), 0 12px 40px -6px rgba(242,70,110,0.7); }
+}
+.hero-cta-glow { animation: heroCtaGlow 3.2s ease-in-out infinite; border-radius: 999px; }
