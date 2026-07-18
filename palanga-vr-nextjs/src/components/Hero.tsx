@@ -53,8 +53,9 @@ function HeroBgCarousel() {
   );
 }
 
-/* Plaukiojantys spalvoti "glow" rutuliai – suteikia gyliaus ir prabangaus judesio */
-function AmbientGlow() {
+/* Plaukiojantys spalvoti "glow" rutuliai – suteikia gyliaus ir prabangaus jausmo.
+   Esant "reduced motion" – lieka statiski (be nuolatinio judesio), bet vis tiek prideda turtingumo. */
+function AmbientGlow({ reduced }: { reduced: boolean }) {
   const orbs = [
     { size: 540, left: '-10%', top: '-20%', color: 'rgba(248,162,75,0.30)', dur: 17, dx: 50, dy: 34 },
     { size: 480, left: '74%', top: '2%', color: 'rgba(242,70,110,0.28)', dur: 21, dx: -56, dy: 44 },
@@ -65,8 +66,8 @@ function AmbientGlow() {
       {orbs.map((o, i) => (
         <motion.div
           key={i}
-          animate={{ x: [0, o.dx, 0], y: [0, o.dy, 0] }}
-          transition={{ duration: o.dur, repeat: Infinity, ease: 'easeInOut' }}
+          animate={reduced ? undefined : { x: [0, o.dx, 0], y: [0, o.dy, 0] }}
+          transition={reduced ? undefined : { duration: o.dur, repeat: Infinity, ease: 'easeInOut' }}
           style={{
             position: 'absolute', left: o.left, top: o.top,
             width: o.size, height: o.size, borderRadius: '50%',
@@ -130,22 +131,20 @@ export default function Hero({ onBook }: Props) {
       overflow: 'hidden',
     }}>
       <HeroBgCarousel />
-      {!reduced && <AmbientGlow />}
+      <AmbientGlow reduced={reduced} />
 
-      {/* Kvėpuojantis švytėjimas už antraštės */}
-      {!reduced && (
-        <motion.div
-          aria-hidden
-          animate={{ opacity: [0.35, 0.65, 0.35], scale: [1, 1.08, 1] }}
-          transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
-          style={{
-            position: 'absolute', top: '38%', left: '50%',
-            width: 680, height: 340, transform: 'translate(-50%, -50%)',
-            background: 'radial-gradient(ellipse, rgba(242,70,110,0.38) 0%, transparent 65%)',
-            filter: 'blur(48px)', zIndex: 1, pointerEvents: 'none',
-          }}
-        />
-      )}
+      {/* Kvėpuojantis švytėjimas už antraštės (statiskas esant reduced motion) */}
+      <motion.div
+        aria-hidden
+        animate={reduced ? { opacity: 0.5 } : { opacity: [0.35, 0.65, 0.35], scale: [1, 1.08, 1] }}
+        transition={reduced ? undefined : { duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          position: 'absolute', top: '38%', left: '50%',
+          width: 680, height: 340, transform: 'translate(-50%, -50%)',
+          background: 'radial-gradient(ellipse, rgba(242,70,110,0.38) 0%, transparent 65%)',
+          filter: 'blur(48px)', zIndex: 1, pointerEvents: 'none',
+        }}
+      />
 
       <motion.div
         variants={container}
