@@ -119,7 +119,9 @@ export default function Hero({ onBook }: Props) {
         animation: 'heroBreathe 6.5s ease-in-out infinite',
       }} />
 
-      <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+      {/* key={lang} – perjungus kalba turinys persirenderina ir iejimo reveal
+          animacija suveikia is naujo kiekvienai kalbai */}
+      <div key={lang} style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
         {/* Glass badge */}
         <div className="hero-reveal" style={{
           ...revealDelay(0),
