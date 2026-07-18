@@ -288,3 +288,45 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .cookie-banner { animation: none; }
 }
+
+/* ============================================================
+   HERO animacijos – CSS keyframes (veikia VISIEMS lankytojams,
+   nepriklausomai nuo irenginio "reduced motion" nustatymo).
+   ============================================================ */
+
+/* Iejimo reveal: iskyla is apacios su neryskumu.
+   SVARBU: animuojam TIK transform+filter, opacity NELieciam – turinys visada
+   matomas (opacity:1), tad net jei animacija nepaleidziama ar uzsaldyta,
+   tekstas NIEKADA nelieka nematomas. */
+@keyframes heroReveal {
+  from { transform: translateY(28px); filter: blur(8px); }
+  to   { transform: translateY(0);    filter: blur(0);   }
+}
+.hero-reveal { animation: heroReveal 0.9s var(--ease-out) both; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal { animation: none; }
+}
+
+/* Plaukiojantys glow rutuliai */
+@keyframes heroOrbA { 0%,100% { transform: translate(0,0); } 50% { transform: translate(50px, 34px); } }
+@keyframes heroOrbB { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-56px, 44px); } }
+@keyframes heroOrbC { 0%,100% { transform: translate(0,0); } 50% { transform: translate(36px, -46px); } }
+
+/* Kvepuojantis svytejimas uz antrastes */
+@keyframes heroBreathe {
+  0%,100% { opacity: 0.35; transform: translate(-50%, -50%) scale(1); }
+  50%     { opacity: 0.65; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+/* Badge taskelio pulsavimas */
+@keyframes heroPulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(2.6); opacity: 0; } }
+
+/* Slinkimo indikatoriaus taskelis */
+@keyframes heroScrollDot { 0%,100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(12px); opacity: 0.2; } }
+
+/* Mygtuku ir statistikos hover (transform per CSS – patikimas visur) */
+.hero-btn { transition: transform 200ms var(--ease-out); will-change: transform; }
+.hero-btn:hover { transform: translateY(-2px) scale(1.045); }
+.hero-btn:active { transform: scale(0.97); }
+.hero-stat { transition: transform 220ms var(--ease-out); }
+.hero-stat:hover { transform: translateY(-4px); }
